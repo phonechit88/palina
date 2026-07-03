@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>   
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>palina - Memory Book & Profile</title>
+    <!-- ນໍາເຂົ້າ Font Awesome ສໍາລັບ Icons ຕົບແຕ່ງ -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans Lao', sans-serif;
+            background: linear-gradient(135deg, #ffe5ec, #ffc2d1, #f0c6ff);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            overflow-x: hidden;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* ແຖບໂຕໜັງສືແລ່ນ */
+        .marquee-container {
+            width: 100%;
+            background-color: rgba(255, 75, 110, 0.15);
+            padding: 10px 0;
+            position: absolute;
+            top: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .marquee-text {
+            display: inline-block;
+            font-size: 1.2rem;
+            color: #ff4b6e;
+            font-weight: bold;
+            animation: marquee 30s linear infinite;
+        }
+
+        /* ----------------------------------------------- */
+        /* ລະບົບຫຼາຍໜ້າ (Multi-page Container) */
+        /* ----------------------------------------------- */
+        .book-container {
+            width: 90%;
+            max-width: 380px;
+            height: 560px; 
+            position: relative;
+            z-index: 5;
+            margin-top: 40px;
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 75, 110, 0.25);
+            padding: 25px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            
+            /* ຊ່ອນໜ້າອື່ນໆໄວ້ */
+            opacity: 0;
+            transform: translateX(100px) scale(0.9);
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .page.active {
+            opacity: 1;
+            transform: translateX(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .page-final {
+            background: linear-gradient(135deg, #fff0f3, #ffe5ec);
+            border: 3px solid #ffb3c1;
+        }
+
+        h1 {
+            color: #ff4b6e;
+            font-size: 1.15rem; 
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        p {
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin: 5px 0;
+        }
+
+        .text-accent {
+            font-size: 1.1rem;
+            color: #d90429;
+            font-weight: bold;
+            line-height: 1.5;
+        }
+
+        .heart-icon {
+            font-size: 35px;
+            color: #ff4b6e;
+            animation: beat 1s infinite alternate;
+        }
+
+        .image-box {
+            width: 100%;
+            height: 220px; 
+            margin: 10px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: float 3s ease-in-out infinite;
+            background-color: #fafafa; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; 
+        }
+
+        /* ປຸ່ມກົດທົ່ວໄປ */
+        .btn-group {
+            width: 100%;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .btn {
+            background-color: #ff4b6e;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            font-size: 0.95rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            box-shadow: 0 5px 12px rgba(255, 75, 110, 0.3);
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #ff2a55;
+            transform: scale(1.05);
+        }
+
+        .btn-back {
+            background-color: #ffb3c1;
+            color: #ff4b6e;
+            padding: 10px 18px;
+        }
+        .btn-back:hover {
+            background-color: #ffa0b2;
+        }
+
+        .indicators {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: #ffb3c1;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 20px;
+            background-color: #ff4b6e;
+            border-radius: 4px;
+        }
+
+        /* ----------------------------------------------- */
+        /* ສ່ວນຂອງກ່ອງຂໍ້ມູນສ່ວນຕົວ (Profile Card) */
+        /* ----------------------------------------------- */
+        .profile-container {
+            max-width: 850px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 35px 25px;
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(255, 154, 162, 0.25);
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            text-align: center;
+            display: none; /* ຊ່ອນໄວ້ກ່ອນ */
+            z-index: 6;
+            margin-top: 40px;
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .profile-flex {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        .profile-card {
+            background: #ffffff;
+            flex: 1;
+            min-width: 280px;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+            text-align: left;
+            border-top: 6px solid #ff758f;
+        }
+
+        .card-phonchit {
+            border-top: 6px solid #c77dff;
+        }
+
+        .profile-card h3 {
+            font-size: 17px;
+            color: #333;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px dashed #ffe5ec;
+        }
+
+        .avatar-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 15px auto;
+            border: 3px solid #fff;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.1);
+        }
+
+        .info-item {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        .info-item strong {
+            color: #ff4d6d;
+        }
+        .card-phonchit .info-item strong {
+            color: #9d4edd;
+        }
+
+        .bio-text {
+            margin-top: 15px;
+            background: #fff0f3;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #555;
+            border-left: 4px solid #ff758f;
+        }
+        .card-phonchit .bio-text {
+            background: #f3e5f5;
+            border-left: 4px solid #c77dff;
+        }
+
+        /* ຈັດການກຸ່ມປຸ່ມໃນໜ້າ Profile */
+        .profile-btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .profile-btn {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        /* ປຸ່ມກັບຄືນໜ້າປຶ້ມ */
+        .btn-return-book {
+            background-color: #ffccd5;
+            color: #ff4b6e;
+            box-shadow: 0 5px 15px rgba(255, 204, 213, 0.4);
+        }
+        .btn-return-book:hover {
+            background-color: #ffb3c1;
+            transform: translateY(-2px);
+        }
+
+        /* ປຸ່ມອອກຈາກລະບົບ */
+        .btn-logout-final {
+            background: linear-gradient(135deg, #ff758f, #ff4d6d);
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
+        }
+        .btn-logout-final:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(255, 77, 109, 0.5);
+        }
+
+        /* ----------------------------------------------- */
+        /* ລະບົບປ໊ອບອັບ (Popup) */
+        /* ----------------------------------------------- */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .popup-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #ffffff, #fff0f3);
+            width: 85%;
+            max-width: 420px;
+            padding: 35px 25px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(255, 75, 110, 0.4);
+            border: 4px solid #ffccd5;
+            transform: scale(0.7) translateY(-50px);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .popup-overlay.show .popup-content {
+            transform: scale(1) translateY(0);
+        }
+
+        .popup-title {
+            font-size: 1.5rem;
+            color: #d90429;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .popup-text {
+            font-size: 1rem;
+            color: #4a4a4a;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .popup-icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+            animation: pulse 0.8s infinite alternate;
+            display: inline-block;
+        }
+
+        .btn-show-profile {
+            background: linear-gradient(135deg, #7b2cbf, #9d4edd);
+            color: white;
+            font-size: 1rem;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(123, 44, 191, 0.3);
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+        .btn-show-profile:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(123, 44, 191, 0.5);
+        }
+
+        /* Animations & Effects */
+        .effect-item { position: absolute; top: -20px; pointer-events: none; animation: fall linear forwards; z-index: 1; }
+        @keyframes beat { to { transform: scale(1.15); } }
+        @keyframes pulse { to { transform: scale(1.2) rotate(5deg); } }
+        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <!-- ແຖບຂໍ້ຄວາມແລ່ນ -->
+    <div class="marquee-container" id="marqueeBar">
+        <div class="marquee-text">
+            ✨ ✨ ປະກາດແຈ້ງການດ່ວນທີ່ສຸດໃນໂລກ! ຊ່ວງນີ້ມີຄົນຂີ້ດື້ແຖວນີ້ ເຮັດວຽກເມື່ອຍຫຼາຍແຕ່ບໍ່ມັກພັກຜ່ອນເຮັດວຽກເກີນໂມງຮອດໂມງເລີກວຽກແລ້ວບໍ່ຍອມກັບເຮືອນ, ບໍ່ຄ່ອຍມັກກິນເຂົ້າເຊົ້າ, ແຖມຍັງມັກລືມຄິດຮອດຄົນທາງນີ້ອີກ! ຖ້າອ່ານຂໍ້ຄວາມນີ້ແລ້ວ ກະລຸນາລາຍງານຕົວ ແລະ ຍິ້ມອອກມາຫວານໆຈັກບາດໜຶ່ງດ່ຽວນີ້ເລີຍ, ຖ້າບໍ່ຍິ້ມຊິໄປຫຍຸມແກ້ມຕອນນີ້ເລີຍໃດ໋ນິ 💖! 💖 
+        </div>
+    </div>
+
+    <!-- ----------------------------------------------------- -->
+    <!-- ສ່ວນທີ 1: ກ່ອງປຶ້ມ Memory Book (4 ໜ້າຄືເກົ່າເປະ) -->
+    <!-- ----------------------------------------------------- -->
+    <div class="book-container" id="bookBox">
+        
+        <!-- ໜ້າທີ 1 -->
+        <div class="page active" id="page1">
+            <div class="heart-icon">❤️</div>
+            <h1>Hello ຢ້າ! ມື້ນີ້ເຮັດວຽກ ຫຼື ໄປເຮັດສົງຄາມມານິນະຄືຊິເມື່ອຍແທ້? 555 ມາໆ ມາເອົາກຳລັງໃຈຢູ່ນີ້ໄວ!!</h1>
+            <div class="image-box">
+                <img src="img/palina1.png" onerror="this.src='img/palina1.png'" alt="ຮູບທີ 1">
+            </div>
+            <p>ມື້ນີ້ເກັ່ງຫຼາຍແລ້ວ! ຮູ້ວ່າມັນເມື່ອຍ, ແຕ່ຢ່າລືມຍິ້ມໃຫ້ໂຕເອງແນ່ເດີ້ 🥰!</p>
+            <div class="btn-group">
+                <button class="btn" onclick="changePage(2, 'heart')">NEXT STATION 555 👉</button>
+            </div>
+        </div>
+
+        <!-- ໜ້າທີ 2 -->
+        <div class="page" id="page2">
+            <div class="heart-icon">🌸</div>
+            <h1>ໂອຍຍຍຍຍ... ຄົນທາງນີ້ຄິດຮອດຄົນທາງນັ້ນຈົນກິນເຂົ້າບໍ່ແຊບ ນອນບໍ່ຫຼັບ (ແຕ່ກິນຊາຂຽວໄດ້ຢູ່ 555) ມື້ນີ້ເຮັດວຽກເມື່ອຍບໍ່? ຖ້າເມື່ອຍກໍຢ່າຝືນເດີ້ ວຽກມັນບໍ່ໜີໄປໃສດອກ ມີແຕ່ນົນນີ້ແລະຊິໜີໄປຫາຢ້ານະ! ອ່ານຂໍ້ຄວາມຍາວໆນີ້ແລ້ວ ຫ້າມເຮັດໜ້າບູດໃສ່ໜ້າຈໍເດີ້ ຍິ້ມແນ່... ນັບ 1 2 3 ແລ້ວຍິ້ມເລີຍ! ພູມໃຈໃນໂຕຢ້າທີ່ສຸດໃນໂລກເລີຍຍຍຍຍຍຍ 💝 ✨</h1>
+            <div class="image-box">
+                <img src="img/palina2.jpeg" onerror="this.src='img/palina2.jpeg'" alt="ຮູບທີ 2">
+            </div>
+            <p>ມື້ນີ້ຄືມາໜ້າຮັກແທ້? ອໍ້ ລືມໄປ... ຢ້າໜ້າຮັກທຸກມື້ຢູ່ແລ້ວ (ແຕ່ມື້ນີ້ໜ້າຮັກໜ້ອຍກວ່າມື້ອື່ນໜ້ອຍໜຶ່ງ) .</p>
+            <div class="btn-group">
+                <button class="btn btn-back" onclick="changePage(1)">↩️</button>
+                <button class="btn" onclick="changePage(3, 'star')">ຕໍ່ໄປເລີຍ ແຕ່!!!!!!ອ່ານໄຫ້ຈົບກ່ອນຄ່ອຍກົດ 👉</button>
+            </div>
+        </div>
+
+        <!-- ໜ້າທີ 3 -->
+        <div class="page" id="page3">
+            <div class="heart-icon">🌸🌸⭐🌸🌸</div>
+            <h1>ກຳລັງໃຈດວງນ້ອຍໆພໍຊິເປັນສ່ວນໜື່ງທີ່ເຮັດໄຫ້ຍິ້ມໄດ້ຢູ່ບໍ່ນໍ້</h1>
+            <div class="image-box">
+                <img src="img/palina3.png" onerror="this.src='img/palina3.png'" alt="ຮູບທີ 3">
+            </div>
+            <p>ຢາກໃຫ້ຮູ້ໄວ້ວ່າ ຢ້າບໍ່ໄດ້ຢູ່ຄົນດຽວດອກເດີ້! ຍັງມີກຳລັງໃຈຈາກນົນ ສົ່ງໄປໃຫ້ຢ້າໃນທຸກໆມື້ເລີຍ ແລະ ທຸກໆຄຳທີ່ຂຽນໄຫ້ຢ້າອ່ານແມ່ນຂຽນມາຈາກຄວາມຮູ້ສຶກໂຕເອງລ້ວນໆ ໂຄດຕັ້ງໃຈເລີຍຂຽນເວັບນີ້ນະ ຕອນຮຽນຍັງບໍ່ຕັ້ງໃຈປານນີ້.</p>
+            <div class="btn-group">
+                <button class="btn btn-back" onclick="changePage(2)">↩️</button>
+                <button class="btn" onclick="changePage(4, 'all')">-----$ 🤫</button>
+            </div>
+        </div>
+
+        <!-- ໜ້າທີ 4 (ໜ້າສຸດທ້າຍ) -->
+        <div class="page page-final" id="page4">
+            <div class="heart-icon">💖</div>
+            <div class="image-box">
+                <img src="img/palina4.png" onerror="this.src='img/palina4.png'" alt="ຮູບທີ 4">
+            </div>
+            <div class="text-accent">
+                💖 ເຫັນຢ້າບອກວ່າເມື່ອຍວຽກ, ນົນກໍຢາກຊ່ວຍເດີ້... ຊ່ວຍເປັນກຳລັງໃຈໃຫ້ ແຕ່ບໍ່ຊ່ວຍເຮັດວຽກໄດ່ລະ 55555 💖
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-back" onclick="changePage(3)">↩️</button>
+                <button class="btn" onclick="showBeautifulPopup()">ໜ້າສຸດທ້າຍມີຄວາມລັບ ☀️</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ຕົວ Dots Indicator ບອກໜ້າປຶ້ມ -->
+    <div class="indicators" id="pageDots">
+        <div class="dot active" id="dot1"></div>
+        <div class="dot" id="dot2"></div>
+        <div class="dot" id="dot3"></div>
+        <div class="dot" id="dot4"></div>
+    </div>
+
+
+    <!-- ----------------------------------------------------- -->
+    <!-- ສ່ວນທີ 2: ກ່ອງຂໍ້ມູນສ່ວນຕົວ Profile -->
+    <!-- ----------------------------------------------------- -->
+    <div class="profile-container" id="profileBox">
+        <h2 style="color: #ff4d6d;"><i class="fas fa-id-card"></i> Wallcom - ຂໍ້ມູນສ່ວນຕົວ</h2>
+        
+        <div class="profile-flex">
+            <!-- ໂປຣໄຟລ໌ປາລີນາ -->
+            <div class="profile-card">
+                <img src="img/palina1.png" class="avatar-circle" alt="Palina">
+                <h3>個人資訊 ອ່ານບໍ່ອອກເອົາມາຈາກGoogle555</h3>
+                <div class="info-item"><strong>#Name & surname:</strong> ປາລີນາ</div>
+                <div class="info-item"><strong>Data of birth:</strong> 13 September 1999</div>
+                <div class="info-item"><strong>Phone:</strong> 020 56350537</div>
+                <div class="info-item"><strong>Address:</strong> ຈັນສະຫວ່າງ, ນະຄອນຫຼວງວຽງຈັນ</div>
+                <div class="bio-text">ບໍ່ມັກຄົນຂີ້ຕົວ,ບໍ່ມັກໄຫ້ຈຸກຈິກຈູ້ຈີ້,ບໍ່ມັກໄຫ້ບັງຄັບ, ມັກກິນຊາຂຽວຫວານ 30% 🍵</div>
+            </div>
+
+            <!-- ໂປຣໄຟລ໌ພອນຈິດ -->
+            <div class="profile-card card-phonchit">
+                <img src="img/palina5.jpg" class="avatar-circle" alt="Phonchit">
+                <h3>個人資訊 ອ່ານບໍ່ອອກເອົາມາຈາກGoogle555</h3>
+                <div class="info-item"><strong>#Name & surname:</strong> ພອນຈິດ</div>
+                <div class="info-item"><strong>Data of birth:</strong> 27 November 2004</div>
+                <div class="info-item"><strong>Phone:</strong> 020 57077316</div>
+                <div class="info-item"><strong>Address:</strong> ໂພນຕ້ອງສະຫວາດ, ນະຄອນຫຼວງວຽງຈັນ</div>
+                <div class="bio-text">ບໍ່ມັກຄວາມວຸ້ຍວາຍ,ມັກຢ້າາາາາ ມັກກິນຊາຂຽວຄືກັນແຕ່ຫວານ 100%...ສອບຖາມຂໍ້ມູນເພີ່ມເຕີມ.... ຢາກຮູ້ດ້ານໃດເອົາດ້ານນັ້ນມາແລກ 😉</div>
+            </div>
+        </div>
+
+        <!-- ກຸ່ມປຸ່ມດ້ານລຸ່ມສຸດ: ເພີ່ມປຸ່ມກັບຄືນ ແລະ ປຸ່ມອອກຈາກລະບົບ -->
+        <div class="profile-btn-group">
+            <button class="profile-btn btn-return-book" onclick="returnToBook()"><i class="fas fa-undo"></i> ↩️ ກັບຄືນໜ້າປຶ້ມ</button>
+            <a href="index.html" class="profile-btn btn-logout-final"><i class="fas fa-sign-out-alt"></i> ອອກຈາກລະບົບ</a>
+        </div>
+    </div>
+
+
+    <!-- ----------------------------------------------------- -->
+    <!-- ລະບົບປ໊ອບອັບຄວາມລັບ -->
+    <!-- ----------------------------------------------------- -->
+    <div class="popup-overlay" id="lovePopup">
+        <div class="popup-content">
+            <div class="popup-icon">🥰💝</div>
+            <div class="popup-title">ຢ້າໜ້າຮັກກກກກ!</div>
+            <div class="popup-text">
+                ຄວາມລັບກໍຄື... ບໍ່ມີຄວາມລັບຫຍັງດອກ ມີແຕ່ຄວາມຄິດຮອດລ້ວນໆເລີຍຍຍ .........ເພາະວ່າທຸກຄົນຕ້ອງມີຄວາມຝັນ ເພາະວ່າຖ້າມີຄວາມຝັນແລ້ວກາຕ້ອງມີຄວາມຫວັງ ແລະ ນົນກໍຫວັງວ່າ <strong>ຢ້າ</strong>ຊິມີຄວາມສຸກກັບເສັ້ນທາງທີ່ໂຕເອງເລືອກບໍ່ວ່າຈະເລືອກແບບໃດກໍຕາມຖ້າເລືອກຜິດກາແຄ່ເລືອກໃໝ່ບໍ່ມີຫຍັງສາຍເກີນໄປ ! <br><br>
+                ຕັ້ງໃຈພັກຜ່ອນ, ຝັນດີ ແລະ ສູ້ໆໃນທຸກໆມື້. ນົນຢູ່ຂ້າງໆສະເໝີມີຫຍັງບໍ່ສະບາຍใจກາເວົ້ານຳໄດ້! 💖✨
+            </div>
+            <button class="btn-show-profile" onclick="switchToProfile()"><i class="fas fa-user-circle"></i> ກົດເບິ່ງຂໍ້ມູນສ່ວນຕົວ 🍵</button>
+        </div>
+    </div>
+
+    <script>
+        // ຟັງຊັນປ່ຽນໜ້າປຶ້ມ
+        function changePage(pageNum, effectType) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+            
+            document.getElementById('page' + pageNum).classList.add('active');
+            document.getElementById('dot' + pageNum).classList.add('active');
+
+            if(effectType) { createEffects(effectType); }
+        }
+
+        // ຟັງຊັນເປີດ ປ໊ອບອັບ
+        function showBeautifulPopup() {
+            createEffects('all'); 
+            document.getElementById('lovePopup').classList.add('show');
+        }
+
+        // ຟັງຊັນປ່ຽນໂໝດ: ໄປໜ້າ Profile ຂໍ້ມູນສ່ວນຕົວ
+        function switchToProfile() {
+            document.getElementById('lovePopup').classList.remove('show');
+            document.getElementById('bookBox').style.display = 'none';
+            document.getElementById('pageDots').style.display = 'none';
+            document.getElementById('profileBox').style.display = 'block';
+            createEffects('all');
+        }
+
+        // ຟັງຊັນໃໝ່: ກັບຄືນມາໜ້າປຶ້ມ Memory Book ໂດຍບໍ່ຕ້ອງລັອກອິນໃໝ່
+        function returnToBook() {
+            document.getElementById('profileBox').style.display = 'none';
+            document.getElementById('bookBox').style.display = 'block';
+            document.getElementById('pageDots').style.display = 'flex';
+            changePage(4, 'heart'); // ໃຫ້ກັບມາສະແດງຜົນຢູ່ໜ້າທີ 4 ຄືເກົ່າ
+        }
+
+        // ຟັງຊັນສ້າງເອັບເຟັກຝົນຕົກ
+        function createEffects(type) {
+            let items = ['❤️', '💖', '✨'];
+            if (type === 'heart') { items = ['❤️', '💖', '💝', '💕', '🥰']; }
+            else if (type === 'star') { items = ['✨', '⭐', '🌟', '🌸']; }
+            else if (type === 'all') { items = ['❤️', '💖', '💝', '💕', '🥰', '✨', '⭐', '🌸', '❄️']; }
+
+            for (let i = 0; i < 40; i++) {
+                setTimeout(() => {
+                    const drop = document.createElement('div');
+                    drop.classList.add('effect-item');
+                    drop.innerText = items[Math.floor(Math.random() * items.length)];
+                    drop.style.left = Math.random() * 100 + 'vw';
+                    drop.style.animationDuration = Math.random() * 2 + 1.5 + 's'; 
+                    drop.style.fontSize = Math.random() * 25 + 18 + 'px'; 
+                    document.body.appendChild(drop);
+                    setTimeout(() => { drop.remove(); }, 3000);
+                }, i * 50); 
+            }
+        }
+    </script>
+</body>
+</html>
