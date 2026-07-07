@@ -17,9 +17,9 @@ function checkLogin() {
         return;
     }
 
-    // ກວດສອບເງື່ອນໄຂ (Username: palina | Password: ວັນເກີດຢ້າ 1391999)
-    // ໃຊ້ .toLowerCase() ເພື່ອໃຫ້ພິມ Palina ຕົວໃຫຍ່ຫຼືຕົວນ້ອຍກໍເຂົ້າໄດ້ຄືກັນ
-    if (userIn.toLowerCase() === "palina" && passIn === "1391999") {
+    // ກວດສອບເງື່ອນໄຂ (Username: palina | Password: ວັນເກີດນົນ 27112004)
+    
+    if (userIn.toLowerCase() === "palina" && passIn === "27112004") {
         loginSuccess = true;
         showModal(
             "success", 
