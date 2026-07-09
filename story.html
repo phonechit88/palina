@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram - palina & non</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Noto Sans Lao', sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* IG Navbar ດ້ານເທິງ */
+        .ig-header {
+            width: 100%;
+            max-width: 500px;
+            background: white;
+            border-bottom: 1px solid #dbdbdb;
+            padding: 10px 15px;
+            box-sizing: border-box;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ig-logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #262626;
+            font-style: italic;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ig-logo i {
+            color: #ff4b6e;
+        }
+
+        /* Container ຂອງ Feed */
+        .instagram-feed {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-bottom: 40px;
+            background-color: #fff;
+        }
+
+        /* IG Post Card */
+        .ig-post {
+            background: white;
+            border-bottom: 1px solid #dbdbdb;
+            width: 100%;
+        }
+
+        /* ຂໍ້ມູນຜູ້ໂພສ (Profile Header) */
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            justify-content: space-between;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .user-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid white;
+        }
+
+        .username {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #262626;
+        }
+
+        /* ຮູບພາບໂພສ */
+        .post-img-box {
+            width: 100%;
+            aspect-ratio: 1 / 1; 
+            overflow: hidden;
+            background-color: #efefef;
+            position: relative;
+        }
+
+        .post-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ປຸ່ມກົດ Interaction */
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px 5px 15px;
+        }
+
+        .action-left {
+            display: flex;
+            gap: 15px;
+            font-size: 1.4rem;
+        }
+
+        .action-btn {
+            cursor: pointer;
+            transition: transform 0.1s ease;
+            color: #262626;
+        }
+
+        .action-btn:active {
+            transform: scale(1.2);
+        }
+
+        .fa-heart.active {
+            color: #ed4956;
+            animation: heartBeat 0.3s ease;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* ຍອດໄລ້ ແລະ ເນື້ອຫາຄຳອະທິບາຍ */
+        .post-content {
+            padding: 0 15px 15px 15px;
+        }
+
+        .likes-count {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #262626;
+        }
+
+        .post-caption {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: #262626;
+            word-wrap: break-word;
+        }
+
+        .caption-username {
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .post-time {
+            font-size: 0.75rem;
+            color: #8e8e8e;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+
+        /* ປຸ່ມກັບຄືນ */
+        .back-nav {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            background: #fafafa;
+        }
+
+        .btn-back {
+            background: #262626;
+            color: white;
+            border: none;
+            padding: 10px 24px;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Pop-up ແຈ້ງເຕືອນ */
+        .share-alert {
+            position: fixed;
+            bottom: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(38, 38, 38, 0.95);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            z-index: 2000;
+            transition: bottom 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .share-alert.show {
+            bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- IG Header -->
+    <div class="ig-header">
+        <div class="ig-logo"><i class="fab fa-instagram"></i> palina_non.story</div>
+        <div style="font-size: 1.2rem; color: #262626;"><i class="far fa-paper-plane"></i></div>
+    </div>
+
+    <!-- Instagram Feed Container -->
+    <div class="instagram-feed">
+        
+        <!-- ໂພສທີ 1 (palina1.png) -->
+        <div class="ig-post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="user-avatar"><img src="img/palina1.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="username">palina_non</div>
+                </div>
+                <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
+            </div>
+            <div class="post-img-box">
+                <img src="img/palina1.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500'" alt="Story 1">
+            </div>
+            <div class="post-actions">
+                <div class="action-left">
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-1')"></i>
+                    <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຈຸດເລີ່ມຕົ້ນຂອງຄວາມດື້ 🐷')"></i>
+                </div>
+                <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
+            </div>
+            <div class="post-content">
+                <div class="likes-count" id="like-count-1">99,520 ຖືກໃຈ</div>
+                <div class="post-caption">
+                    <span class="caption-username">palina_non</span>ຈຸດເລີ່ມຕົ້ນ🐷...ຕັ້ງແຕ່ມື້ທຳອິດທີ່ໄດ້ຮູ້ຈັກກັນໃຜຊິຄິດວ່າຄົນແປກໜ້າຄົນໜຶ່ງທີ່ຊວນໄປວັດຄົນນັ້ນ ຊິເຂົ້າມາມີອິດທິພົນຕໍ່ໃຈໄດ້ປານນີ້.
+                </div>
+                <div class="post-time">ສະຕໍລີ້</div>
+            </div>
+        </div>
+
+        <!-- ໂພສທີ 2 (palina2.jpeg) -->
+        <div class="ig-post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="user-avatar"><img src="img/palina2.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="username">palina_non</div>
+                </div>
+                <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
+            </div>
+            <div class="post-img-box">
+                <img src="img/palina2.jpeg" onerror="this.src='https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=500'" alt="Story 2">
+            </div>
+            <div class="post-actions">
+                <div class="action-left">
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-2')"></i>
+                    <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຢ້າສາຍບ້າວຽກ ບວກນົນສາຍອ້ອນ 🍵')"></i>
+                </div>
+                <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
+            </div>
+            <div class="post-content">
+                <div class="likes-count" id="like-count-2">12,430 ຖືກໃຈ</div>
+                <div class="post-caption">
+                    <span class="caption-username">palina_non</span>ຢູ່ຂ້າງໆແບບນີ້ລະ. ມີຫຍັງບໍ່ສະບາຍໃຈໃຫ້ຟ້າວມາຟ້ອງນົນໂລດ!
+                </div>
+                <div class="post-time">ສະຕໍລີ້</div>
+            </div>
+        </div>
+
+        <!-- ໂພສທີ 3 (palina3.png) -->
+        <div class="ig-post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="user-avatar"><img src="img/palina3.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="username">palina_non</div>
+                </div>
+                <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
+            </div>
+            <div class="post-img-box">
+                <img src="img/palina3.png" onerror="this.src='https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500'" alt="Story 3">
+            </div>
+            <div class="post-actions">
+                <div class="action-left">
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-3')"></i>
+                    <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ແກ້ມປ່ຽງໆ ແບບນີ້ໃຜຊິອົດໃຈໄຫວ 😗')"></i>
+                </div>
+                <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
+            </div>
+            <div class="post-content">
+                <div class="likes-count" id="like-count-3">88,912 ຖືກໃຈ</div>
+                <div class="post-caption">
+                    <span class="caption-username">palina_non</span>ແກ້ມປ່ຽງໆ ແບບນີ້ໃຜຊิອົດໃຈໄຫວ 😗 ເວລາຢ້າຍິ້ມມັນໂຄດໜ້າຮັກເລີຍ! ແກ້ມພອງໆຄືຊາລາເປົາ.
+                </div>
+                <div class="post-time">ສະຕໍລີ້</div>
+            </div>
+        </div>
+
+        <!-- ໂພສທີ 4 (palina4.png) -->
+        <div class="ig-post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="user-avatar"><img src="img/palina4.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="username">palina_non</div>
+                </div>
+                <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
+            </div>
+            <div class="post-img-box">
+                <img src="img/palina4.png" onerror="this.src='https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500'" alt="Story 4">
+            </div>
+            <div class="post-actions">
+                <div class="action-left">
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-4')"></i>
+                    <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ເມນູໂປດ ແລະ ຄວາມສຸກຄູນສອງ 🍕')"></i>
+                </div>
+                <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
+            </div>
+            <div class="post-content">
+                <div class="likes-count" id="like-count-4">111,999 ຖືກໃຈ</div>
+                <div class="post-caption">
+                    <span class="caption-username">palina_non</span>🍕 "ມື້ນີ້ກິນຫຍັງດີ?"
+                </div>
+                <div class="post-time">ສະຕໍລີ້</div>
+            </div>
+        </div>
+
+        <!-- ໂພສທີ 5 (palina5.jpg) -->
+        <div class="ig-post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="user-avatar"><img src="img/palina5.jpg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="username">palina_non</div>
+                </div>
+                <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
+            </div>
+            <div class="post-img-box">
+                <img src="img/palina5.jpg" onerror="this.src='https://images.unsplash.com/photo-1511295742364-92b9345f6854?w=500'" alt="Story 5">
+            </div>
+            <div class="post-actions">
+                <div class="action-left">
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-5')"></i>
+                    <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຝັນດີເດີ້... ເຈົ້າຄວາມຮັກ 🌙')"></i>
+                </div>
+                <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
+            </div>
+            <div class="post-content">
+                <div class="likes-count" id="like-count-5">15,900 ຖືກໃຈ</div>
+                <div class="post-caption">
+                    <span class="caption-username">palina_non</span>ຝັນດີເດີ້
+                <div class="post-time">ສະຕໍລີ້</div>
+            </div>
+        </div>
+
+        <!-- ໂພສທີ 6 (palina6.jpeg) -->
+        <div class="ig-post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="user-avatar"><img src="img/palina6.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="username">palina_non</div>
+                </div>
+                <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
+            </div>
+            <div class="post-img-box">
+                <img src="img/palina6.jpeg" onerror="this.src='https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=500'" alt="Story 6">
+            </div>
+            <div class="post-actions">
+                <div class="action-left">
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-6')"></i>
+                    <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຄົນໜ້າຮັກມັກເຮັດໂຕແປກ 🤪')"></i>
+                </div>
+                <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
+            </div>
+            <div class="post-content">
+                <div class="likes-count" id="like-count-6">13,999 ຖືກໃຈ</div>
+                <div class="post-caption">
+                    <span class="caption-username">palina_non</span>ຄົນໜ້າຮັກມัກເຮັດໂຕແປກ 🤪ເປັນຄວາມສົດໃສແບບນີ້ໃຫ້ນົນໄປດົນໆເດີ້.
+                </div>
+                <div class="post-time">ສະຕໍລີ້</div>
+            </div>
+        </div>
+
+        <!-- ໂພສທີ 7 (palina8.jpg) -->
+        <div class="ig-post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="user-avatar"><img src="img/palina8.jpg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="username">palina_non</div>
+                </div>
+                <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
+            </div>
+            <div class="post-img-box">
+                <img src="img/palina8.jpg" onerror="this.src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500'" alt="Story 7">
+            </div>
+            <div class="post-actions">
+                <div class="action-left">
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-7')"></i>
+                    <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຮອຍຍິ້ມທະລຸຈໍ ⚡')"></i>
+                </div>
+                <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
+            </div>
+            <div class="post-content">
+                <div class="likes-count" id="like-count-7">27,112,003 ຖືກໃຈ</div>
+                <div class="post-caption">
+                    <span class="caption-username">palina_non</span>ຮອຍຍິ້ມທະລຸຈໍ ⚡ ເຫັນແຈ້ງເຕືອນເປັນຊື່ຂອງຢ້າພະລັງງານລົບກໍຫາຍວັບໄປທັນທີ.
+                </div>
+                <div class="post-time">ສະຕໍລີ້</div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ປຸ່ມກົດກັບຄືນໜ້າຫຼັກ -->
+    <div class="back-nav">
+        <a href="javascript:history.back()" class="btn-back"><i class="fas fa-arrow-left"></i> ກັບຄືນໜ້າໂປຣໄຟລ໌</a>
+    </div>
+
+    <!-- Pop-up ແຈ້ງເຕືອນ -->
+    <div id="shareAlert" class="share-alert">
+        <i class="fas fa-check-circle" style="color: #4bb543;"></i> <span id="alertText">ແຊຣ໌ເລື່ອງລາວນີ້ແລ້ວ!</span>
+    </div>
+
+    <script>
+        function toggleLike(element, countId) {
+            const countElement = document.getElementById(countId);
+            let currentLikes = parseInt(countElement.innerText.replace(/,/g, ''));
+
+            if (element.classList.contains('far')) {
+                element.classList.remove('far', 'fa-heart');
+                element.classList.add('fas', 'fa-heart', 'active');
+                currentLikes++;
+            } else {
+                element.classList.remove('fas', 'fa-heart', 'active');
+                element.classList.add('far', 'fa-heart');
+                currentLikes--;
+            }
+            countElement.innerText = currentLikes.toLocaleString() + " ຖືກໃຈ";
+        }
+
+        function sharePost(title) {
+            triggerAlert(`ແຊຣ໌ໂພສ "${title}" ໄປທີ່ຫົວໃຈຂອງຢ້າແລ້ວ! 💞`);
+        }
+
+        function triggerAlert(text) {
+            const alertBox = document.getElementById('shareAlert');
+            document.getElementById('alertText').innerText = text;
+            alertBox.classList.add('show');
+            
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
