@@ -414,7 +414,7 @@
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body>
+.<body>
 
     <!-- ແຖບຂໍ້ຄວາມແລ່ນ -->
     <div class="marquee-container" id="marqueeBar">
@@ -524,7 +524,7 @@
             
             </div>
         </div>
-
+        
         <!-- ກຸ່ມປຸ່ມດ້ານລຸ່ມສຸດ: ເພີ່ມປຸ່ມກັບຄືນ ແລະ ປຸ່ມອອກຈາກລະບົບ -->
         <div class="profile-btn-group">
             <button class="profile-btn btn-return-book" onclick="returnToBook()"><i class="fas fa-undo"></i> ↩️ ກັບຄືນໄປເບິ່ງຄວາມໜ້າຮັກຂອງຢ້າ</button>
@@ -548,7 +548,13 @@
             <button class="btn-show-profile" onclick="switchToProfile()"><i class="fas fa-user-circle"></i> ກົດເບິ່ງຂໍ້ມູນສ່ວນຕົວ 🍵</button>
         </div>
     </div>
-
+    <!-- ກຸ່ມປຸ່ມດ້ານລຸ່ມສຸດ: ເພີ່ມປຸ່ມກັບຄືນ, ປຸ່ມສະຕໍລີ້ ແລະ ປຸ່ມອອກຈາກລະບົບ -->
+<div class="profile-btn-group">
+    <button class="profile-btn btn-return-book" onclick="returnToBook()"><i class="fas fa-undo"></i> ↩️ ກັບຄືນໄປເບິ່ງຄວາມໜ້າຮັກຂອງຢ້າ</button>
+    <!-- ປຸ່ມເບິ່ງສະຕໍລີ້ທີ່ເພີ່ມເຂົ້າໃໝ່ -->
+    <a href="story.html" class="profile-btn" style="background: linear-gradient(135deg, #ff758f, #ff8fa3); color: white; box-shadow: 0 5px 15px rgba(255, 117, 143, 0.4);"><i class="fas fa-book-open"></i> 📖 ເປີດບັນທຶກສະຕໍລີ້ຂອງເຮົາ</a>
+    <a href="index.html" class="profile-btn btn-logout-final"><i class="fas fa-sign-out-alt"></i> ບັອບອອກຈາກລະບົບ</a>
+</div>
     <script>
         // ຟັງຊັນປ່ຽນໜ້າປຶ້ມ
         function changePage(pageNum, effectType) {
