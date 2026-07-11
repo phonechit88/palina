@@ -4,8 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Instagram - palina & non</title>
-    <!-- Font Awesome ສໍາລັບ Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- ເພີ່ມ Google Fonts ເພື່ອໃຫ້ພາສາລາວສະແດງຜົນໄດ້ສວຍງາມໃນທຸກອຸປະກອນ -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
     <style>
         body {
             font-family: 'Noto Sans Lao', sans-serif;
@@ -137,6 +141,9 @@
             cursor: pointer;
             transition: transform 0.1s ease;
             color: #262626;
+            -webkit-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         .action-btn:active {
@@ -245,151 +252,151 @@
         <div style="font-size: 1.2rem; color: #262626;"><i class="far fa-paper-plane"></i></div>
     </div>
 
-    <!-- Instagram Feed Container -->
+    <!-- Instagram Feed Container (ລຽງຈາກ palina12 ລົງໄປຫາ palina1 ຢູ່ລຸ່ມສຸດ) -->
     <div class="instagram-feed">
         
-        <!-- ໂພສທີ 1 (palina1.png) -->
+        <!-- ໂພສທີ 1 (palina12.jpeg) -->
         <div class="ig-post">
             <div class="post-header">
                 <div class="user-info">
-                    <div class="user-avatar"><img src="img/palina1.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="user-avatar"><img src="img/palina12.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
                     <div class="username">palina_non</div>
                 </div>
                 <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
             </div>
             <div class="post-img-box">
-                <img src="img/palina1.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500'" alt="Story 1">
+                <img src="img/palina12.jpeg" onerror="this.src='https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=500'" alt="Story 12">
             </div>
             <div class="post-actions">
                 <div class="action-left">
-                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-1')"></i>
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-12')"></i>
                     <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
-                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຈຸດເລີ່ມຕົ້ນຂອງຄວາມດື້ 🐷')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ໂມເມັ້ນໃໝ່ສຸດຊິ້ງ ✨')"></i>
                 </div>
                 <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
             </div>
             <div class="post-content">
-                <div class="likes-count" id="like-count-1">7,062,026 ຖືກໃຈ</div>
+                <div class="likes-count" id="like-count-12">8,520 ຖືກໃຈ</div>
                 <div class="post-caption">
-                    <span class="caption-username">palina_non</span>ຈຸດເລີ່ມຕົ້ນ🐷...ຕັ້ງແຕ່ມື້ທຳອິດທີ່ໄດ້ຮູ້ຈັກກັນໃຜຊິຄິດວ່າຄົນແປກໜ້າຄົນໜຶ່ງທີ່ຊວນໄປວັດຄົນນັ້ນ ຊິເຂົ້າມາມີອິດທિພົນຕໍ່ໃຈໄດ້ປານນີ້.
+                    <span class="caption-username">palina_non</span>ຄວາມຊົງຈຳໃໝ່ໆທີ່ເຮົາສ້າງຮ່ວມກັນ ໂຄດມີຄວາມສຸກເລີຍ 📸💞
                 </div>
-                <div class="post-time">ສະຕໍລີ້ຈຸດເລີ່ມຕົ້ນຄວາມສຳພັນທີ່ໂຄດໜ້າຮັກ</div>
+                <div class="post-time">ສະຕໍລີ້ຫຼ້າສຸດ</div>
             </div>
         </div>
 
-        <!-- ໂພສທີ 2 (palina2.jpeg) -->
+        <!-- ໂພສທີ 2 (palina11.jpeg) -->
         <div class="ig-post">
             <div class="post-header">
                 <div class="user-info">
-                    <div class="user-avatar"><img src="img/palina2.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="user-avatar"><img src="img/palina11.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
                     <div class="username">palina_non</div>
                 </div>
                 <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
             </div>
             <div class="post-img-box">
-                <img src="img/palina2.jpeg" onerror="this.src='https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=500'" alt="Story 2">
+                <img src="img/palina11.jpeg" onerror="this.src='https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=500'" alt="Story 11">
             </div>
             <div class="post-actions">
                 <div class="action-left">
-                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-2')"></i>
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-11')"></i>
                     <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
-                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຢ້າສາຍບ້າວຽກ ບວກນົນສາຍອ້ອນ 🍵')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຮັກຕະຫຼອດໄປ ♾️')"></i>
                 </div>
                 <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
             </div>
             <div class="post-content">
-                <div class="likes-count" id="like-count-2">12,430 ຖືກໃຈ</div>
+                <div class="likes-count" id="like-count-11">999,999 ຖືກໃຈ</div>
                 <div class="post-caption">
-                    <span class="caption-username">palina_non</span>ຢູ່ຂ້າງໆແບບນີ້ລະ. ມີຫຍັງບໍ່ສະບາຍໃຈໃຫ້ຟ້າວມາຟ້ອງນົນໂລດ!
+                    <span class="caption-username">palina_non</span>ຂໍໃຫ້ເຮົາເປັນຮອຍຍິ້ມ ແລະ Caps ຄວາມສົດໃສໃຫ້ກັນແບບນີ້ຕະຫຼອດໄປເດີ້ 🥰♾️
                 </div>
-                <div class="post-time">ສະຕໍລີ້</div>
+                <div class="post-time">ສະຕໍລີ້ຕະຫຼອດໄປ</div>
             </div>
         </div>
 
-        <!-- ໂພສທີ 3 (palina3.png) -->
+        <!-- ໂພສທີ 3 (palina10.jpeg) -->
         <div class="ig-post">
             <div class="post-header">
                 <div class="user-info">
-                    <div class="user-avatar"><img src="img/palina3.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="user-avatar"><img src="img/palina10.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
                     <div class="username">palina_non</div>
                 </div>
                 <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
             </div>
             <div class="post-img-box">
-                <img src="img/palina3.png" onerror="this.src='https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500'" alt="Story 3">
+                <img src="img/palina10.jpeg" onerror="this.src='https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=500'" alt="Story 10">
             </div>
             <div class="post-actions">
                 <div class="action-left">
-                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-3')"></i>
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-10')"></i>
                     <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
-                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ແກ້ມປ່ຽງໆ ແບບນີ້ໃຜຊິອົດໃຈໄຫວ 😗')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຮູບຄູ່ສຸດພິເສດ 🤍')"></i>
                 </div>
                 <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
             </div>
             <div class="post-content">
-                <div class="likes-count" id="like-count-3">88,912 ຖືກໃຈ</div>
+                <div class="likes-count" id="like-count-10">102,540 ຖືກໃຈ</div>
                 <div class="post-caption">
-                    <span class="caption-username">palina_non</span>🍕 "ມື້ນີ້ກິນຫຍັງດີ?".
+                    <span class="caption-username">palina_non</span>ทุกช่วงเวลาที่มีเจ้า มันคือช่วงเวลาที่ดีที่สุดเลยขอบใจนะ 🤍
                 </div>
-                <div class="post-time">ສະຕໍລີ້</div>
+                <div class="post-time">ສະຕໍລີ້ວັນພິເສດ</div>
             </div>
         </div>
 
-        <!-- ໂພສທີ 4 (palina4.png) -->
+        <!-- ໂພສທີ 4 (palina8.jpg) -->
         <div class="ig-post">
             <div class="post-header">
                 <div class="user-info">
-                    <div class="user-avatar"><img src="img/palina4.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="user-avatar"><img src="img/palina8.jpg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
                     <div class="username">palina_non</div>
                 </div>
                 <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
             </div>
             <div class="post-img-box">
-                <img src="img/palina4.png" onerror="this.src='https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500'" alt="Story 4">
+                <img src="img/palina8.jpg" onerror="this.src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500'" alt="Story 8">
             </div>
             <div class="post-actions">
                 <div class="action-left">
-                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-4')"></i>
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-8')"></i>
                     <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
-                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ເມນູໂປດ ແລະ ຄວາມສຸກຄູນສອງ 🍕')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຮອຍຍິ້ມທະລຸຈໍ ⚡')"></i>
                 </div>
                 <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
             </div>
             <div class="post-content">
-                <div class="likes-count" id="like-count-4">1,391,998 ຖືກໃຈ</div>
+                <div class="likes-count" id="like-count-8">27,112,003 ຖືກໃຈ</div>
                 <div class="post-caption">
-                    <span class="caption-username">palina_non</span>ແກ້ມນຸ້ມໆແບບນີ້ໃຜຊິອົດໃຈໄຫວ 😗 ເວລາຢ້າຍິ້ມມັນໂຄດໜ້າຮັກເລີຍ! ແກ້ມພອງໆຄືຊາລາເປົາ
+                    <span class="caption-username">palina_non</span>ຮອຍຍິ້ມທະລຸຈໍ ⚡ ເຫັນແຈ້ງເຕືອນເປັນຊື່ຂອງຢ້າພະລັງງານລົບກໍຫາຍວັບໄປທັນທີ.
                 </div>
-                <div class="post-time">#ຕາຮັກທີ່ສຸດໃນໂລກເລີຍຍຍຍຍຍ</div>
+                <div class="post-time">ຖ້າຖາມວ່າความหน้ารักของย้าหลายปานใดไห้เบิ่งบ่อนที่มือชี้ไปพุ้นນ</div>
             </div>
         </div>
 
-        <!-- ໂພສທີ 5 (palina5.jpg) -->
+        <!-- ໂພສທີ 5 (palina7.png) -->
         <div class="ig-post">
             <div class="post-header">
                 <div class="user-info">
-                    <div class="user-avatar"><img src="img/palina5.jpg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="user-avatar"><img src="img/palina7.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
                     <div class="username">palina_non</div>
                 </div>
                 <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
             </div>
             <div class="post-img-box">
-                <img src="img/palina5.jpg" onerror="this.src='https://images.unsplash.com/photo-1511295742364-92b9345f6854?w=500'" alt="Story 5">
+                <img src="img/palina7.png" onerror="this.src='https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=500'" alt="Story 7">
             </div>
             <div class="post-actions">
                 <div class="action-left">
-                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-5')"></i>
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-7')"></i>
                     <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
-                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຝັນດີເດີ້... ເຈົ້າຄວາມຮັກ 🌙')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ມຸມໃດກໍໜ້າຮັກ 💕')"></i>
                 </div>
                 <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
             </div>
             <div class="post-content">
-                <div class="likes-count" id="like-count-5">15,900 ຖືກใจ</div>
+                <div class="likes-count" id="like-count-7">94,200 ຖືກໃຈ</div>
                 <div class="post-caption">
-                    <span class="caption-username">palina_non</span>ຝັນດີເດີ້
+                    <span class="caption-username">palina_non</span>ຮູບນີ້ຖ່າຍຕອນໄປທ່ຽວນຳກັນ ບັນຍາກາດໂຄດດີ ແລະ ຄົນຂ້າງໆກໍໂຄດໜ້າຮັກເລີຍ 🏔️✨
                 </div>
-                <div class="post-time">ສະຕໍລີ້</div>
+                <div class="post-time">ສະຕໍລີ້ການເດີນທາງ</div>
             </div>
         </div>
 
@@ -422,32 +429,148 @@
             </div>
         </div>
 
-        <!-- ໂພສທີ 7 (palina8.jpg) -->
+        <!-- ໂພສທີ 7 (palina5.jpeg) -->
         <div class="ig-post">
             <div class="post-header">
                 <div class="user-info">
-                    <div class="user-avatar"><img src="img/palina8.jpg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="user-avatar"><img src="img/palina5.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
                     <div class="username">palina_non</div>
                 </div>
                 <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
             </div>
             <div class="post-img-box">
-                <img src="img/palina8.jpg" onerror="this.src='https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500'" alt="Story 7">
+                <img src="img/palina5.jpeg" onerror="this.src='https://images.unsplash.com/photo-1511295742364-92b9345f6854?w=500'" alt="Story 5">
             </div>
             <div class="post-actions">
                 <div class="action-left">
-                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-7')"></i>
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-5')"></i>
                     <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
-                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຮອຍຍິ້ມທະລຸຈໍ ⚡')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຝັນດີເດີ້... ເຈົ້າຄວາມຮັກ 🌙')"></i>
                 </div>
                 <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
             </div>
             <div class="post-content">
-                <div class="likes-count" id="like-count-7">27,112,003 ຖືກໃຈ</div>
+                <div class="likes-count" id="like-count-5">15,900 ຖືກໃຈ</div>
                 <div class="post-caption">
-                    <span class="caption-username">palina_non</span>ຮອຍຍິ້ມທະລຸຈໍ ⚡ ເຫັນແຈ້ງເຕືອນເປັນຊື່ຂອງຢ້າພະລັງງານລົບກໍຫາຍວັບໄປທັນທີ.
+                    <span class="caption-username">palina_non</span>ຝັນດີເດີ້
                 </div>
-                <div class="post-time">ຖ້າຖາມວ່າຄວາມໜ້າຮັກຂອງຢ້າຫຼາຍປານໃດໄຫ້ເບິ່ງບ່ອນທີ່ມືຊີ້ໄປພຸ້ນນ</div>
+                <div class="post-time">ສະຕໍລີ້</div>
+            </div>
+        </div>
+
+        <!-- ໂພສທີ 8 (palina4.png) -->
+        <div class="ig-post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="user-avatar"><img src="img/palina4.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="username">palina_non</div>
+                </div>
+                <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
+            </div>
+            <div class="post-img-box">
+                <img src="img/palina4.png" onerror="this.src='https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=500'" alt="Story 4">
+            </div>
+            <div class="post-actions">
+                <div class="action-left">
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-4')"></i>
+                    <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ເມນູໂປດ ແລະ ຄວາມສຸກຄູນສອງ 🍕')"></i>
+                </div>
+                <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
+            </div>
+            <div class="post-content">
+                <div class="likes-count" id="like-count-4">1,391,998 ຖືກໃຈ</div>
+                <div class="post-caption">
+                    <span class="caption-username">palina_non</span>ແກ້ມນຸ້ມໆແບບນີ້ໃຜຊິອົດໃຈໄຫວ 😗 ເວລາຢ້າຍິ້ມມັນໂຄດໜ້າຮັກເລີຍ! ແກ້ມພອງໆຄືຊາລາເປົາ
+                </div>
+                <div class="post-time">#ຕາຮັກທີ່ສຸດໃນໂລກເລີຍຍຍຍຍຍ</div>
+            </div>
+        </div>
+
+        <!-- ໂພສທີ 9 (palina3.png) -->
+        <div class="ig-post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="user-avatar"><img src="img/palina3.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="username">palina_non</div>
+                </div>
+                <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
+            </div>
+            <div class="post-img-box">
+                <img src="img/palina3.png" onerror="this.src='https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500'" alt="Story 3">
+            </div>
+            <div class="post-actions">
+                <div class="action-left">
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-3')"></i>
+                    <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ແກ້ມປ່ຽງໆ ແບບນີ້ໃຜຊິອົດใจໄຫວ 😗')"></i>
+                </div>
+                <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
+            </div>
+            <div class="post-content">
+                <div class="likes-count" id="like-count-3">88,912 ຖືກໃຈ</div>
+                <div class="post-caption">
+                    <span class="caption-username">palina_non</span>🍕 "ມື້ນີ້ກິນຫຍັງດີ?".
+                </div>
+                <div class="post-time">ສະຕໍລີ້</div>
+            </div>
+        </div>
+
+        <!-- ໂພສທີ 10 (palina2.jpeg) -->
+        <div class="ig-post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="user-avatar"><img src="img/palina2.jpeg" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="username">palina_non</div>
+                </div>
+                <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
+            </div>
+            <div class="post-img-box">
+                <img src="img/palina2.jpeg" onerror="this.src='https://images.unsplash.com/photo-1445116572660-236099ec97a0?w=500'" alt="Story 2">
+            </div>
+            <div class="post-actions">
+                <div class="action-left">
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-2')"></i>
+                    <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຢ້າສາຍບ້າວຽກ ບວກນົນສາຍອ້ອນ 🍵')"></i>
+                </div>
+                <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
+            </div>
+            <div class="post-content">
+                <div class="likes-count" id="like-count-2">12,430 ຖືກໃຈ</div>
+                <div class="post-caption">
+                    <span class="caption-username">palina_non</span>ຢູ່ຂ້າງໆແບບນີ້ລະ. ມີຫຍັງບໍ່ສະບາຍໃຈໃຫ້ຟ້າວມາຟ້ອງນົນໂລດ!
+                </div>
+                <div class="post-time">ສະຕໍລີ້</div>
+            </div>
+        </div>
+
+        <!-- ໂພສທີ 11 (palina1.png) -->
+        <div class="ig-post">
+            <div class="post-header">
+                <div class="user-info">
+                    <div class="user-avatar"><img src="img/palina1.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100'" alt="avatar"></div>
+                    <div class="username">palina_non</div>
+                </div>
+                <div class="post-more"><i class="fas fa-ellipsis-h" style="color: #8e8e8e;"></i></div>
+            </div>
+            <div class="post-img-box">
+                <img src="img/palina1.png" onerror="this.src='https://images.unsplash.com/photo-1517841905240-472988babdf9?w=500'" alt="Story 1">
+            </div>
+            <div class="post-actions">
+                <div class="action-left">
+                    <i class="far fa-heart action-btn btn-like" onclick="toggleLike(this, 'like-count-1')"></i>
+                    <i class="far fa-comment action-btn" onclick="triggerAlert('ຢາກຄອມເມັ້ນຫວາ? ໄປບອກໃນແຊັດພຸ້ນເລີຍ 😜')"></i>
+                    <i class="far fa-paper-plane action-btn" onclick="sharePost('ຈຸດເລີ່ມຕົ້ນຂອງຄວາມດື້ 🐷')"></i>
+                </div>
+                <div class="action-right"><i class="far fa-bookmark action-btn"></i></div>
+            </div>
+            <div class="post-content">
+                <div class="likes-count" id="like-count-1">7,062,026 ຖືກໃຈ</div>
+                <div class="post-caption">
+                    <span class="caption-username">palina_non</span>ຈຸດເລີ່ມຕົ້ນ🐷...ຕັ້ງແຕ່ມື້ທຳອິດທີ່ໄດ້ຮູ້ຈັກກັນໃຜຊິຄິດວ່າຄົນແປກໜ້າຄົນໜຶ່ງທີ່ຊວນໄປວັດຄົນນັ້ນ ຊິເຂົ້າມາມີອິດທિພົນຕໍ່ໃຈໄດ້ປານນີ້.
+                </div>
+                <div class="post-time">ສະຕໍລີ້ຈຸດເລີ່ມຕົ້ນຄວາມສຳພັນທີ່ໂຄດໜ້າຮັກ</div>
             </div>
         </div>
 
@@ -460,13 +583,14 @@
 
     <!-- Pop-up ແຈ້ງເຕືອນ -->
     <div id="shareAlert" class="share-alert">
-        <i class="fas fa-check-circle" style="color: #4bb543;"></i> <span id="alertText">ແຊຣ໌ເລື່ອງລາວນີ້ແລ້ວ!</span>
+        <i class="fas fa-check-circle" style="color: #4bb543;"></i> <span id="alertText">ແຊຣ໌ແລ້ວ!</span>
     </div>
 
     <script>
         function toggleLike(element, countId) {
             const countElement = document.getElementById(countId);
-            let currentLikes = parseInt(countElement.innerText.replace(/,/g, ''));
+            // ປ່ຽນມາໃຊ້ Regex [^0-9] ເພື່ອຄວາມປອດໄພ ດຶງສະເພາະຕົວເລກ
+            let currentLikes = parseInt(countElement.innerText.replace(/[^0-9]/g, ''));
 
             if (element.classList.contains('far')) {
                 element.classList.remove('far', 'fa-heart');
