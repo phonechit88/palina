@@ -7,6 +7,12 @@
     <!-- ນໍາເຂົ້າ Font Awesome ສໍາລັບ Icons ຕົບແຕ່ງ -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
             font-family: 'Noto Sans Lao', sans-serif;
             background: linear-gradient(135deg, #ffe5ec, #ffc2d1, #f0c6ff);
@@ -15,20 +21,19 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            margin: 0;
             overflow-x: hidden;
             position: relative;
             padding: 20px;
-            box-sizing: border-box;
         }
 
-        <!--  /* ແຖບໂຕໜັງສືແລ່ນ */-->
+        /* ແຖບໂຕໜັງສືແລ່ນ */
         .marquee-container {
             width: 100%;
             background-color: rgba(255, 75, 110, 0.15);
             padding: 10px 0;
             position: absolute;
             top: 0;
+            left: 0;
             overflow: hidden;
             white-space: nowrap;
             z-index: 10;
@@ -42,7 +47,6 @@
             animation: marquee 30s linear infinite;
         }
 
-     
         .book-container {
             width: 90%;
             max-width: 380px;
@@ -60,14 +64,11 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(255, 75, 110, 0.25);
             padding: 25px;
-            box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
             text-align: center;
-            
-          
             opacity: 0;
             transform: translateX(100px) scale(0.9);
             pointer-events: none;
@@ -132,7 +133,6 @@
             object-fit: contain; 
         }
 
-      
         .btn-group {
             width: 100%;
             display: flex;
@@ -163,6 +163,7 @@
             color: #ff4b6e;
             padding: 10px 18px;
         }
+
         .btn-back:hover {
             background-color: #ffa0b2;
         }
@@ -255,6 +256,7 @@
         .info-item strong {
             color: #ff4d6d;
         }
+
         .card-phonchit .info-item strong {
             color: #9d4edd;
         }
@@ -268,6 +270,7 @@
             color: #555;
             border-left: 4px solid #ff758f;
         }
+
         .card-phonchit .bio-text {
             background: #f3e5f5;
             border-left: 4px solid #c77dff;
@@ -296,12 +299,12 @@
             text-decoration: none;
         }
 
-    
         .btn-return-book {
             background-color: #ffccd5;
             color: #ff4b6e;
             box-shadow: 0 5px 15px rgba(255, 204, 213, 0.4);
         }
+
         .btn-return-book:hover {
             background-color: #ffb3c1;
             transform: translateY(-2px);
@@ -313,6 +316,7 @@
             color: white;
             box-shadow: 0 5px 15px rgba(255, 77, 109, 0.3);
         }
+
         .btn-logout-final:hover {
             transform: translateY(-2px);
             box-shadow: 0 7px 20px rgba(255, 77, 109, 0.5);
@@ -391,13 +395,20 @@
             transition: all 0.2s;
             margin-top: 10px;
         }
+
         .btn-show-profile:hover {
             transform: translateY(-2px);
             box-shadow: 0 7px 20px rgba(123, 44, 191, 0.5);
         }
 
-    
-        .effect-item { position: absolute; top: -20px; pointer-events: none; animation: fall linear forwards; z-index: 1; }
+        .effect-item { 
+            position: absolute; 
+            top: -20px; 
+            pointer-events: none; 
+            animation: fall linear forwards; 
+            z-index: 1; 
+        }
+
         @keyframes beat { to { transform: scale(1.15); } }
         @keyframes pulse { to { transform: scale(1.2) rotate(5deg); } }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
@@ -415,7 +426,6 @@
         </div>
     </div>
 
-  
     <div class="book-container" id="bookBox">
         
         <!-- ໜ້າທີ 1 -->
@@ -484,10 +494,7 @@
         <div class="dot" id="dot4"></div>
     </div>
 
-
-    <!-- ----------------------------------------------------- -->
- 
-    <!-- ----------------------------------------------------- -->
+    <!-- ໂປຣໄຟລ໌ -->
     <div class="profile-container" id="profileBox">
         <h2 style="color: #ff4d6d;"><i class="fas fa-id-card"></i> ກ່ອງຂໍ້ມູນສ່ວນຕົວ</h2>
         
@@ -538,7 +545,6 @@
     </div>
 
     <script>
-      
         function changePage(pageNum, effectType) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
@@ -549,13 +555,11 @@
             if(effectType) { createEffects(effectType); }
         }
 
-      
         function showBeautifulPopup() {
             createEffects('all'); 
             document.getElementById('lovePopup').classList.add('show');
         }
 
-       
         function switchToProfile() {
             document.getElementById('lovePopup').classList.remove('show');
             document.getElementById('bookBox').style.display = 'none';
@@ -564,7 +568,6 @@
             createEffects('all');
         }
 
-       
         function returnToBook() {
             document.getElementById('profileBox').style.display = 'none';
             document.getElementById('bookBox').style.display = 'block';
@@ -572,7 +575,6 @@
             changePage(4, 'heart'); 
         }
 
-       
         function createEffects(type) {
             let items = ['❤️', '💖', '✨'];
             if (type === 'heart') { items = ['❤️', '💖', '💝', '💕', '🥰']; }
