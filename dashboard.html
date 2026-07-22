@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html lang="lo">
-<head>   
+<head>    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>palina - Memory Book & Profile</title>
-    <!-- ນໍາເຂົ້າ Font Awesome ສໍາລັບ Icons ຕົບແຕ່ງ -->
+    
+    <!-- ນໍາເຂົ້າ Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ນໍາເຂົ້າ Google Fonts (Noto Sans Lao) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;600;700&display=swap" rel="stylesheet">
+
     <style>
         * {
             box-sizing: border-box;
@@ -198,7 +205,7 @@
             box-shadow: 0 20px 40px rgba(255, 154, 162, 0.25);
             border: 2px solid rgba(255, 255, 255, 0.5);
             text-align: center;
-            display: none; /* ຊ່ອນໄວ້ກ່ອນ */
+            display: none; 
             z-index: 6;
             margin-top: 40px;
             animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -276,7 +283,6 @@
             border-left: 4px solid #c77dff;
         }
 
-        /* ຈັດການກຸ່ມປຸ່ມໃນໜ້າ Profile */
         .profile-btn-group {
             display: flex;
             justify-content: center;
@@ -310,7 +316,6 @@
             transform: translateY(-2px);
         }
 
-        /* ປຸ່ມອອກຈາກລະບົບ */
         .btn-logout-final {
             background: linear-gradient(135deg, #ff758f, #ff4d6d);
             color: white;
@@ -402,18 +407,18 @@
         }
 
         .effect-item { 
-            position: absolute; 
+            position: fixed; 
             top: -20px; 
             pointer-events: none; 
             animation: fall linear forwards; 
-            z-index: 1; 
+            z-index: 1000; 
         }
 
         @keyframes beat { to { transform: scale(1.15); } }
         @keyframes pulse { to { transform: scale(1.2) rotate(5deg); } }
         @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-        @keyframes fall { to { transform: translateY(105vh) rotate(360deg); } }
+        @keyframes fall { to { transform: translateY(120vh) rotate(360deg); opacity: 0; } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
@@ -433,7 +438,7 @@
             <div class="heart-icon">❤️</div>
             <h1>ສະບາຍດີຄົນເກັ່ງ! ເຖິງວຽກຢູ່ຫ້ອງການຈະໜັກ ແລະ ເມື່ອຍປານໃດ... ແຕ່ກໍຢ່າລືມວ່າ ມີນົນຄອຍສົ່ງກຳລັງໃຈໃຫ້ຢູ່ທຸກໆວິນາທີເດີ້ 🐷💕</h1>
             <div class="image-box">
-                <img src="img/palina12.jpeg" onerror="this.src='img/palina12.jpeg'" alt="ຮູບທີ 1">
+                <img src="img/palina12.jpeg" onerror="this.src='https://via.placeholder.com/300x200?text=Palina+1'" alt="ຮູບທີ 1">
             </div>
             <p>ເມື່ອຍຫຼາຍກໍແຄ່ພັກສາຍຕາຈັກໜ້ອຍເດີ້... ເຖິງໂລກຈະວຸ່ນວາຍ ແຕ່ຢ້າມີນົນຄອຍຢູ່ຂ້າງໆສະເໝີ. ສູ້ໆເດີ້ຄົນງາມ! ✌️🥰✨</p>
             <div class="btn-group">
@@ -446,7 +451,7 @@
             <div class="heart-icon">✨</div>
             <h1>ຕັ້ງແຕ່ມີຢ້າເຂົ້າມາໃນຊີວິດ, ໂລກຂອງນົນກໍເບິ່ງສົດໃສ ແລະ ມີຮອຍຍິ້ມຫຼາຍຂຶ້ນທຸກໆມື້. ຂອບໃຈເດີ້ທີ່ຄອຍເປັນຄວາມສຸກໃຫ້ກັນ 💝</h1>
             <div class="image-box">
-                <img src="img/palina31.jpeg" onerror="this.src='img/palina31.jpeg'" alt="ຮູບທີ 2">
+                <img src="img/palina31.jpeg" onerror="this.src='https://via.placeholder.com/300x200?text=Palina+2'" alt="ຮູບທີ 2">
             </div>
             <p>ເຖິງບາງທີນົນຊິເບິ່ງຄືຊື້ບື້ ບໍ່ຄ່ອຍເວົ້າຫວານ, ແຕ່ທຸກຢ່າງທີ່ເຮັດໄປ ກໍເພາະຢາກໃຫ້ຢ້າມີຮອຍຍິ້ມ ແລະ ຄວາມສຸກໃນທຸກໆມື້ເດີ້.</p>
             <div class="btn-group">
@@ -460,7 +465,7 @@
             <div class="heart-icon">🌸✨🌸</div>
             <h1>ບໍ່ວ່າຈະເຈິເລື່ອງຍາກປານໃດໃຫ້ອົດທົນເດີ້! ຢ່າລືມວ່າຢ້າມີນົນເປັນອ້ອມກອດສ່ວນຕົວຢູ່ບ່ອນນີ້ສະເໝີ.</h1>
             <div class="image-box">
-                <img src="img/palina5.jpeg" onerror="this.src='img/palina5.jpeg'" alt="ຮູບທີ 3">
+                <img src="img/palina5.jpeg" onerror="this.src='https://via.placeholder.com/300x200?text=Palina+3'" alt="ຮູບທີ 3">
             </div>
             <p>ຂອບໃຈທີ່ເປັນເຫດຜົນ ທີ່ເຮັດໃຫ້ນົນຢາກຕື່ນມາຈັບໂທລະສັບແລ້ວຍິ້ມໄດ້ໃນທຸກໆເຊົ້າເດີ້. ຢ້າຕາຮັກທີ່ສຸດເລີຍ! 🌙💖</p>
             <div class="btn-group">
@@ -473,7 +478,7 @@
         <div class="page page-final" id="page4">
             <div class="heart-icon">💖</div>
             <div class="image-box">
-                <img src="img/palina23.jpeg" onerror="this.src='img/palina23.jpeg'" alt="ຮູບທີ 4">
+                <img src="img/palina23.jpeg" onerror="this.src='https://via.placeholder.com/300x200?text=Palina+4'" alt="ຮູບທີ 4">
             </div>
             <div class="text-accent">
                 💖💖 ເຫັນຢ້າເມື່ອຍວຽກ ນົນກໍຢາກຊ່ວຍເດີ້... ຊ່ວຍສົ່ງກຳລັງໃຈ ແລະ ຄິດຮອດ! ແຕ່ຖ້າໃຫ້ຊ່ວຍເຮັດວຽກແມ່ນ... ຂໍໂຕໄປນອນກ່ອນເດີ້ 55555 💖💖
@@ -501,7 +506,7 @@
         <div class="profile-flex">
             <!-- ໂປຣໄຟລ໌ປາລີນາ -->
             <div class="profile-card">
-                <img src="img/palina1.png" class="avatar-circle" alt="Palina">
+                <img src="img/palina1.png" class="avatar-circle" onerror="this.src='https://via.placeholder.com/100'" alt="Palina">
                 <h3>ຂໍ້ມູນສ່ວນຕົວ (Profile Card)</h3>
                 <div class="info-item"><strong>#Name & surname:</strong> palina-杨丽娜</div>
                 <div class="info-item"><strong>Date of birth:</strong> 13 September 1999</div>
@@ -512,7 +517,7 @@
 
             <!-- ໂປຣໄຟລ໌ພອນຈິດ -->
             <div class="profile-card card-phonchit">
-                <img src="img/palina7.png" class="avatar-circle" alt="Phonchit">
+                <img src="img/palina7.png" class="avatar-circle" onerror="this.src='https://via.placeholder.com/100'" alt="Phonchit">
                 <h3>ຂໍ້ມູນສ່ວນຕົວ (Profile Card)</h3>
                 <div class="info-item"><strong>#Name & surname:</strong> phonechit-印富洁</div>
                 <div class="info-item"><strong>Date of birth:</strong> 27 November 2004</div>
@@ -525,7 +530,7 @@
         <!-- ກຸ່ມປຸ່ມດ້ານລຸ່ມສຸດ -->
         <div class="profile-btn-group">
             <button class="profile-btn btn-return-book" onclick="returnToBook()"><i class="fas fa-undo"></i> ↩️ ກັບຄືນໄປເບິ່ງຄວາມໜ້າຮັກຂອງຢ້າ</button>
-            <a href="story.html" class="profile-btn" style="background: linear-gradient(135deg, #ff758f, #ff8fa3); color: white; box-shadow: 0 5px 15px rgba(255, 117, 143, 0.4);"><i class="fas fa-book-open"></i> 📖 ເປີດບັນທຶກສະຕໍລີ້ຂອງເຮົາ</a>
+            <a href="story.html" class="profile-btn" style="background: linear-gradient(135deg, #ff758f, #ff8fa3); color: white; box-shadow: 0 5px 15px rgba(255, 117, 143, 0.4);"><i class="fas fa-book-open"></i> 📖 Instagram.palina & non</a>
             <a href="index.html" class="profile-btn btn-logout-final"><i class="fas fa-sign-out-alt"></i> ອອກຈາກລະບົບ</a>
         </div>
     </div>
@@ -581,17 +586,17 @@
             else if (type === 'star') { items = ['✨', '⭐', '🌟', '🌸']; }
             else if (type === 'all') { items = ['❤️', '💖', '💝', '💕', '🥰', '✨', '⭐', '🌸', '❄️']; }
 
-            for (let i = 0; i < 40; i++) {
+            for (let i = 0; i < 35; i++) {
                 setTimeout(() => {
                     const drop = document.createElement('div');
                     drop.classList.add('effect-item');
                     drop.innerText = items[Math.floor(Math.random() * items.length)];
                     drop.style.left = Math.random() * 100 + 'vw';
                     drop.style.animationDuration = Math.random() * 2 + 1.5 + 's'; 
-                    drop.style.fontSize = Math.random() * 25 + 18 + 'px'; 
+                    drop.style.fontSize = Math.random() * 20 + 16 + 'px'; 
                     document.body.appendChild(drop);
                     setTimeout(() => { drop.remove(); }, 3000);
-                }, i * 50); 
+                }, i * 60); 
             }
         }
     </script>
