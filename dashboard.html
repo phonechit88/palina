@@ -22,7 +22,7 @@
             box-sizing: border-box;
         }
 
-        /* ແຖບໂຕໜັງສືແລ່ນ */
+        <!--  /* ແຖບໂຕໜັງສືແລ່ນ */-->
         .marquee-container {
             width: 100%;
             background-color: rgba(255, 75, 110, 0.15);
@@ -42,9 +42,7 @@
             animation: marquee 30s linear infinite;
         }
 
-        /* ----------------------------------------------- */
-        /* ລະບົບຫຼາຍໜ້າ (Multi-page Container) */
-        /* ----------------------------------------------- */
+     
         .book-container {
             width: 90%;
             max-width: 380px;
@@ -69,7 +67,7 @@
             align-items: center;
             text-align: center;
             
-            /* ຊ່ອນໜ້າອື່ນໆໄວ້ */
+          
             opacity: 0;
             transform: translateX(100px) scale(0.9);
             pointer-events: none;
@@ -134,7 +132,7 @@
             object-fit: contain; 
         }
 
-        /* ປຸ່ມກົດທົ່ວໄປ */
+      
         .btn-group {
             width: 100%;
             display: flex;
@@ -189,9 +187,6 @@
             border-radius: 4px;
         }
 
-        /* ----------------------------------------------- */
-        /* ສ່ວນຂອງກ່ອງຂໍ້ມູນສ່ວນຕົວ (Profile Card) */
-        /* ----------------------------------------------- */
         .profile-container {
             max-width: 850px;
             width: 100%;
@@ -301,7 +296,7 @@
             text-decoration: none;
         }
 
-        /* ປຸ່ມກັບຄືນໜ້າປຶ້ມ */
+    
         .btn-return-book {
             background-color: #ffccd5;
             color: #ff4b6e;
@@ -323,9 +318,6 @@
             box-shadow: 0 7px 20px rgba(255, 77, 109, 0.5);
         }
 
-        /* ----------------------------------------------- */
-        /* ລະບົບປ໊ອບອັບ (Popup) */
-        /* ----------------------------------------------- */
         .popup-overlay {
             position: fixed;
             top: 0;
@@ -404,7 +396,7 @@
             box-shadow: 0 7px 20px rgba(123, 44, 191, 0.5);
         }
 
-        /* Animations & Effects */
+    
         .effect-item { position: absolute; top: -20px; pointer-events: none; animation: fall linear forwards; z-index: 1; }
         @keyframes beat { to { transform: scale(1.15); } }
         @keyframes pulse { to { transform: scale(1.2) rotate(5deg); } }
@@ -423,9 +415,7 @@
         </div>
     </div>
 
-    <!-- ----------------------------------------------------- -->
-    /* ສ່ວນທີ 1: ກ່ອງປຶ້ມ Memory Book */
-    <!-- ----------------------------------------------------- -->
+  
     <div class="book-container" id="bookBox">
         
         <!-- ໜ້າທີ 1 -->
@@ -496,7 +486,7 @@
 
 
     <!-- ----------------------------------------------------- -->
-    /* ສ່ວນທີ 2: ກ່ອງຂໍ້ມູນສ່ວນຕົວ Profile */
+ 
     <!-- ----------------------------------------------------- -->
     <div class="profile-container" id="profileBox">
         <h2 style="color: #ff4d6d;"><i class="fas fa-id-card"></i> ກ່ອງຂໍ້ມູນສ່ວນຕົວ</h2>
@@ -548,7 +538,7 @@
     </div>
 
     <script>
-        // ຟັງຊັນປ່ຽນໜ້າປຶ້ມ
+      
         function changePage(pageNum, effectType) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
@@ -559,13 +549,13 @@
             if(effectType) { createEffects(effectType); }
         }
 
-        // ຟັງຊັນເປີດ ປ໊ອບອັບ
+      
         function showBeautifulPopup() {
             createEffects('all'); 
             document.getElementById('lovePopup').classList.add('show');
         }
 
-        // ຟັງຊັນປ່ຽນໂໝດ: ໄປໜ້າ Profile ຂໍ້ມູນສ່ວນຕົວ
+       
         function switchToProfile() {
             document.getElementById('lovePopup').classList.remove('show');
             document.getElementById('bookBox').style.display = 'none';
@@ -574,15 +564,15 @@
             createEffects('all');
         }
 
-        // ຟັງຊັນໃໝ່: ກັບຄືນມາໜ້າປຶ້ມ Memory Book ໂດຍບໍ່ຕ້ອງລັອກອິນໃໝ່
+       
         function returnToBook() {
             document.getElementById('profileBox').style.display = 'none';
             document.getElementById('bookBox').style.display = 'block';
             document.getElementById('pageDots').style.display = 'flex';
-            changePage(4, 'heart'); // ໃຫ້ກັບມາສະແດງຜົນຢູ່ໜ້າທີ 4 ຄືເກົ່າ
+            changePage(4, 'heart'); 
         }
 
-        // ຟັງຊັນສ້າງເອັບເຟັກຝົນຕົກ
+       
         function createEffects(type) {
             let items = ['❤️', '💖', '✨'];
             if (type === 'heart') { items = ['❤️', '💖', '💝', '💕', '🥰']; }
