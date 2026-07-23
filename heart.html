@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>heart.PROTOCOL_v1.0</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #050505;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+
+        /* Terminal Overlay Concept */
+        .terminal-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 8px;
+            border: 1px solid #222;
+            backdrop-filter: blur(8px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            min-width: 320px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .line {
+            font-size: 14px;
+            line-height: 1.5;
+            min-height: 21px;
+        }
+
+        .sys-text {
+            color: #ff3366;
+            font-weight: bold;
+        }
+
+        .status-text {
+            color: #00ff66;
+            font-weight: bold;
+        }
+
+        .msg-text {
+            color: #aaa;
+            font-style: italic;
+            margin-top: 5px;
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            background-color: #ff3366;
+            animation: blink 0.8s infinite;
+            margin-left: 2px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .decrypt-btn {
+            margin-top: 15px;
+            background: transparent;
+            color: #ff3366;
+            border: 1px solid #ff3366;
+            padding: 10px 20px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 10px rgba(255, 51, 102, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0; 
+            pointer-events: none;
+        }
+
+        .decrypt-btn.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .decrypt-btn:hover {
+            background: #ff3366;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 51, 102, 0.6);
+        }
+
+        .fade-out {
+            opacity: 0;
+            transform: scale(0.95);
+            pointer-events: none;
+        }
+
+        /* ປຸ່ມ Instagram ແບບ Gradient ຢູ່ມຸມເທິງຂວາມື */
+        .ig-btn {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 18px;
+            border-radius: 30px;
+            background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+            color: #ffffff;
+            text-decoration: none;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(220, 39, 67, 0.4);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .ig-btn.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .ig-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 25px rgba(220, 39, 67, 0.7);
+        }
+
+        .ig-icon {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ປຸ່ມ Instagram Link ຢູ່ເທິງຂວາມື -->
+    <a href="dashboard.html" class="ig-btn" id="igBtn">
+        <svg class="ig-icon" viewBox="0 0 24 24">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+        <span>Box</span>
+    </a>
+
+    <!-- Terminal Box -->
+    <div class="terminal-container" id="terminal">
+        <div class="line" id="line1"></div>
+        <div class="line" id="line2"></div>
+        <div class="line" id="line3"></div>
+        <button class="decrypt-btn" id="decryptBtn">
+            🔒 DECRYPT MESSAGE
+        </button>
+    </div>
+
+    <!-- Canvas -->
+    <canvas id="heartCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+        const decryptBtn = document.getElementById('decryptBtn');
+        const terminal = document.getElementById('terminal');
+        const igBtn = document.getElementById('igBtn');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const linesData = [
+            { id: 'line1', htmlPrefix: '<span class="sys-text">[system]</span> ', text: 'Initializing heart.PROTOCOL_v1.0 ...' },
+            { id: 'line2', htmlPrefix: '<span class="status-text">[status]</span> ', text: 'READY' },
+            { id: 'line3', htmlPrefix: '<span class="msg-text">&gt; </span>', text: 'One encrypted package found for you palina-杨丽娜.' }
+        ];
+
+        let lineIndex = 0;
+        let charIndex = 0;
+
+        function typeWriter() {
+            if (lineIndex < linesData.length) {
+                const currentLine = linesData[lineIndex];
+                const elem = document.getElementById(currentLine.id);
+
+                if (charIndex === 0) {
+                    elem.innerHTML = currentLine.htmlPrefix + '<span class="cursor">&nbsp;</span>';
+                }
+
+                if (charIndex < currentLine.text.length) {
+                    const typedText = currentLine.text.substring(0, charIndex + 1);
+                    elem.innerHTML = currentLine.htmlPrefix + typedText + '<span class="cursor">&nbsp;</span>';
+                    charIndex++;
+                    setTimeout(typeWriter, 35); 
+                } else {
+                    elem.innerHTML = currentLine.htmlPrefix + currentLine.text;
+                    lineIndex++;
+                    charIndex = 0;
+                    setTimeout(typeWriter, 300); 
+                }
+            } else {
+                decryptBtn.classList.add('show');
+            }
+        }
+
+        window.onload = () => {
+            setTimeout(typeWriter, 500);
+        };
+
+        let isAnimating = false;
+        let pulseAngle = 0;
+        const particles = [];
+        const numParticles = 450;
+
+        function getHeartPoint(t) {
+            const x = 16 * Math.pow(Math.sin(t), 3);
+            const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+            return { x, y };
+        }
+
+        function getRandomHeartPoint() {
+            const t = Math.random() * Math.PI * 2;
+            const pt = getHeartPoint(t);
+            const r = Math.pow(Math.random(), 0.4); 
+            return {
+                x: pt.x * r,
+                y: pt.y * r
+            };
+        }
+
+        function createParticles() {
+            for (let i = 0; i < numParticles; i++) {
+                const pt = getRandomHeartPoint();
+                particles.push({
+                    baseX: pt.x,
+                    baseY: pt.y,
+                    size: Math.random() * 4 + 11,
+                    opacity: Math.random() * 0.7 + 0.3,
+                    speedOffset: Math.random() * Math.PI * 2,
+                    angle: (Math.random() - 0.5) * 0.3
+                });
+            }
+        }
+        createParticles();
+
+        function animate() {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.25)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            if (isAnimating) {
+                pulseAngle += 0.025;
+                const pulseScale = 1 + Math.sin(pulseAngle) * 0.04; 
+
+                const baseScale = Math.min(canvas.width, canvas.height) / 42;
+                const currentScale = baseScale * pulseScale;
+                const centerX = canvas.width / 2;
+                const centerY = canvas.height / 2;
+
+                // 1. ແຕ້ມ Particle "i love you"
+                particles.forEach((p) => {
+                    const twinkle = Math.sin(pulseAngle * 2 + p.speedOffset) * 0.25;
+                    const finalOpacity = Math.min(1, Math.max(0.2, p.opacity + twinkle));
+
+                    const x = centerX + p.baseX * currentScale;
+                    const y = centerY + p.baseY * currentScale;
+
+                    ctx.save();
+                    ctx.translate(x, y);
+                    ctx.rotate(p.angle);
+                    ctx.font = `bold ${p.size}px monospace`;
+                    
+                    ctx.shadowColor = '#ff0055';
+                    ctx.shadowBlur = 8;
+                    ctx.fillStyle = `rgba(255, 30, 80, ${finalOpacity})`;
+                    ctx.fillText("i love you", 0, 0);
+                    ctx.restore();
+                });
+
+                // 2. ແຕ້ມຄຳວ່າ "palina" ຢູ່ທາງກາງ
+                ctx.save();
+                ctx.font = 'bold 38px monospace';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+
+                ctx.shadowColor = '#ff3366';
+                ctx.shadowBlur = 30;
+                ctx.fillStyle = '#ffffff';
+                ctx.fillText('palina', centerX, centerY);
+                ctx.restore();
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        decryptBtn.addEventListener('click', () => {
+            terminal.classList.add('fade-out');
+            setTimeout(() => {
+                isAnimating = true;
+                igBtn.classList.add('show'); // ສະແດງປຸ່ມ Instagram ເທິງຂວາມື
+            }, 400);
+        });
+
+        animate();
+    </script>
+</body>
+</html>
