@@ -31,6 +31,7 @@
             overflow-x: hidden;
             position: relative;
             padding: 20px;
+            padding-bottom: 60px; /* ເພີ່ມພື້ນທີ່ດ້ານລຸ່ມເພື່ອບໍ່ໃຫ້ປຸ່ມ What! ບັງເນື້ອຫາ */
         }
 
         /* ແຖບໂຕໜັງສືແລ່ນ */
@@ -55,7 +56,7 @@
         }
 
         /* ========================================================= */
-        /* ປຸ່ມ Virus (ມຸມຊ້າຍເທິງ) - ປັບຂະໜາດໃຫ້ນ້ອຍລົງ (Compact Size) */
+        /* ປຸ່ມ Virus (ມຸມຊ້າຍເທິງ) - Compact Size */
         /* ========================================================= */
         .top-virus-btn {
             position: fixed;
@@ -64,10 +65,10 @@
             z-index: 99;
             background: #00ff66;
             color: #0d0d0d;
-            padding: 6px 12px; /* ປັບ Padding ໃຫ້ນ້ອຍລົງ */
+            padding: 6px 12px;
             border-radius: 20px;
             text-decoration: none;
-            font-size: 0.75rem; /* ປັບ Font ໃຫ້ນ້ອຍລົງ */
+            font-size: 0.75rem;
             font-weight: bold;
             box-shadow: 0 0 10px rgba(0, 255, 102, 0.6);
             display: flex;
@@ -79,7 +80,7 @@
         }
 
         .top-virus-btn i {
-            font-size: 0.85rem; /* ປັບ ໄອຄອນ ໃຫ້ນ້ອຍລົງ */
+            font-size: 0.85rem;
             color: #0d0d0d;
         }
 
@@ -90,7 +91,7 @@
         }
 
         /* ========================================================= */
-        /* ປຸ່ມ IG (ມຸມຂວາເທິງ) - ປັບຂະໜາດໃຫ້ນ້ອຍລົງ (Compact Size)   */
+        /* ປຸ່ມ IG (ມຸມຂວາເທິງ) - Compact Size */
         /* ========================================================= */
         .top-story-btn {
             position: fixed;
@@ -99,10 +100,10 @@
             z-index: 99;
             background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
             color: white;
-            padding: 6px 12px; /* ປັບ Padding ໃຫ້ນ້ອຍລົງ */
+            padding: 6px 12px;
             border-radius: 20px;
             text-decoration: none;
-            font-size: 0.75rem; /* ປັບ Font ໃຫ້ນ້ອຍລົງ */
+            font-size: 0.75rem;
             font-weight: bold;
             box-shadow: 0 3px 10px rgba(214, 36, 159, 0.3);
             display: flex;
@@ -114,13 +115,45 @@
         }
 
         .top-story-btn i {
-            font-size: 0.9rem; /* ປັບ ໄອຄອນ ໃຫ້ນ້ອຍລົງ */
+            font-size: 0.9rem;
         }
 
         .top-story-btn:hover {
             transform: translateY(-2px) scale(1.05);
             box-shadow: 0 5px 15px rgba(214, 36, 159, 0.5);
             filter: brightness(1.1);
+        }
+
+        /* ========================================================= */
+        /* ປຸ່ມ What! (ລອຍຢູ່ດ້ານລຸ່ມ) */
+        /* ========================================================= */
+        .bottom-what-btn {
+            position: fixed;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 99;
+            background: rgba(255, 255, 255, 0.85);
+            color: #ff4b6e;
+            padding: 5px 14px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(255, 75, 110, 0.25);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 75, 110, 0.3);
+        }
+
+        .bottom-what-btn:hover {
+            transform: translateX(-50%) translateY(-3px) scale(1.08);
+            background: #ff4b6e;
+            color: #ffffff;
+            box-shadow: 0 6px 18px rgba(255, 75, 110, 0.45);
         }
 
         /* ========================================================= */
@@ -527,6 +560,11 @@
     <!-- ປຸ່ມລອຍ Instagram (ຂະໜາດ Mini/Compact ຢູ່ມຸມຂວາເທິງ) -->
     <a href="story.html" class="top-story-btn">
         <i class="fa-brands fa-instagram"></i> Instagram
+    </a>
+
+    <!-- ປຸ່ມ What! (ຢູ່ດ້ານລຸ່ມສຸດ ເພື່ອໄປໜ້າ non.html) -->
+    <a href="non.html" class="bottom-what-btn">
+        <i class="fas fa-circle-question"></i> What!
     </a>
 
     <div class="book-container" id="bookBox">
