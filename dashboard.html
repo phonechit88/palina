@@ -54,10 +54,42 @@
             animation: marquee 30s linear infinite;
         }
 
+        /* ປຸ່ມລອຍໄປໜ້າ story.html Style ແບບ Instagram */
+        .top-story-btn {
+            position: fixed;
+            top: 50px;
+            right: 20px;
+            z-index: 99;
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+            color: white;
+            padding: 10px 18px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(214, 36, 159, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            border: 2px solid rgba(255, 255, 255, 0.8);
+        }
+
+        .top-story-btn i {
+            font-size: 1.2rem;
+        }
+
+        .top-story-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(214, 36, 159, 0.6);
+            filter: brightness(1.1);
+        }
+
         .book-container {
             width: 90%;
             max-width: 380px;
-            height: 580px;
+            height: 560px; 
             position: relative;
             z-index: 5;
             margin-top: 40px;
@@ -70,7 +102,7 @@
             background: white;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(255, 75, 110, 0.25);
-            padding: 20px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -93,41 +125,36 @@
             border: 3px solid #ffb3c1;
         }
 
-        #page4 .image-box {
-            height: 160px;
-            margin: 5px 0;
-        }
-
         h1 {
             color: #ff4b6e;
-            font-size: 1.05rem; 
+            font-size: 1.15rem; 
             margin: 0;
             line-height: 1.4;
         }
 
         p {
             color: #555;
-            font-size: 0.9rem;
-            line-height: 1.4;
+            font-size: 0.95rem;
+            line-height: 1.5;
             margin: 5px 0;
         }
 
         .text-accent {
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             color: #d90429;
             font-weight: bold;
-            line-height: 1.4;
+            line-height: 1.5;
         }
 
         .heart-icon {
-            font-size: 30px;
+            font-size: 35px;
             color: #ff4b6e;
             animation: beat 1s infinite alternate;
         }
 
         .image-box {
             width: 100%;
-            height: 200px; 
+            height: 220px; 
             margin: 10px 0;
             border-radius: 12px;
             overflow: hidden;
@@ -142,23 +169,22 @@
         .image-box img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; 
         }
 
         .btn-group {
             width: 100%;
             display: flex;
-            gap: 8px;
+            gap: 10px;
             justify-content: center;
-            flex-wrap: wrap;
         }
 
         .btn {
             background-color: #ff4b6e;
             color: white;
             border: none;
-            padding: 10px 18px;
-            font-size: 0.85rem;
+            padding: 10px 24px;
+            font-size: 0.95rem;
             border-radius: 25px;
             cursor: pointer;
             transition: transform 0.2s, background-color 0.2s;
@@ -174,16 +200,11 @@
         .btn-back {
             background-color: #ffb3c1;
             color: #ff4b6e;
-            padding: 10px 15px;
+            padding: 10px 18px;
         }
 
         .btn-back:hover {
             background-color: #ffa0b2;
-        }
-
-        .btn-game {
-            background: linear-gradient(135deg, #ff9a9e, #fecfef);
-            color: #d90429;
         }
 
         .indicators {
@@ -316,6 +337,18 @@
             text-decoration: none;
         }
 
+        .btn-instagram-style {
+            background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(214, 36, 159, 0.4);
+        }
+
+        .btn-instagram-style:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(214, 36, 159, 0.6);
+            filter: brightness(1.1);
+        }
+
         .btn-return-book {
             background-color: #ffccd5;
             color: #ff4b6e;
@@ -371,7 +404,6 @@
             border: 4px solid #ffccd5;
             transform: scale(0.7) translateY(-50px);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
         }
 
         .popup-overlay.show .popup-content {
@@ -386,7 +418,7 @@
         }
 
         .popup-text {
-            font-size: 0.95rem;
+            font-size: 1rem;
             color: #4a4a4a;
             line-height: 1.6;
             margin-bottom: 20px;
@@ -426,93 +458,12 @@
             z-index: 1000; 
         }
 
-        .music-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #ff4b6e, #ff758f);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255, 75, 110, 0.4);
-            z-index: 90;
-            font-size: 20px;
-            transition: transform 0.3s;
-        }
-
-        .music-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .music-btn.playing {
-            animation: spin 4s linear infinite;
-        }
-
-        .catch-heart {
-            position: fixed;
-            font-size: 35px;
-            cursor: pointer;
-            z-index: 200;
-            user-select: none;
-            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transition: transform 0.1s;
-        }
-        .catch-heart:active {
-            transform: scale(1.4);
-        }
-
-        .scratch-container {
-            position: relative;
-            width: 280px;
-            height: 180px;
-            margin: 0 auto;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.15);
-        }
-        .scratch-secret {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 10px;
-            text-align: center;
-        }
-        canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            cursor: pointer;
-            touch-action: none;
-        }
-
-        .close-popup {
-            position: absolute;
-            top: 10px;
-            right: 15px;
-            font-size: 20px;
-            color: #aaa;
-            cursor: pointer;
-        }
-        .close-popup:hover { color: #ff4b6e; }
-
         @keyframes beat { to { transform: scale(1.15); } }
         @keyframes pulse { to { transform: scale(1.2) rotate(5deg); } }
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+        @keyframes marquee { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
         @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
         @keyframes fall { to { transform: translateY(120vh) rotate(360deg); opacity: 0; } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
-        @keyframes popIn { 0% { transform: scale(0); } 100% { transform: scale(1); } }
     </style>
 </head>
 <body>
@@ -524,11 +475,10 @@
         </div>
     </div>
 
-    <!-- 🎵 Floating Background Music Button -->
-    <div class="music-btn" id="musicBtn" onclick="toggleMusic()" title="ເປີດ/ປິດ ເພງ">
-        <i class="fas fa-music" id="musicIcon"></i>
-    </div>
-    <audio id="bgMusic" loop src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3"></audio>
+    <!-- ປຸ່ມລອຍ Instagram ຢູ່ມຸມຂວາມືເທິງ -->
+    <a href="story.html" class="top-story-btn">
+        <i class="fa-brands fa-instagram"></i> Instagram
+    </a>
 
     <div class="book-container" id="bookBox">
         
@@ -573,25 +523,24 @@
             </div>
         </div>
 
-        <!-- ໜ້າທີ 4 -->
+        <!-- ໜ້າທີ 4 (ໜ້າສຸດທ້າຍ) -->
         <div class="page page-final" id="page4">
             <div class="heart-icon">💖</div>
             <div class="image-box">
                 <img src="img/palina23.jpeg" onerror="this.src='https://via.placeholder.com/300x200?text=Palina+4'" alt="ຮູບທີ 4">
             </div>
             <div class="text-accent">
-                💖💖 ເຫັນຢ້າເມື່ອຍວຽກ ນົນກໍຢາກຊ່ວຍເດີ້... ຊ່ວຍສົ່ງກຳລັງໃຈ! ແຕ່ຖ້າໃຫ້ຊ່ວຍເຮັດວຽກແມ່ນ... ຂໍໂຕໄປນອນກ່ອນເດີ້ 55555 💖💖
+                💖💖 ເຫັນຢ້າເມື່ອຍວຽກ ນົນກໍຢາກຊ່ວຍເດີ້... ຊ່ວຍສົ່ງກຳລັງໃຈ ແລະ ຄິດຮອດ! ແຕ່ຖ້າໃຫ້ຊ່ວຍເຮັດວຽກແມ່ນ... ຂໍໂຕໄປນອນກ່ອນເດີ້ 55555 💖💖
             </div>
             <div class="btn-group">
                 <button class="btn btn-back" onclick="changePage(3)">↩️</button>
-                <button class="btn btn-game" onclick="startHeartGame()">🎮 ເກມຈັບຫົວໃຈ</button>
-                <button class="btn" onclick="showBeautifulPopup()">ກ່ອງຄວາມສົມບູນ ☀️</button>
+                <button class="btn" onclick="showBeautifulPopup()">ກົດເປີດກ່ອງຄວາມສົມບູນ ☀️</button>
             </div>
         </div>
 
     </div>
 
-    <!-- ຕົວ Dots Indicator -->
+    <!-- ຕົວ Dots Indicator ບອກໜ້າປຶ້ມ -->
     <div class="indicators" id="pageDots">
         <div class="dot active" id="dot1"></div>
         <div class="dot" id="dot2"></div>
@@ -627,18 +576,17 @@
             </div>
         </div>
         
+        <!-- ກຸ່ມປຸ່ມດ້ານລຸ່ມສຸດ -->
         <div class="profile-btn-group">
             <button class="profile-btn btn-return-book" onclick="returnToBook()"><i class="fas fa-undo"></i> ↩️ ກັບຄືນໄປເບິ່ງຄວາມໜ້າຮັກຂອງຢ້າ</button>
-            <button class="profile-btn" style="background: linear-gradient(135deg, #ff9a9e, #fecfef); color: #d90429;" onclick="openScratchCard()"><i class="fas fa-magic"></i> 🎟️ ໃບຂູດຄວາມລັບ</button>
-            <a href="story.html" class="profile-btn" style="background: linear-gradient(135deg, #ff758f, #ff8fa3); color: white; box-shadow: 0 5px 15px rgba(255, 117, 143, 0.4);"><i class="fas fa-book-open"></i> 📖 Instagram.palina & non</a>
+            <a href="story.html" class="profile-btn btn-instagram-style"><i class="fa-brands fa-instagram"></i> Instagram.palina & non</a>
             <a href="index.html" class="profile-btn btn-logout-final"><i class="fas fa-sign-out-alt"></i> ອອກຈາກລະບົບ</a>
         </div>
     </div>
 
-    <!-- ປ໊ອບອັບຄວາມລັບ -->
+    <!-- ລະບົບປ໊ອບອັບຄວາມລັບ -->
     <div class="popup-overlay" id="lovePopup">
         <div class="popup-content">
-            <span class="close-popup" onclick="closePopup('lovePopup')">&times;</span>
             <div class="popup-icon">🥰💝</div>
             <div class="popup-title">ແນ່ໆ... ແອບກົດເຂົ້າມາເບິ່ງລະຕິ!!</div>
             <div class="popup-text">
@@ -650,25 +598,7 @@
         </div>
     </div>
 
-    <!-- ໃບຂູດຄວາມລັບ (Scratch Card Modal) -->
-    <div class="popup-overlay" id="scratchPopup">
-        <div class="popup-content">
-            <span class="close-popup" onclick="closePopup('scratchPopup')">&times;</span>
-            <div class="popup-title">🎟️ ໃບຂູດຄວາມລັບພິເສດ</div>
-            <p style="font-size: 0.85rem; margin-bottom: 12px;">ໃຊ້ນິ້ວມື ຫຼື ເມົ້າຂູດສີເທົາອອກ ເພື່ອລຸ້ນຮັບລາງວັນ!</p>
-            
-            <div class="scratch-container">
-                <div class="scratch-secret">
-                    <h3 style="color: #ff4b6e; font-size: 1.1rem; margin-bottom: 5px;">🎉 ຍິນດີນຳເດີຢ້າຖືກເລກ6ໂຕ!</h3>
-                    <p style="font-size: 0.85rem; color: #333;">ລາງວັນ: <strong>ຊາຂຽວຫວານໆ 1 ແກ້ວ 🍵</strong><br>+ ກອດອຸ່ນໆ ໂດຍ "ນົນ" 🥰💖</p>
-                </div>
-                <canvas id="scratchCanvas" width="280" height="180"></canvas>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // ------------------ 📖 ລະບົບປ່ຽນໜ້າປຶ້ມ ------------------
         function changePage(pageNum, effectType) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
@@ -682,10 +612,6 @@
         function showBeautifulPopup() {
             createEffects('all'); 
             document.getElementById('lovePopup').classList.add('show');
-        }
-
-        function closePopup(popupId) {
-            document.getElementById(popupId).classList.remove('show');
         }
 
         function switchToProfile() {
@@ -703,211 +629,24 @@
             changePage(4, 'heart'); 
         }
 
-        // ------------------ ✨ ເອັບເຟັກຫົວໃຈ / ດາວຕົກ ------------------
         function createEffects(type) {
             let items = ['❤️', '💖', '✨'];
             if (type === 'heart') { items = ['❤️', '💖', '💝', '💕', '🥰']; }
             else if (type === 'star') { items = ['✨', '⭐', '🌟', '🌸']; }
             else if (type === 'all') { items = ['❤️', '💖', '💝', '💕', '🥰', '✨', '⭐', '🌸', '❄️']; }
 
-            for (let i = 0; i < 30; i++) {
+            for (let i = 0; i < 35; i++) {
                 setTimeout(() => {
                     const drop = document.createElement('div');
                     drop.classList.add('effect-item');
                     drop.innerText = items[Math.floor(Math.random() * items.length)];
-                    drop.style.left = Math.random() * 85 + 'vw';
+                    drop.style.left = Math.random() * 100 + 'vw';
                     drop.style.animationDuration = Math.random() * 2 + 1.5 + 's'; 
                     drop.style.fontSize = Math.random() * 20 + 16 + 'px'; 
                     document.body.appendChild(drop);
                     setTimeout(() => { drop.remove(); }, 3000);
                 }, i * 60); 
             }
-        }
-
-        // ------------------ 🎵 1. ລະບົບເຄື່ອງຫຼິ້ນເພງ ------------------
-        let isMusicPlaying = false;
-        let musicNoteTimer = null;
-        const bgMusic = document.getElementById('bgMusic');
-        const musicBtn = document.getElementById('musicBtn');
-        const musicIcon = document.getElementById('musicIcon');
-
-        function toggleMusic() {
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                musicBtn.classList.remove('playing');
-                musicIcon.classList.remove('fa-pause');
-                musicIcon.classList.add('fa-music');
-                isMusicPlaying = false;
-                if(musicNoteTimer) clearTimeout(musicNoteTimer);
-            } else {
-                bgMusic.play().then(() => {
-                    musicBtn.classList.add('playing');
-                    musicIcon.classList.remove('fa-music');
-                    musicIcon.classList.add('fa-pause');
-                    isMusicPlaying = true;
-                    spawnMusicNotes();
-                }).catch(e => console.log("Autoplay blocked:", e));
-            }
-        }
-
-        function spawnMusicNotes() {
-            if(!isMusicPlaying) return;
-            const notes = ['🎵', '🎶', '🎼', '🎹', '✨'];
-            const note = document.createElement('div');
-            note.classList.add('effect-item');
-            note.innerText = notes[Math.floor(Math.random() * notes.length)];
-            note.style.right = '25px';
-            note.style.left = 'auto';
-            note.style.bottom = '70px';
-            note.style.top = 'auto';
-            note.style.animation = 'fall 2.5s linear forwards';
-            document.body.appendChild(note);
-
-            setTimeout(() => { note.remove(); }, 2500);
-            if(isMusicPlaying) {
-                musicNoteTimer = setTimeout(spawnMusicNotes, 800);
-            }
-        }
-
-        // ------------------ 🎮 2. ເກມຈັບຫົວໃຈ (Catch the Hearts) ------------------
-        let heartsCaught = 0;
-        const targetHearts = 10;
-        let gameHeartTimer = null;
-
-        function startHeartGame() {
-            heartsCaught = 0;
-            // ລ້າງຫົວໃຈເກົ່າຖ້າມີ
-            document.querySelectorAll('.catch-heart').forEach(h => h.remove());
-            if(gameHeartTimer) clearTimeout(gameHeartTimer);
-            
-            alert('🎮 ພາລະກິດ: ໄລ່ຈັບຫົວໃຈທີ່ລອຍອອກມາໃຫ້ໄດ້ 10 ດວງ ເພື່ອປົດລັອກຄວາມລັບ!');
-            spawnGameHeart();
-        }
-
-        function spawnGameHeart() {
-            document.querySelectorAll('.catch-heart').forEach(h => h.remove());
-
-            if (heartsCaught >= targetHearts) {
-                setTimeout(() => {
-                    alert('🎉 ເກັ່ງຫຼາຍ! ຈັບຫົວໃຈຄົບ 10 ດວງແລ້ວ! ປົດລັອກຄວາມລັບພິເສດ ❤️');
-                    showBeautifulPopup();
-                }, 100);
-                return;
-            }
-
-            const heart = document.createElement('div');
-            heart.classList.add('catch-heart');
-            heart.innerText = ['💖', '❤️', '💝', '💕'][Math.floor(Math.random() * 4)];
-            
-            const x = Math.random() * (window.innerWidth - 80) + 20;
-            const y = Math.random() * (window.innerHeight - 80) + 20;
-            heart.style.left = x + 'px';
-            heart.style.top = y + 'px';
-
-            heart.onclick = function() {
-                heartsCaught++;
-                createEffects('heart');
-                heart.remove();
-                if(gameHeartTimer) clearTimeout(gameHeartTimer);
-                spawnGameHeart();
-            };
-
-            document.body.appendChild(heart);
-
-            gameHeartTimer = setTimeout(() => {
-                if(document.body.contains(heart)) {
-                    heart.remove();
-                    spawnGameHeart();
-                }
-            }, 2000);
-        }
-
-        // ------------------ 🎟️ ໃບຂູດຄວາມລັບ (Scratch Card Smooth Fix) ------------------
-        let scratchInitialized = false;
-
-        function openScratchCard() {
-            document.getElementById('scratchPopup').classList.add('show');
-            initScratchCanvas();
-        }
-
-        function initScratchCanvas() {
-            const canvas = document.getElementById('scratchCanvas');
-            const ctx = canvas.getContext('2d');
-
-            ctx.globalCompositeOperation = 'source-over';
-            ctx.fillStyle = '#C0C0C0';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            ctx.fillStyle = '#555555';
-            ctx.font = 'bold 16px "Noto Sans Lao", sans-serif';
-            ctx.textAlign = 'center';
-            ctx.fillText('✨ ໃຊ້ນິ້ວມື/ເມົ້າ ຂູດບ່ອນນີ້ ✨', canvas.width / 2, canvas.height / 2 + 5);
-
-            if(scratchInitialized) return; 
-            scratchInitialized = true;
-
-            let isDrawing = false;
-            let lastPos = null;
-
-            function getCoordinates(e) {
-                const rect = canvas.getBoundingClientRect();
-                const scaleX = canvas.width / rect.width;
-                const scaleY = canvas.height / rect.height;
-                
-                let clientX = e.clientX;
-                let clientY = e.clientY;
-
-                if (e.touches && e.touches.length > 0) {
-                    clientX = e.touches[0].clientX;
-                    clientY = e.touches[0].clientY;
-                }
-
-                return {
-                    x: (clientX - rect.left) * scaleX,
-                    y: (clientY - rect.top) * scaleY
-                };
-            }
-
-            function scratch(e) {
-                if (!isDrawing) return;
-                if (e.cancelable) e.preventDefault();
-
-                const pos = getCoordinates(e);
-
-                ctx.globalCompositeOperation = 'destination-out';
-                ctx.lineWidth = 36;
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
-
-                ctx.beginPath();
-                if (lastPos) {
-                    ctx.moveTo(lastPos.x, lastPos.y);
-                    ctx.lineTo(pos.x, pos.y);
-                } else {
-                    ctx.arc(pos.x, pos.y, 18, 0, Math.PI * 2);
-                }
-                ctx.stroke();
-                lastPos = pos;
-            }
-
-            function startScratch(e) {
-                isDrawing = true;
-                lastPos = getCoordinates(e);
-                scratch(e);
-            }
-
-            function stopScratch() {
-                isDrawing = false;
-                lastPos = null;
-            }
-
-            canvas.addEventListener('mousedown', startScratch);
-            canvas.addEventListener('mousemove', scratch);
-            window.addEventListener('mouseup', stopScratch);
-
-            canvas.addEventListener('touchstart', startScratch, { passive: false });
-            canvas.addEventListener('touchmove', scratch, { passive: false });
-            window.addEventListener('touchend', stopScratch);
         }
     </script>
 </body>
