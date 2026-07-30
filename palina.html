@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lamp Light Reveal Effect</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #02040f;
+      background-image: 
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+      background-size: 550px 550px, 350px 350px, 250px 250px;
+      background-position: 0 0, 40px 60px, 130px 270px;
+      color: #ffffff;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .scene-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      position: relative;
+      width: 100%;
+    }
+
+    /* 1. ຂໍ້ຄວາມຫຼັກ (ລັອກຕຳແໜ່ງ static ຢູ່ບ່ອນເກົ່າ 100%) */
+    .text-container {
+      position: absolute;
+      top: 300px;
+      text-align: center;
+      z-index: 3;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .main-text {
+      font-size: 3rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      margin-bottom: 8px;
+      color: #ffffff;
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 25px #00ffff;
+    }
+
+    .sub-text {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #e0ffff;
+      text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+    }
+
+    /* 2. ເທັກນິກ Masking: ຊ້ອນ overlay ມືດໄວ້ເທິງຂໍ້ຄວາມ */
+    .dark-mask-layer {
+      position: absolute;
+      inset: 0;
+      background-color: #02040f;
+      z-index: 4;
+      pointer-events: none;
+      /* ໃຊ້ radial-gradient ເປັນ Spotlight cutout */
+      -webkit-mask-image: radial-gradient(circle 180px at var(--light-x, 50%) var(--light-y, 350px), transparent 0%, black 100%);
+      mask-image: radial-gradient(circle 180px at var(--light-x, 50%) var(--light-y, 350px), transparent 0%, black 100%);
+    }
+
+    /* 3. ສ່ວນດອກໄຟ ແລະ ລຳແສງ visual */
+    .swinging-part {
+      position: absolute;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transform-origin: top center;
+      animation: swing 3.5s ease-in-out infinite alternate;
+      z-index: 5;
+    }
+
+    @keyframes swing {
+      0% { transform: rotate(-18deg); }
+      100% { transform: rotate(18deg); }
+    }
+
+    .wire {
+      width: 2px;
+      height: 130px;
+      background-color: #ff5e36;
+    }
+
+    .lamp {
+      width: 140px;
+      height: 70px;
+      background: #00bcd4;
+      border-top-left-radius: 70px;
+      border-top-right-radius: 70px;
+      position: relative;
+      box-shadow: 0 0 20px rgba(0, 188, 212, 0.8);
+      transition: all 0.4s ease;
+    }
+
+    .lamp::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 30px;
+      background-color: #e0ffff;
+      border-radius: 50%;
+      box-shadow: 0 0 25px #e0ffff;
+      transition: all 0.4s ease;
+    }
+
+    /* ລຳແສງ Cone (Visual ເພີ່ມຄວາມງາມ) */
+    .light-beam {
+      position: absolute;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 320px;
+      height: 500px;
+      background: linear-gradient(to bottom, rgba(0, 255, 255, 0.4), rgba(0, 188, 212, 0.05));
+      clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+      opacity: 1;
+    }
+
+    /* 4. ສະວິດ ON / OFF ແລະ ປຸ່ມ Back */
+    .controls-container {
+      padding-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+      z-index: 10;
+    }
+
+    .switch-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .switch-label {
+      font-size: 0.9rem;
+      font-weight: bold;
+      letter-spacing: 1px;
+      color: #aaa;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 54px;
+      height: 28px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #333;
+      transition: 0.4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: 0.4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: #00bcd4;
+      box-shadow: 0 0 10px #00bcd4;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+    }
+
+    /* ປຸ່ມ Back to Story */
+    .back-btn {
+      text-decoration: none;
+      color: #e0ffff;
+      background: rgba(0, 188, 212, 0.15);
+      border: 1px solid #00bcd4;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px rgba(0, 188, 212, 0.2);
+    }
+
+    .back-btn:hover {
+      background: #00bcd4;
+      color: #02040f;
+      box-shadow: 0 0 15px #00bcd4;
+      transform: translateY(-2px);
+    }
+
+    /* ສະຖານະປິດໄຟ (OFF) */
+    body.off .lamp {
+      background: #222;
+      box-shadow: none;
+    }
+
+    body.off .lamp::after {
+      background-color: #444;
+      box-shadow: none;
+    }
+
+    body.off .light-beam {
+      opacity: 0;
+    }
+
+    body.off .dark-mask-layer {
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="scene-container">
+    
+    <!-- ຂໍ້ຄວາມຫຼັກ (ຢູ່ບ່ອນເກົ່ານິ່ງໆ 100%) -->
+    <div class="text-container">
+      <div class="main-text">YOU ARE THE LIGHT</div>
+      <div class="sub-text">May your heart always be filled with warmth & joy 🕯️🤍</div>
+    </div>
+
+    <!-- ຟິມບັງຄວາມມືດ (ຖືກເຈາະຮູ Mask ຕາມຕຳແໜ່ງລຳແສງ) -->
+    <div class="dark-mask-layer" id="maskLayer"></div>
+
+    <!-- ດອກໄຟ + ລຳແສງ ແກວ່ງໄປມາ -->
+    <div class="swinging-part" id="swingingLamp">
+      <div class="wire"></div>
+      <div class="lamp">
+        <div class="light-beam" id="lightBeam"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ສ່ວນຄວບຄຸມ: ສະວິດ ເປີດ-ປິດ + ປຸ່ມ Back -->  
+  <div class="controls-container">
+    <div class="switch-container">
+      <span class="switch-label">ON / OFF</span>
+      <label class="switch">
+        <input type="checkbox" id="lightSwitch" checked>
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <!-- ປຸ່ມກັບໄປໜ້າ story.html -->
+    <a href="story.html" class="back-btn">‹ Back to Story</a>
+  </div>
+
+  <script>
+    const lightSwitch = document.getElementById('lightSwitch');
+    const lightBeam = document.getElementById('lightBeam');
+    const maskLayer = document.getElementById('maskLayer');
+
+    // ຄິດໄລ່ຕຳແໜ່ງຂອງ Center ລຳແສງໄຟໃນ real-time ເພື່ອອັບເດດ Mask Position
+    function updateMaskPosition() {
+      if (!document.body.classList.contains('off')) {
+        const rect = lightBeam.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        maskLayer.style.setProperty('--light-x', `${centerX}px`);
+        maskLayer.style.setProperty('--light-y', `${centerY}px`);
+      }
+      requestAnimationFrame(updateMaskPosition);
+    }
+
+    requestAnimationFrame(updateMaskPosition);
+
+    lightSwitch.addEventListener('change', function() {    
+      if (this.checked) {
+        document.body.classList.remove('off');
+      } else {
+        document.body.classList.add('off');
+      }
+    });
+  </script>
+
+</body>
+</html>
