@@ -23,34 +23,112 @@
         }
 
         /* ========================================================= */
-        /* ປຸ່ມ Box (ເພີ່ມໃໝ່) - ສາຍ Pixel Retro Style ໃຫ້ເຂົ້າກັບ Glass Theme */
+        /* Hamburger Menu Dropdown (ລຸ່ມຂວາ) - ສາຍ Pixel Retro Style */
         /* ========================================================= */
-        .box-btn {
+        .menu-wrapper {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 100;
-            background: transparent;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        /* ປຸ່ມ Hamburger (ຂີດ 3 ຂີດ) Pixel Style */
+        .hamburger-btn {
+            width: 48px;
+            height: 48px;
+            background-color: #000000;
             color: #ffffff;
             border: 4px outset #ffffff;
-            padding: 10px 18px;
-            font-size: 10pt;
-            font-family: 'Press Start 2P', monospace;
             cursor: pointer;
-            text-decoration: none;
             display: flex;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            gap: 8px;
+            gap: 5px;
             box-shadow: 4px 4px 0px #1a1a1a;
             transition: all 0.1s ease;
         }
 
-        .box-btn:hover {
+        .hamburger-btn:hover {
             background: #ffffff;
-            color: #000000;
             border: 4px inset #ffffff;
             box-shadow: 2px 2px 0px #1a1a1a;
             transform: translate(2px, 2px);
+        }
+
+        .hamburger-btn .bar {
+            width: 22px;
+            height: 4px;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .hamburger-btn:hover .bar {
+            background-color: #000000;
+        }
+
+        /* ເມື່ອຄິກເປີດເມນູ ປ່ຽນ Icon ເປັນ X */
+        .hamburger-btn.active .bar:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+
+        .hamburger-btn.active .bar:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger-btn.active .bar:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+
+        /* ລາຍການເມນູແບບເລື່ອນຂຶ້ນ-ລົງ */
+        .menu-dropdown {
+            list-style: none;
+            margin-bottom: 12px;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(15px);
+            transition: all 0.2s ease;
+        }
+
+        .menu-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .menu-item a {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        /* ແຖບ Pixel Capsule ເກັບຂໍ້ຄວາມ */
+        .menu-text {
+            background-color: #000000;
+            color: #ffffff;
+            border: 3px outset #ffffff;
+            padding: 8px 18px;
+            min-width: 140px;
+            text-align: center;
+            font-size: 8pt;
+            font-family: 'Press Start 2P', monospace;
+            box-shadow: 3px 3px 0px #1a1a1a;
+            transition: all 0.1s ease;
+        }
+
+        .menu-item a:hover .menu-text {
+            background: #ffffff;
+            color: #000000;
+            border: 3px inset #ffffff;
+            transform: translate(2px, 2px);
+            box-shadow: 1px 1px 0px #1a1a1a;
         }
 
         /* ========================================================= */
@@ -146,24 +224,28 @@
             user-select: none;
             pointer-events: none;
         }
+
+        /* ປ່ຽນຂໍ້ຄວາມກາງຈໍໃຫ້ເປັນສີຂຽວ Neon ແຮັກເກີ */
         .neon-text {
-            color: #ffccff;
+            color: #00ff66;
             font-size: 26pt;
             text-align: center;
             margin-bottom: 5px;
             text-shadow: 
-                0 0 5px #ffccff,
-                0 0 15px #ff3399,
-                0 0 30px #ff3399;
+                0 0 5px #00ff66,
+                0 0 15px #00ff66,
+                0 0 30px #00cc44;
         }
+        
         .neon-heart-svg {
             width: 140px;
             height: 140px;
-            filter: drop-shadow(0 0 4px #ffccff)
-                    drop-shadow(0 0 10px #ff3399)
-                    drop-shadow(0 0 25px #ff3399)
-                    drop-shadow(0 0 45px #ff3399);
+            filter: drop-shadow(0 0 4px #00ff66)
+                    drop-shadow(0 0 10px #00ff66)
+                    drop-shadow(0 0 25px #00cc44)
+                    drop-shadow(0 0 45px #00cc44);
         }
+
         .matrix-bg {
             display: none; 
             position: absolute;
@@ -178,15 +260,19 @@
             opacity: 0; 
             transition: opacity 0.2s ease;
         }
+
+        /* ປ່ຽນໂຕໜັງສືທີ່ໄຫຼລົງມາໃຫ້ເປັນສີຂຽວແຮັກເກີ (Hacker Green Matrix) */
         .matrix-column {
             display: flex;
             flex-direction: column;
             white-space: nowrap;
             font-size: 13px; 
             line-height: 1.5;
-            color: rgba(255, 51, 153, 0.45);
+            color: #00ff66;
+            text-shadow: 0 0 8px rgba(0, 255, 102, 0.8);
             user-select: none;
         }
+
         .matrix-move {
             animation: scrollDown 10s linear infinite;
         }
@@ -205,11 +291,6 @@
     </style>
 </head>
 <body>
-
-    <!-- ປຸ່ມ Box ເພີ່ມໃໝ່ (ຢູ່ມຸມຊ້າຍເທິງ) ໃຊ້ລິ້ງໄປຫາ dashboard.html -->
-    <a href="dashboard.html" class="box-btn">
-        📦 Box
-    </a>
 
     <div class="wrapper" id="viewInterface">
         <div class="pixel-window" id="popupWindow">
@@ -231,14 +312,31 @@
     <div class="pixel-smiler" id="smileContainer">:)</div>
     
     <div class="neon-center-set" id="neonSet" style="display: none;">
-        <div class="neon-text">LOVE YOU</div>
+        <div class="neon-text">LOVE ME</div>
         
-        <svg class="neon-heart-svg" viewBox="0 0 24 24" fill="#ffccff">
+        <svg class="neon-heart-svg" viewBox="0 0 24 24" fill="#00ff66">
             <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
         </svg>
     </div>
 
     <div class="matrix-bg" id="bgContainer"></div>
+
+    <!-- Hamburger Menu (ຢູ່ລຸ່ມຂວາ) -->
+    <div class="menu-wrapper">
+        <ul class="menu-dropdown" id="menuDropdown">
+            <li class="menu-item"><a href="dashboard.html"><span class="menu-text">Memory Box</span></a></li>
+            <li class="menu-item"><a href="heart.html"><span class="menu-text">Heart </span></a></li>
+            <li class="menu-item"><a href="non.html"><span class="menu-text">Do you Love me</span></a></li>
+            <li class="menu-item"><a href="palina.html"><span class="menu-text">She is the light</span></a></li>
+            <li class="menu-item"><a href="story.html"><span class="menu-text">Instagram</span></a></li>
+        </ul>
+        
+        <button class="hamburger-btn" id="menuToggle" aria-label="Toggle Navigation">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
+        </button>
+    </div>
 
     <script>
         const bgContainer = document.getElementById('bgContainer');
@@ -251,7 +349,7 @@
             
             let textBlock = "";
             for (let i = 0; i < 60; i++) {
-                textBlock += "LOVE YOU<br>";
+                textBlock += "LOVE ME<br>";
             }
 
             for (let i = 0; i < columnCount; i++) {
@@ -262,7 +360,7 @@
                 moveDiv.className = 'matrix-move';
                 moveDiv.innerHTML = textBlock + textBlock;
                 
-                col.style.opacity = (Math.random() * 0.5 + 0.3).toFixed(2);
+                col.style.opacity = (Math.random() * 0.6 + 0.4).toFixed(2);
                 moveDiv.style.animationDelay = (Math.random() * -10) + 's';
 
                 col.appendChild(moveDiv);
@@ -292,6 +390,23 @@
                 document.getElementById('neonSet').style.display = 'flex';
             }, 130);
         }
+
+        // ລະບົບເປີດ-ປິດ ເມນູ Hamburger 
+        const menuToggle = document.getElementById('menuToggle');
+        const menuDropdown = document.getElementById('menuDropdown');
+
+        menuToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            menuDropdown.classList.toggle('show');
+        });
+
+        // ປິດເມນູອັດໂນມັດເມື່ອຄິກຢູ່ບ່ອນອື່ນ
+        document.addEventListener('click', function(e) {
+            if (!menuToggle.contains(e.target) && !menuDropdown.contains(e.target)) {
+                menuToggle.classList.remove('active');
+                menuDropdown.classList.remove('show');
+            }
+        });
     </script>
 </body>
 </html>
