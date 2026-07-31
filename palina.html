@@ -226,9 +226,7 @@
       transform: translateY(-2px);
     }
 
-    /* ====================================
-       5. Hamburger Menu Dropdown (ລຸ່ມຂວາ)
-       ==================================== */
+    /* Hamburger Menu Dropdown */
     .menu-wrapper {
       position: fixed;
       bottom: 25px;
@@ -239,7 +237,6 @@
       align-items: flex-end;
     }
 
-    /* ປຸ່ມ Hamburger (ຂີດ 3 ຂີດ) */
     .hamburger-btn {
       width: 48px;
       height: 48px;
@@ -269,7 +266,6 @@
       transition: all 0.3s ease;
     }
 
-    /* ເມື່ອຄິກເປີດເມນູ ປ່ຽນ Icon ເປັນ X */
     .hamburger-btn.active .bar:nth-child(1) {
       transform: translateY(8px) rotate(45deg);
     }
@@ -282,7 +278,6 @@
       transform: translateY(-8px) rotate(-45deg);
     }
 
-    /* ລາຍການເມນູແບບເລື່ອນຂຶ້ນ-ລົງ */
     .menu-dropdown {
       list-style: none;
       margin-bottom: 12px;
@@ -358,7 +353,8 @@
     }
   </style>
 </head>
-<body>
+<!-- ປ່ຽນຈຸດທີ 1: ເພີ່ມ class="off" ໃສ່ body ເພື່ອໃຫ້ປິດໄຟທັນທີເມື່ອໂຫຼດໜ້າ -->
+<body class="off">
 
   <div class="scene-container">
     
@@ -390,7 +386,8 @@
     <div class="switch-container">
       <span class="switch-label">ON / OFF</span>
       <label class="switch">
-        <input type="checkbox" id="lightSwitch" checked>
+        <!-- ປ່ຽນຈຸດທີ 2: ເອົາ checked ອອກ ເພື່ອໃຫ້ສະວິດຢູ່ຕຳແໜ່ງ OFF ເລີ່ມຕົ້ນ -->
+        <input type="checkbox" id="lightSwitch">
         <span class="slider"></span>
       </label>
     </div>
@@ -402,10 +399,10 @@
   <div class="menu-wrapper">
     <ul class="menu-dropdown" id="menuDropdown">
       <li class="menu-item"><a href="dashboard.html"><span class="menu-text">Memory Box</span></a></li>
-            <li class="menu-item"><a href="heart.html"><span class="menu-text">Heart </span></a></li>
-            <li class="menu-item"><a href="non.html"><span class="menu-text">Do you Love me</span></a></li>
-            <li class="menu-item"><a href="palina.html"><span class="menu-text">She is the light</span></a></li>
-            <li class="menu-item"><a href="story.html"><span class="menu-text">Instagram</span></a></li>
+      <li class="menu-item"><a href="heart.html"><span class="menu-text">Heart </span></a></li>
+      <li class="menu-item"><a href="non.html"><span class="menu-text">Do you Love me</span></a></li>
+      <li class="menu-item"><a href="palina.html"><span class="menu-text">She is the light</span></a></li>
+      <li class="menu-item"><a href="story.html"><span class="menu-text">Instagram</span></a></li>
     </ul>
     
     <button class="hamburger-btn" id="menuToggle" aria-label="Toggle Navigation">
@@ -416,11 +413,11 @@
   </div>
 
   <script>
-    // ຄິດໄລ່ຕຳແໜ່ງ Spotlight Cutout
     const lightSwitch = document.getElementById('lightSwitch');
     const lightBeam = document.getElementById('lightBeam');
     const maskLayer = document.getElementById('maskLayer');
 
+    // ຄິດໄລ່ຕຳແໜ່ງ Spotlight Cutout
     function updateMaskPosition() {
       if (!document.body.classList.contains('off')) {
         const rect = lightBeam.getBoundingClientRect();
@@ -435,6 +432,7 @@
 
     requestAnimationFrame(updateMaskPosition);
 
+    // ປ່ຽນຈຸດທີ 3: ປັບປຸງ Event Listener ເພື່ອສະຫຼັບ class 'off' ຕາມຈິງ
     lightSwitch.addEventListener('change', function() {    
       if (this.checked) {
         document.body.classList.remove('off');
