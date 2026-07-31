@@ -39,7 +39,7 @@
       width: 100%;
     }
 
-    /* 1. ຂໍ້ຄວາມຫຼັກ (ລັອກຕຳແໜ່ງ static ຢູ່ບ່ອນເກົ່າ 100%) */
+    /* 1. ຂໍ້ຄວາມຫຼັກ */
     .text-container {
       position: absolute;
       top: 300px;
@@ -65,14 +65,13 @@
       text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
     }
 
-    /* 2. ເທັກນິກ Masking: ຊ້ອນ overlay ມືດໄວ້ເທິງຂໍ້ຄວາມ */
+    /* 2. ເທັກນິກ Masking */
     .dark-mask-layer {
       position: absolute;
       inset: 0;
       background-color: #02040f;
       z-index: 4;
       pointer-events: none;
-      /* ໃຊ້ radial-gradient ເປັນ Spotlight cutout */
       -webkit-mask-image: radial-gradient(circle 180px at var(--light-x, 50%) var(--light-y, 350px), transparent 0%, black 100%);
       mask-image: radial-gradient(circle 180px at var(--light-x, 50%) var(--light-y, 350px), transparent 0%, black 100%);
     }
@@ -125,7 +124,6 @@
       transition: all 0.4s ease;
     }
 
-    /* ລຳແສງ Cone (Visual ເພີ່ມຄວາມງາມ) */
     .light-beam {
       position: absolute;
       top: 70px;
@@ -207,7 +205,6 @@
       transform: translateX(26px);
     }
 
-    /* ປຸ່ມ Back to Story */
     .back-btn {
       text-decoration: none;
       color: #e0ffff;
@@ -227,6 +224,117 @@
       color: #02040f;
       box-shadow: 0 0 15px #00bcd4;
       transform: translateY(-2px);
+    }
+
+    /* ====================================
+       5. Hamburger Menu Dropdown (ລຸ່ມຂວາ)
+       ==================================== */
+    .menu-wrapper {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    /* ປຸ່ມ Hamburger (ຂີດ 3 ຂີດ) */
+    .hamburger-btn {
+      width: 48px;
+      height: 48px;
+      background-color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .hamburger-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+    }
+
+    .hamburger-btn .bar {
+      width: 22px;
+      height: 3px;
+      background-color: #02040f;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    /* ເມື່ອຄິກເປີດເມນູ ປ່ຽນ Icon ເປັນ X */
+    .hamburger-btn.active .bar:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+    }
+
+    .hamburger-btn.active .bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger-btn.active .bar:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+    }
+
+    /* ລາຍການເມນູແບບເລື່ອນຂຶ້ນ-ລົງ */
+    .menu-dropdown {
+      list-style: none;
+      margin-bottom: 12px;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(15px);
+      transition: all 0.3s ease;
+    }
+
+    .menu-dropdown.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .menu-item a {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .menu-item a:hover {
+      opacity: 0.85;
+      transform: translateX(-3px);
+    }
+
+    .menu-item a::before {
+      content: '';
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background-color: #ffffff;
+      border-radius: 50%;
+      margin-right: 10px;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+    }
+
+    .menu-text {
+      background-color: #ffffff;
+      color: #02040f;
+      padding: 8px 20px;
+      border-radius: 50px;
+      min-width: 120px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: bold;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
 
     /* ສະຖານະປິດໄຟ (OFF) */
@@ -254,13 +362,13 @@
 
   <div class="scene-container">
     
-    <!-- ຂໍ້ຄວາມຫຼັກ (ຢູ່ບ່ອນເກົ່ານິ່ງໆ 100%) -->
+    <!-- ຂໍ້ຄວາມຫຼັກ -->
     <div class="text-container">
       <div class="main-text">YOU ARE THE LIGHT</div>
       <div class="sub-text">May your heart always be filled with warmth & joy 🕯️🤍</div>
     </div>
 
-    <!-- ຟິມບັງຄວາມມືດ (ຖືກເຈາະຮູ Mask ຕາມຕຳແໜ່ງລຳແສງ) -->
+    <!-- ຟິມບັງຄວາມມືດ -->
     <div class="dark-mask-layer" id="maskLayer"></div>
 
     <!-- ດອກໄຟ + ລຳແສງ ແກວ່ງໄປມາ -->
@@ -283,16 +391,32 @@
       </label>
     </div>
 
-    <!-- ປຸ່ມກັບໄປໜ້າ story.html -->
     <a href="story.html" class="back-btn">‹ Back to Story</a>
   </div>
 
+  <!-- Hamburger Menu (ຢູ່ລຸ່ມຂວາ) -->
+  <div class="menu-wrapper">
+    <ul class="menu-dropdown" id="menuDropdown">
+      <li class="menu-item"><a href="dashboard.html"><span class="menu-text">Dashboard</span></a></li>
+      <li class="menu-item"><a href="heart.html"><span class="menu-text">Heart</span></a></li>
+      <li class="menu-item"><a href="non.html"><span class="menu-text">Non</span></a></li>
+      <li class="menu-item"><a href="palina.html"><span class="menu-text">Palina</span></a></li>
+      <li class="menu-item"><a href="story.html"><span class="menu-text">Story</span></a></li>
+    </ul>
+    
+    <button class="hamburger-btn" id="menuToggle" aria-label="Toggle Navigation">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+  </div>
+
   <script>
+    // ຄິດໄລ່ຕຳແໜ່ງ Spotlight Cutout
     const lightSwitch = document.getElementById('lightSwitch');
     const lightBeam = document.getElementById('lightBeam');
     const maskLayer = document.getElementById('maskLayer');
 
-    // ຄິດໄລ່ຕຳແໜ່ງຂອງ Center ລຳແສງໄຟໃນ real-time ເພື່ອອັບເດດ Mask Position
     function updateMaskPosition() {
       if (!document.body.classList.contains('off')) {
         const rect = lightBeam.getBoundingClientRect();
@@ -312,6 +436,23 @@
         document.body.classList.remove('off');
       } else {
         document.body.classList.add('off');
+      }
+    });
+
+    // ລະບົບເປີດ-ປິດ ເມນູ Hamburger 
+    const menuToggle = document.getElementById('menuToggle');
+    const menuDropdown = document.getElementById('menuDropdown');
+
+    menuToggle.addEventListener('click', function() {
+      this.classList.toggle('active');
+      menuDropdown.classList.toggle('show');
+    });
+
+    // ປິດເມນູອັດໂນມັດເມື່ອຄິກຢູ່ບ່ອນອື່ນນອກເມນູ
+    document.addEventListener('click', function(e) {
+      if (!menuToggle.contains(e.target) && !menuDropdown.contains(e.target)) {
+        menuToggle.classList.remove('active');
+        menuDropdown.classList.remove('show');
       }
     });
   </script>
