@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Lamp Light Reveal Effect</title>
+  <title>Lamp Light Reveal Effect - Pink Theme</title>
+
+  <!-- 1. ນຳເຂົ້າ Google Fonts (Noto Sans Lao + Poppins) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;600;700;800&family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
+
   <style>
     * {
       box-sizing: border-box;
@@ -12,7 +18,7 @@
     }
 
     body {
-      background-color: #02040f;
+      background-color: #0f0209; /* ປ່ຽນພື້ນຫຼັງໃຫ້ເປັນໂທນມຶດອົມບົວ */
       background-image: 
         radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
         radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
@@ -20,7 +26,7 @@
       background-size: 550px 550px, 350px 350px, 250px 250px;
       background-position: 0 0, 40px 60px, 130px 270px;
       color: #ffffff;
-      font-family: 'Segoe UI', Roboto, sans-serif;
+      font-family: 'Poppins', 'Noto Sans Lao', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -39,44 +45,53 @@
       width: 100%;
     }
 
-    /* 1. ຂໍ້ຄວາມຫຼັກ */
+    /* 3. Typography ສ່ວນຂໍ້ຄວາມ (ປ່ຽນເງົາສີບົວ) */
     .text-container {
       position: absolute;
       top: 300px;
       text-align: center;
       z-index: 3;
       width: 100%;
+      padding: 0 20px;
       pointer-events: none;
     }
 
     .main-text {
-      font-size: 3rem;
+      font-family: 'Poppins', sans-serif;
+      font-size: 3.2rem;
       font-weight: 900;
-      letter-spacing: 3px;
-      margin-bottom: 8px;
+      letter-spacing: 4px;
+      margin-bottom: 12px;
       color: #ffffff;
-      text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 25px #00ffff;
+      /* ປ່ຽນ Glow text ເປັນສີບົວ */
+      text-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 25px #ff1493, 0 0 35px #ff69b4;
+      text-transform: uppercase;
     }
 
     .sub-text {
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #e0ffff;
-      text-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+      font-family: 'Noto Sans Lao', sans-serif;
+      font-size: 1.15rem;
+      font-weight: 400;
+      line-height: 1.8;
+      color: #ffe4e1;
+      text-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
+      letter-spacing: 0.5px;
     }
 
-    /* 2. ເທັກນິກ Masking */
+    /* ເທັກນິກ Masking */
     .dark-mask-layer {
       position: absolute;
       inset: 0;
-      background-color: #02040f;
+      background-color: #0f0209;
       z-index: 4;
       pointer-events: none;
-      -webkit-mask-image: radial-gradient(circle 180px at var(--light-x, 50%) var(--light-y, 350px), transparent 0%, black 100%);
-      mask-image: radial-gradient(circle 180px at var(--light-x, 50%) var(--light-y, 350px), transparent 0%, black 100%);
+      opacity: 1;
+      transition: opacity 0.4s ease;
+      -webkit-mask-image: radial-gradient(circle 200px at var(--light-x, 50%) var(--light-y, 350px), transparent 20%, rgba(0,0,0,0.8) 70%, black 100%);
+      mask-image: radial-gradient(circle 200px at var(--light-x, 50%) var(--light-y, 350px), transparent 20%, rgba(0,0,0,0.8) 70%, black 100%);
     }
 
-    /* 3. ສ່ວນດອກໄຟ ແລະ ລຳແສງ visual */
+    /* ສ່ວນດອກໄຟ ແລະ ລຳແສງ visual */
     .swinging-part {
       position: absolute;
       top: 0;
@@ -96,17 +111,17 @@
     .wire {
       width: 2px;
       height: 130px;
-      background-color: #ff5e36;
+      background-color: #ff69b4;
     }
 
     .lamp {
       width: 140px;
       height: 70px;
-      background: #00bcd4;
+      background: #ff1493; /* ໂຄມໄຟສີບົວເຂັ້ມ */
       border-top-left-radius: 70px;
       border-top-right-radius: 70px;
       position: relative;
-      box-shadow: 0 0 20px rgba(0, 188, 212, 0.8);
+      box-shadow: 0 0 25px rgba(255, 20, 147, 0.9);
       transition: all 0.4s ease;
     }
 
@@ -118,12 +133,13 @@
       transform: translateX(-50%);
       width: 30px;
       height: 30px;
-      background-color: #e0ffff;
+      background-color: #fff0f5;
       border-radius: 50%;
-      box-shadow: 0 0 25px #e0ffff;
+      box-shadow: 0 0 25px #ff69b4, 0 0 40px #ff1493;
       transition: all 0.4s ease;
     }
 
+    /* ລຳແສງສີບົວ */
     .light-beam {
       position: absolute;
       top: 70px;
@@ -131,14 +147,14 @@
       transform: translateX(-50%);
       width: 320px;
       height: 500px;
-      background: linear-gradient(to bottom, rgba(0, 255, 255, 0.4), rgba(0, 188, 212, 0.05));
+      background: linear-gradient(to bottom, rgba(255, 105, 180, 0.5), rgba(255, 20, 147, 0.08));
       clip-path: polygon(15% 0%, 85% 0%, 100% 100%, 0% 100%);
       pointer-events: none;
       transition: opacity 0.4s ease;
       opacity: 1;
     }
 
-    /* 4. ສະວິດ ON / OFF ແລະ ປຸ່ມ Back */
+    /* ສະວິດ ON / OFF ແລະ ປຸ່ມ Back */
     .controls-container {
       padding-bottom: 30px;
       display: flex;
@@ -156,9 +172,9 @@
     }
 
     .switch-label {
-      font-size: 0.9rem;
-      font-weight: bold;
-      letter-spacing: 1px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1.5px;
       color: #aaa;
     }
 
@@ -197,8 +213,8 @@
     }
 
     input:checked + .slider {
-      background-color: #00bcd4;
-      box-shadow: 0 0 10px #00bcd4;
+      background-color: #ff1493;
+      box-shadow: 0 0 12px #ff1493;
     }
 
     input:checked + .slider:before {
@@ -207,22 +223,22 @@
 
     .back-btn {
       text-decoration: none;
-      color: #e0ffff;
-      background: rgba(0, 188, 212, 0.15);
-      border: 1px solid #00bcd4;
-      padding: 8px 20px;
+      color: #ffe4e1;
+      background: rgba(255, 20, 147, 0.15);
+      border: 1px solid #ff1493;
+      padding: 8px 24px;
       border-radius: 20px;
       font-size: 0.9rem;
       font-weight: 600;
       letter-spacing: 1px;
       transition: all 0.3s ease;
-      box-shadow: 0 0 10px rgba(0, 188, 212, 0.2);
+      box-shadow: 0 0 10px rgba(255, 20, 147, 0.2);
     }
 
     .back-btn:hover {
-      background: #00bcd4;
-      color: #02040f;
-      box-shadow: 0 0 15px #00bcd4;
+      background: #ff1493;
+      color: #ffffff;
+      box-shadow: 0 0 18px #ff1493;
       transform: translateY(-2px);
     }
 
@@ -249,19 +265,19 @@
       justify-content: center;
       align-items: center;
       gap: 5px;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
       transition: all 0.3s ease;
     }
 
     .hamburger-btn:hover {
       transform: scale(1.08);
-      box-shadow: 0 0 20px rgba(0, 255, 255, 0.8);
+      box-shadow: 0 0 20px rgba(255, 20, 147, 0.8);
     }
 
     .hamburger-btn .bar {
       width: 22px;
       height: 3px;
-      background-color: #02040f;
+      background-color: #0f0209;
       border-radius: 3px;
       transition: all 0.3s ease;
     }
@@ -317,18 +333,18 @@
       background-color: #ffffff;
       border-radius: 50%;
       margin-right: 10px;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+      box-shadow: 0 0 8px rgba(255, 105, 180, 0.8);
     }
 
     .menu-text {
       background-color: #ffffff;
-      color: #02040f;
+      color: #0f0209;
       padding: 8px 20px;
       border-radius: 50px;
-      min-width: 120px;
+      min-width: 130px;
       text-align: center;
       font-size: 14px;
-      font-weight: bold;
+      font-weight: 600;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
     }
 
@@ -350,10 +366,10 @@
     body.off .dark-mask-layer {
       -webkit-mask-image: none;
       mask-image: none;
+      opacity: 1;
     }
   </style>
 </head>
-<!-- ປ່ຽນຈຸດທີ 1: ເພີ່ມ class="off" ໃສ່ body ເພື່ອໃຫ້ປິດໄຟທັນທີເມື່ອໂຫຼດໜ້າ -->
 <body class="off">
 
   <div class="scene-container">
@@ -386,7 +402,6 @@
     <div class="switch-container">
       <span class="switch-label">ON / OFF</span>
       <label class="switch">
-        <!-- ປ່ຽນຈຸດທີ 2: ເອົາ checked ອອກ ເພື່ອໃຫ້ສະວິດຢູ່ຕຳແໜ່ງ OFF ເລີ່ມຕົ້ນ -->
         <input type="checkbox" id="lightSwitch">
         <span class="slider"></span>
       </label>
@@ -399,7 +414,7 @@
   <div class="menu-wrapper">
     <ul class="menu-dropdown" id="menuDropdown">
       <li class="menu-item"><a href="dashboard.html"><span class="menu-text">Memory Box</span></a></li>
-      <li class="menu-item"><a href="heart.html"><span class="menu-text">Heart </span></a></li>
+      <li class="menu-item"><a href="heart.html"><span class="menu-text">Heart</span></a></li>
       <li class="menu-item"><a href="non.html"><span class="menu-text">Do you Love me</span></a></li>
       <li class="menu-item"><a href="palina.html"><span class="menu-text">She is the light</span></a></li>
       <li class="menu-item"><a href="story.html"><span class="menu-text">Instagram</span></a></li>
@@ -417,12 +432,11 @@
     const lightBeam = document.getElementById('lightBeam');
     const maskLayer = document.getElementById('maskLayer');
 
-    // ຄິດໄລ່ຕຳແໜ່ງ Spotlight Cutout
     function updateMaskPosition() {
       if (!document.body.classList.contains('off')) {
         const rect = lightBeam.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
-        const centerY = rect.top + rect.height / 2;
+        const centerY = rect.top + (rect.height * 0.5);
 
         maskLayer.style.setProperty('--light-x', `${centerX}px`);
         maskLayer.style.setProperty('--light-y', `${centerY}px`);
@@ -432,7 +446,6 @@
 
     requestAnimationFrame(updateMaskPosition);
 
-    // ປ່ຽນຈຸດທີ 3: ປັບປຸງ Event Listener ເພື່ອສະຫຼັບ class 'off' ຕາມຈິງ
     lightSwitch.addEventListener('change', function() {    
       if (this.checked) {
         document.body.classList.remove('off');
@@ -441,7 +454,6 @@
       }
     });
 
-    // ລະບົບເປີດ-ປິດ ເມນູ Hamburger 
     const menuToggle = document.getElementById('menuToggle');
     const menuDropdown = document.getElementById('menuDropdown');
 
@@ -450,7 +462,6 @@
       menuDropdown.classList.toggle('show');
     });
 
-    // ປິດເມນູອັດໂນມັດເມື່ອຄິກຢູ່ບ່ອນອື່ນນອກເມນູ
     document.addEventListener('click', function(e) {
       if (!menuToggle.contains(e.target) && !menuDropdown.contains(e.target)) {
         menuToggle.classList.remove('active');
