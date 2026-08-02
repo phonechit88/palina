@@ -58,7 +58,7 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
-            padding-bottom: 80px;
+            padding-bottom: 40px;
             background-color: #fff;
         }
 
@@ -239,103 +239,6 @@
 
         .share-alert.show {
             bottom: 30px;
-        }
-
-        /* ========================================================= */
-        /* [ເພີ່ມໃໝ່ 1/3] Hamburger Menu (ມຸມລຸ່ມຂວາ) - IG UI Theme  */
-        /* ========================================================= */
-        .menu-wrapper {
-            position: fixed;
-            bottom: 25px;
-            right: 25px;
-            z-index: 2000;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-        }
-
-        .hamburger-btn {
-            width: 48px;
-            height: 48px;
-            background-color: #ffffff;
-            border: 1px solid #dbdbdb;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 5px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-            transition: all 0.3s ease;
-        }
-
-        .hamburger-btn:hover {
-            transform: scale(1.08);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .hamburger-btn .bar {
-            width: 20px;
-            height: 2px;
-            background-color: #262626;
-            border-radius: 2px;
-            transition: all 0.3s ease;
-        }
-
-        .hamburger-btn.active .bar:nth-child(1) {
-            transform: translateY(7px) rotate(45deg);
-        }
-
-        .hamburger-btn.active .bar:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger-btn.active .bar:nth-child(3) {
-            transform: translateY(-7px) rotate(-45deg);
-        }
-
-        .menu-dropdown {
-            list-style: none;
-            margin-bottom: 12px;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(15px);
-            transition: all 0.3s ease;
-        }
-
-        .menu-dropdown.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .menu-item a {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-            transition: transform 0.2s ease;
-        }
-
-        .menu-item a:hover {
-            transform: translateX(-3px);
-        }
-
-        .menu-text {
-            background-color: #ffffff;
-            color: #262626;
-            border: 1px solid #dbdbdb;
-            padding: 8px 20px;
-            border-radius: 50px;
-            min-width: 120px;
-            text-align: center;
-            font-size: 0.85rem;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
         }
     </style>
 </head>
@@ -2281,26 +2184,21 @@
         </div>
 
     </div>
-<!-- [ເພີ່ມໃໝ່ 2/3] Hamburger Menu Markup (ມຸມລຸ່ມຂວາ) -->
-    <div class="menu-wrapper">
-        <ul class="menu-dropdown" id="menuDropdown">
-            <li class="menu-item"><a href="dashboard.html"><span class="menu-text">Memory Box</span></a></li>
-            <li class="menu-item"><a href="heart.html"><span class="menu-text">Heart </span></a></li>
-            <li class="menu-item"><a href="non.html"><span class="menu-text">Do you Love me</span></a></li>
-            <li class="menu-item"><a href="palina.html"><span class="menu-text">She is the light</span></a></li>
-            <li class="menu-item"><a href="story.html"><span class="menu-text">Instagram</span></a></li>
-        </ul>
-        
-        <button class="hamburger-btn" id="menuToggle" aria-label="Toggle Navigation">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </button>
+
+    <!-- ປຸ່ມກົດກັບຄືນໜ້າຫຼັກ -->
+    <div class="back-nav">
+        <a href="javascript:history.back()" class="btn-back"><i class="fas fa-arrow-left"></i> ກັບຄືນໜ້າໂປຣໄຟລ໌</a>
+    </div>
+
+    <!-- Pop-up ແຈ້ງເຕືອນ -->
+    <div id="shareAlert" class="share-alert">
+        <i class="fas fa-check-circle" style="color: #4bb543;"></i> <span id="alertText">ແຊຣ໌ແລ້ວ!</span>
     </div>
 
     <script>
         function toggleLike(element, countId) {
             const countElement = document.getElementById(countId);
+            // ປ່ຽນມາໃຊ້ Regex [^0-9] ເພື່ອຄວາມປອດໄພ ດຶງສະເພາະຕົວເລກ
             let currentLikes = parseInt(countElement.innerText.replace(/[^0-9]/g, ''));
 
             if (element.classList.contains('far')) {
@@ -2328,22 +2226,6 @@
                 alertBox.classList.remove('show');
             }, 2500);
         }
-
-        // [ເພີ່ມໃໝ່ 3/3] JS Script ສຳລັບເປີດ/ປິດ ເມນູ Hamburger
-        const menuToggle = document.getElementById('menuToggle');
-        const menuDropdown = document.getElementById('menuDropdown');
-
-        menuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            menuDropdown.classList.toggle('show');
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!menuToggle.contains(e.target) && !menuDropdown.contains(e.target)) {
-                menuToggle.classList.remove('active');
-                menuDropdown.classList.remove('show');
-            }
-        });
     </script>
 </body>
 </html>
