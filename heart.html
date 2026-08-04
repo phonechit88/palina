@@ -12,7 +12,7 @@
         body {
             margin: 0;
             overflow: hidden;
-            background: #050505;
+            background: #030305;
             font-family: 'Courier New', Courier, monospace;
             display: flex;
             justify-content: center;
@@ -119,7 +119,7 @@
             pointer-events: none;
         }
 
-        /* ປຸ່ມ Instagram ແບບ Gradient ຢູ່ມຸມເທິງຂວາມື */
+        /* Instagram Button */
         .ig-btn {
             position: absolute;
             top: 25px;
@@ -158,9 +158,7 @@
             fill: currentColor;
         }
 
-        /* ========================================================= */
-        /* [ເພີ່ມໃໝ່ 1/3] Hamburger Menu (ມຸມລຸ່ມຂວາ) - Dark Cyber Theme */
-        /* ========================================================= */
+        /* Hamburger Menu */
         .menu-wrapper {
             position: fixed;
             bottom: 25px;
@@ -269,7 +267,7 @@
 </head>
 <body>
 
-    <!-- ປຸ່ມ Instagram Link ຢູ່ເທິງຂວາມື -->
+    <!-- Instagram Link -->
     <a href="dashboard.html" class="ig-btn" id="igBtn">
         <svg class="ig-icon" viewBox="0 0 24 24">
             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
@@ -290,7 +288,7 @@
     <!-- Canvas -->
     <canvas id="heartCanvas"></canvas>
 
-    <!-- [ເພີ່ມໃໝ່ 2/3] Hamburger Menu Markup (ມຸມລຸ່ມຂວາ) -->
+    <!-- Hamburger Menu -->
     <div class="menu-wrapper">
         <ul class="menu-dropdown" id="menuDropdown">
             <li class="menu-item"><a href="dashboard.html"><span class="menu-text">Memory Box</span></a></li>
@@ -314,9 +312,28 @@
         const terminal = document.getElementById('terminal');
         const igBtn = document.getElementById('igBtn');
 
+        // --- Constellation Nodes (ເຄືອຂ່າຍດາວ) ---
+        let particles = [];
+        function initParticles() {
+            particles = [];
+            const count = Math.floor((canvas.width * canvas.height) / 12000);
+            for (let i = 0; i < count; i++) {
+                const isLeft = Math.random() < 0.5;
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 0.4,
+                    vy: (Math.random() - 0.5) * 0.4,
+                    radius: Math.random() * 1.8 + 0.8,
+                    side: isLeft ? 'left' : 'right'
+                });
+            }
+        }
+
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            initParticles();
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
@@ -360,85 +377,120 @@
         };
 
         let isAnimating = false;
-        let pulseAngle = 0;
-        const particles = [];
-        const numParticles = 450;
+        let time = 0;
 
+        // ແຕ້ມດາວ constellation network
+        function drawConstellations() {
+            for (let i = 0; i < particles.length; i++) {
+                let p = particles[i];
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = p.x < canvas.width / 2 ? 'rgba(255, 60, 100, 0.7)' : 'rgba(0, 200, 255, 0.7)';
+                ctx.fill();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    let p2 = particles[j];
+                    let dx = p.x - p2.x;
+                    let dy = p.y - p2.y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 110) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        let strokeColor = (p.x + p2.x) / 2 < canvas.width / 2 ? `rgba(200, 30, 80, ${1 - dist / 110})` : `rgba(0, 180, 230, ${1 - dist / 110})`;
+                        ctx.strokeStyle = strokeColor;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+            }
+        }
+
+        // ສູດຄິດໄລ່ຈຸດຫົວໃຈແບບ Parametric Heart Curve
         function getHeartPoint(t) {
             const x = 16 * Math.pow(Math.sin(t), 3);
             const y = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
             return { x, y };
         }
 
-        function getRandomHeartPoint() {
-            const t = Math.random() * Math.PI * 2;
-            const pt = getHeartPoint(t);
-            const r = Math.pow(Math.random(), 0.4); 
-            return {
-                x: pt.x * r,
-                y: pt.y * r
-            };
-        }
+        // ຟັງຊັນແຕ້ມເສັ້ນໄຫຼວຽນນີອອນ (Swoosh Path)
+        function drawSwoosh(cx, cy, scale, startAngle, length, color, glowColor, width, speedOffset) {
+            ctx.save();
+            ctx.translate(cx, cy);
 
-        function createParticles() {
-            for (let i = 0; i < numParticles; i++) {
-                const pt = getRandomHeartPoint();
-                particles.push({
-                    baseX: pt.x,
-                    baseY: pt.y,
-                    size: Math.random() * 4 + 11,
-                    opacity: Math.random() * 0.7 + 0.3,
-                    speedOffset: Math.random() * Math.PI * 2,
-                    angle: (Math.random() - 0.5) * 0.3
-                });
+            ctx.strokeStyle = color;
+            ctx.lineWidth = width;
+            ctx.lineCap = 'round';
+            ctx.shadowColor = glowColor;
+            ctx.shadowBlur = 18;
+
+            ctx.beginPath();
+            const step = 0.03;
+            let first = true;
+            for (let a = 0; a <= length; a += step) {
+                let t = startAngle + speedOffset + a;
+                let pt = getHeartPoint(t);
+                let x = pt.x * scale;
+                let y = pt.y * scale;
+
+                if (first) {
+                    ctx.moveTo(x, y);
+                    first = false;
+                } else {
+                    ctx.lineTo(x, y);
+                }
             }
+            ctx.stroke();
+            ctx.restore();
         }
-        createParticles();
 
         function animate() {
-            ctx.fillStyle = 'rgba(5, 5, 5, 0.25)';
+            ctx.fillStyle = 'rgba(3, 3, 5, 0.25)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            if (isAnimating) {
-                pulseAngle += 0.025;
-                const pulseScale = 1 + Math.sin(pulseAngle) * 0.04; 
+            // ແຕ້ມ constellation network ທາງຫຼັງ
+            drawConstellations();
 
-                const baseScale = Math.min(canvas.width, canvas.height) / 42;
-                const currentScale = baseScale * pulseScale;
+            if (isAnimating) {
+                time += 0.012; // ຄວາມໄວໃນການເຄື່ອນໄຫວ
+
                 const centerX = canvas.width / 2;
                 const centerY = canvas.height / 2;
+                const baseScale = Math.min(canvas.width, canvas.height) / 45;
 
-                // 1. ແຕ້ມ Particle "i love you"
-                particles.forEach((p) => {
-                    const twinkle = Math.sin(pulseAngle * 2 + p.speedOffset) * 0.25;
-                    const finalOpacity = Math.min(1, Math.max(0.2, p.opacity + twinkle));
-
-                    const x = centerX + p.baseX * currentScale;
-                    const y = centerY + p.baseY * currentScale;
-
-                    ctx.save();
-                    ctx.translate(x, y);
-                    ctx.rotate(p.angle);
-                    ctx.font = `bold ${p.size}px monospace`;
-                    
-                    ctx.shadowColor = '#ff0055';
-                    ctx.shadowBlur = 8;
-                    ctx.fillStyle = `rgba(255, 30, 80, ${finalOpacity})`;
-                    ctx.fillText("i love you", 0, 0);
-                    ctx.restore();
-                });
-
-                // 2. ແຕ້ມຄຳວ່າ "palina" ຢູ່ທາງກາງ
+                // --- 1. ແຕ້ມຂໍ້ຄວາມ "palina" ແບບແສງ Glowing ນີອອນ ---
                 ctx.save();
-                ctx.font = 'bold 38px monospace';
+                ctx.font = 'bold 36px "Courier New", Courier, monospace';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-
-                ctx.shadowColor = '#ff3366';
-                ctx.shadowBlur = 30;
+                ctx.shadowColor = 'rgba(255, 200, 230, 0.9)';
+                ctx.shadowBlur = 15;
                 ctx.fillStyle = '#ffffff';
-                ctx.fillText('palina', centerX, centerY);
+                ctx.fillText('palina', centerX, centerY + 5);
                 ctx.restore();
+
+                // --- 2. ແຕ້ມເສັ້ນໂຄ້ງນີອອນຝ່າຍຊ້າຍ (Cyan / Blue Neon) ---
+                // ເສັ້ນຫຼັກ
+                drawSwoosh(centerX, centerY, baseScale * 1.02, Math.PI * 0.85, Math.PI * 0.95, '#00f2fe', '#00d2fe', 3.5, time * 1.1);
+                drawSwoosh(centerX, centerY, baseScale * 0.96, Math.PI * 0.75, Math.PI * 0.85, '#38ef7d', '#00f2fe', 1.8, time * 1.1);
+                drawSwoosh(centerX, centerY, baseScale * 1.08, Math.PI * 0.90, Math.PI * 0.70, '#00c6ff', '#0072ff', 1.2, time * 1.1);
+
+                // --- 3. ແຕ້ມເສັ້ນໂຄ້ງນີອອນຝ່າຍຂວາ (Pink / Magenta Neon) ---
+                // ເສັ້ນຫຼັກ
+                drawSwoosh(centerX, centerY, baseScale * 1.02, -Math.PI * 0.15, Math.PI * 0.95, '#ff007f', '#ff00de', 3.5, time * 1.1);
+                drawSwoosh(centerX, centerY, baseScale * 0.96, -Math.PI * 0.25, Math.PI * 0.85, '#ff5252', '#ff007f', 1.8, time * 1.1);
+                drawSwoosh(centerX, centerY, baseScale * 1.08, -Math.PI * 0.10, Math.PI * 0.70, '#e040fb', '#aa00ff', 1.2, time * 1.1);
+
+                // --- 4. ເສັ້ນຊ້ອນກັນຢູ່ສ່ວນເທິງ ແລະ ລຸ່ມ ---
+                drawSwoosh(centerX, centerY, baseScale * 0.88, Math.PI * 0.3, Math.PI * 0.5, 'rgba(0, 242, 254, 0.8)', '#00f2fe', 1.0, time * 0.8);
+                drawSwoosh(centerX, centerY, baseScale * 0.88, -Math.PI * 0.7, Math.PI * 0.5, 'rgba(255, 0, 127, 0.8)', '#ff007f', 1.0, time * 0.8);
             }
 
             requestAnimationFrame(animate);
@@ -448,13 +500,13 @@
             terminal.classList.add('fade-out');
             setTimeout(() => {
                 isAnimating = true;
-                igBtn.classList.add('show'); // ສະແດງປຸ່ມ Instagram ເທິງຂວາມື
+                igBtn.classList.add('show'); 
             }, 400);
         });
 
         animate();
 
-        // [ເພີ່ມໃໝ່ 3/3] JS Script ສຳລັບເປີດ/ປິດ ເມນູ Hamburger
+        // Hamburger Menu Logic
         const menuToggle = document.getElementById('menuToggle');
         const menuDropdown = document.getElementById('menuDropdown');
 
