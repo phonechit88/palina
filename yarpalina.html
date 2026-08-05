@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Love Letter for Ya</title>
+    <!-- Import Lao Fonts via Google Fonts for Desktop and Mobile compatibility -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;600;700;800&family=Noto+Serif+Lao:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: #ffd1dc; 
+            font-family: 'Noto Sans Lao', 'Noto Serif Lao', 'Phetsarath OT', sans-serif; 
+            color: #111; 
+            overflow-x: hidden; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+        
+        #wrap { 
+            position: relative; 
+            width: 100%; 
+            max-width: 1100px; 
+            min-height: 680px; 
+            display: flex; 
+            justify-content: center;
+            align-items: center;
+        }
+        
+        /* Navigation / Menu Container Style (Bottom Right) */
+        .nav-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+
+        /* ປຸ່ມວົງມົນ 3 ຂີດ */
+        .hamburger-btn {
+            width: 50px;
+            height: 50px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(220, 100, 120, 0.25);
+            border: 2px solid #ff5252;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px rgba(220, 100, 120, 0.35);
+        }
+
+        .hamburger-btn span {
+            width: 22px;
+            height: 3px;
+            background-color: #ff5252;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        /* ປ່ຽນເປັນຮູບກາກະບະ (X) ເວລາກົດ active */
+        .hamburger-btn.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+        .hamburger-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .hamburger-btn.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Nav Menu Dropdown */
+        .nav-menu {
+            position: absolute;
+            bottom: 65px;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            list-style: none;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+
+        .nav-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .menu-item a {
+            display: block;
+            background: #ffffff;
+            backdrop-filter: blur(10px);
+            padding: 10px 24px;
+            border-radius: 30px;
+            color: #ff5252;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 700;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(220, 100, 120, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .menu-item a:hover {
+            background-color: #fff0f3;
+            transform: scale(1.03);
+            color: #d63031;
+        }
+
+        /* Typography & Left Panel Section */
+        #left-panel {
+            position: absolute;
+            left: 20px;
+            top: 20px;
+            width: 500px;
+            min-height: 640px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        #text { width: 100%; }
+        
+        /* ປັບຂະໜາດ ແລະ ຄວາມເຂັ້ມຂອງຕົວໜັງສືຈົດໝາຍ */
+        #code { 
+            font-size: 18px; 
+            color: #111111; 
+            line-height: 28px; 
+            display: none; 
+            font-weight: 700; 
+            text-shadow: 0 0 1px rgba(0,0,0,0.1);
+        }
+        #code .say { font-style: normal; }
+        #code .space { margin-right: 20px; }
+        
+        /* Bottom UI Container (Clock & Calendar) */
+        #bottom-container {
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 15;
+            margin-top: 15px;
+        }
+
+        /* UI Clock Box */
+        #clock-box { 
+            font-size: 18px; 
+            color: #111; 
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 14px 20px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(220, 100, 120, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            width: fit-content;
+        }
+        .clock-title {
+            font-size: 15px;
+            color: #2c3e50;
+            margin-bottom: 6px;
+            display: block;
+            font-weight: 700;
+        }
+        #clock { 
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+        }
+        .time-block {
+            display: flex;
+            align-items: baseline;
+            gap: 3px;
+        }
+        #clock .digit { 
+            font-size: 28px; 
+            font-weight: 800; 
+            color: #e74c3c; 
+            font-family: 'Courier New', monospace;
+        }
+        .unit {
+            font-size: 14px;
+            color: #111;
+            font-weight: 700;
+        }
+
+        /* Calendar Section */
+        #calendar-box {
+            background: rgba(255, 240, 245, 0.9);
+            backdrop-filter: blur(8px);
+            padding: 14px 18px;
+            border-radius: 16px;
+            box-shadow: 0 6px 18px rgba(220, 100, 120, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            width: 270px;
+        }
+        .calendar-header {
+            text-align: center;
+            font-weight: 800;
+            color: #d63031;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            text-align: center;
+            font-size: 13px;
+            color: #222;
+            font-weight: 600;
+        }
+        .day-name {
+            font-weight: 800;
+            color: #e84393;
+            padding-bottom: 4px;
+        }
+        .day-number {
+            padding: 3px 0;
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 24px;
+        }
+
+        /* Enhanced Heart Highlight for Special Day (17) */
+        .day-number.special-day {
+            color: #ffffff !important;
+            font-weight: 900;
+            font-size: 14px;
+            text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
+            z-index: 2;
+        }
+        .day-number.special-day::before {
+            content: "♥";
+            position: absolute;
+            font-size: 28px;
+            color: #d63031;
+            z-index: -1;
+            line-height: 1;
+            top: -2px;
+            filter: drop-shadow(0px 2px 4px rgba(214, 48, 49, 0.4));
+        }
+
+        /* Canvas Section */
+        #canvas { position: absolute; right: 0; top: 0; width: 100%; height: 680px; z-index: 1; }
+        
+        /* Step 1: Click Heart Button */
+        #click-container {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            z-index: 50;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .heart-icon {
+            width: 50px;
+            height: 45px;
+            background: #e74c3c;
+            position: relative;
+            transform: rotate(-45deg);
+            margin-right: 25px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .heart-icon::before,
+        .heart-icon::after {
+            content: "";
+            width: 50px;
+            height: 50px;
+            background: #e74c3c;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .heart-icon::before { top: -25px; left: 0; }
+        .heart-icon::after { left: 25px; top: 0; }
+
+        .click-text {
+            font-size: 22px;
+            font-weight: 800;
+            color: #d63031;
+            font-family: monospace;
+            border-bottom: 2px solid #d63031;
+            padding-bottom: 2px;
+            white-space: nowrap;
+        }
+
+        /* Responsive Styles for Mobile Displays */
+        @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+            #wrap {
+                flex-direction: column;
+                height: auto;
+                min-height: 100vh;
+                padding-bottom: 80px;
+            }
+            #left-panel {
+                position: relative;
+                left: 0;
+                top: 0;
+                width: 92%;
+                margin: 20px auto;
+                min-height: auto;
+            }
+            #code {
+                font-size: 17px;
+                line-height: 26px;
+            }
+            #canvas {
+                position: relative;
+                width: 100%;
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Circle Menu -->
+    <div class="nav-container">
+        <div class="hamburger-btn" id="menuBtn">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-menu" id="navMenu">
+            <li class="menu-item"><a href="yarpalina.html"><span class="menu-text">For palina</span></a></li>
+            <li class="menu-item"><a href="dashboard.html"><span class="menu-text">Memory Box</span></a></li>
+            <li class="menu-item"><a href="heart.html"><span class="menu-text">Heart</span></a></li>
+            <li class="menu-item"><a href="non.html"><span class="menu-text">Do you Love me</span></a></li>
+            <li class="menu-item"><a href="palina.html"><span class="menu-text">She is the light</span></a></li>
+            <li class="menu-item"><a href="story.html"><span class="menu-text">Instagram</span></a></li>
+        </ul>
+    </div>
+
+    <div id="wrap">
+        <!-- Step 1: Click Heart Button -->
+        <div id="click-container">
+            <div class="heart-icon"></div>
+            <span class="click-text">click here</span>
+        </div>
+
+        <!-- Left Panel Container (Typography + Clock + Calendar) -->
+        <div id="left-panel">
+            <div id="text">
+                <div id="code">
+                    <span class="say">From Non..</span><br><br>
+                    <span class="say">ຢາກບອກໃຫ້ຢ້າຮູ້ວ່າ ຕັ້ງແຕ່ທີ່ມີຢ້າເຂົ້າມາໃນຊີວິດ, ນົນກໍຮູ້ສຶກວ່າຕົວເອງເປັນຄົນທີ່ໂຊກດີຫຼາຍ</span><br>
+                    <span class="say">ທຸກໆ ມື້ຂອງນົນມີແຕ່ຮອຍຍິ້ມ, ຄວາມສົດໃສ ແລະ ມີຄວາມໝາຍຫຼາຍຂຶ້ນໃນທຸກໆມື້</span><br>
+                    <span class="say">ຢ້າເປັນຄົນທີ່ນົນຢູ່ນຳແລ້ວມີຄວາມສຸກ, ສະບາຍໃຈ ແລະ ຮູ້ສຶກອົບອຸ່ນໃຈສະເໝີ</span><br>
+                    <span class="say">ມັນເຮັດໃຫ້ນົນໄດ້ຮູ້ວ່າ ການທີ່ເຮົາໄດ້ຮັກໃຜຈັກຄົນ ແລ້ວຄົນໆ ນັ້ນກໍຮັກເຮົາຄືກັນ ມັນດີສ່ຳໃດ</span><br><br>
+                    <span class="say">ຂອບໃຈສຳລັບຄວາມຮັກ, ຄວາມຫວ່ງໃຍ ແລະ ຄວາມເຂົ້າໃຈທີ່ຢ້າມີໃຫ້ນົນເດີ</span><br>
+                    <span class="say">ບໍ່ວ່າຈະເລື່ອງເລັກນ້ອຍ ຫຼື ເລື່ອງໃຫຍ່, ນົນກໍຊິຄ່ອຍຢູ່ຂ້າງໆ ຢ້າແບບນີ້ສະເໝີ</span><br>
+                    <span class="say">ບໍ່ໄດ້ຕ້ອງການຫຍັງທີ່ຍິ່ງໃຫຍ່ຈາກຢ້າດອກ, ແຄ່ມີຢ້າຢູ່ເປັນຄວາມຮັກທີ່ໜ້າຮັກແບບນີ້ໄປຕະຫຼອດກໍພໍແລ້ວ</span><br>
+                    <span class="say">ນົນຊິຄ່ອຍຢູ່ເປັນຮັກທີ່ປອດໄພ,ເປັນກອດທີ່ອົບອຸ່ນ ແລະ ເປັນກຳລັງໃຈໃຫ້ຢ້າໃນທຸກໆ ມື້......</span><br><br>
+                    <span class="say"><span class="space"></span>--ນົນຮັກຢ້າເດີ ❤️</span>
+                </div>
+            </div>
+            
+            <div id="bottom-container">
+                <div id="clock-box">
+                    <span class="clock-title">✨ Non & Yar:</span>
+                    <div id="clock"></div>
+                </div>
+
+                <!-- Sweet Pink Calendar -->
+                <div id="calendar-box">
+                    <div class="calendar-header">📅 Special Day</div>
+                    <div class="calendar-grid">
+                        <div class="day-name">SUN</div>
+                        <div class="day-name">MON</div>
+                        <div class="day-name">TUE</div>
+                        <div class="day-name">WED</div>
+                        <div class="day-name">THU</div>
+                        <div class="day-name">FRI</div>
+                        <div class="day-name">SAT</div>
+                        
+                        <div></div><div></div><div></div>
+                        
+                        <div class="day-number">1</div>
+                        <div class="day-number">2</div>
+                        <div class="day-number">3</div>
+                        <div class="day-number">4</div>
+                        <div class="day-number">5</div>
+                        <div class="day-number">6</div>
+                        <div class="day-number">7</div>
+                        <div class="day-number">8</div>
+                        <div class="day-number">9</div>
+                        <div class="day-number">10</div>
+                        <div class="day-number">11</div>
+                        <div class="day-number">12</div>
+                        <div class="day-number">13</div>
+                        <div class="day-number">14</div>
+                        <div class="day-number">15</div>
+                        <div class="day-number">16</div>
+                        <div class="day-number special-day">17</div>
+                        <div class="day-number">18</div>
+                        <div class="day-number">19</div>
+                        <div class="day-number">20</div>
+                        <div class="day-number">21</div>
+                        <div class="day-number">22</div>
+                        <div class="day-number">23</div>
+                        <div class="day-number">24</div>
+                        <div class="day-number">25</div>
+                        <div class="day-number">26</div>
+                        <div class="day-number">27</div>
+                        <div class="day-number">28</div>
+                        <div class="day-number">29</div>
+                        <div class="day-number">30</div>
+                        <div class="day-number">31</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Canvas for Animation -->
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <!-- Background Music -->
+    <audio id="media" src="love.mp3" preload="auto" loop></audio>
+
+    <script>
+        // Toggle Navigation Menu and X Animation
+        const menuBtn = document.getElementById('menuBtn');
+        const navMenu = document.getElementById('navMenu');
+
+        menuBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            menuBtn.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+                menuBtn.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+
+        (function () {
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+            var audio = document.getElementById('media');
+            var clickBtn = document.getElementById('click-container');
+
+            canvas.width = 1100;
+            canvas.height = 680;
+
+            var branches = [];
+            var leaves = [];
+            var fallingLeaves = []; 
+            var state = 0; // 0: Idle, 1: Dot Falling, 2: Growing Tree, 3: Growing Leaves, 3.5: Moving Right, 4: Clock & Text
+
+            var heartColors = [
+                "rgba(235, 47, 6, 0.85)",   
+                "rgba(255, 107, 129, 0.85)", 
+                "rgba(255, 165, 2, 0.85)",  
+                "rgba(255, 211, 42, 0.85)",  
+                "rgba(255, 255, 255, 0.9)",  
+                "rgba(255, 71, 87, 0.85)"   
+            ];
+
+            var treeColor = "#8c532b"; // ສີນ້ຳຕານອົບອຸ່ນ (ບໍ່ມີເສັ້ນຂອບສີດຳ)
+            var currentTreeX = 550;
+            var targetTreeX = 820; 
+            var treeY = 550;
+
+            function buildTree(relX, relY, length, angle, thickness, depth) {
+                var branch = { relX1: relX, relY1: relY, length: length, angle: angle, thickness: thickness, depth: depth, progress: 0 };
+                var relX2 = relX + Math.cos(angle) * length;
+                var relY2 = relY - Math.sin(angle) * length;
+                branch.relX2 = relX2;
+                branch.relY2 = relY2;
+                branches.push(branch);
+
+                if (depth < 8) {
+                    var angleRange = 0.45;
+                    buildTree(relX2, relY2, length * 0.78, angle - angleRange + (Math.random() * 0.1), thickness * 0.7, depth + 1);
+                    buildTree(relX2, relY2, length * 0.78, angle + angleRange - (Math.random() * 0.1), thickness * 0.7, depth + 1);
+                } else {
+                    for(var k = 0; k < 6; k++) {
+                        var rx = relX2 + (Math.random() - 0.5) * 140;
+                        var ry = relY2 + (Math.random() - 0.5) * 140;
+                        var color = heartColors[Math.floor(Math.random() * heartColors.length)];
+                        leaves.push({ 
+                            relX: rx, 
+                            relY: ry, 
+                            size: 0, 
+                            maxSize: 6 + Math.random() * 5,
+                            color: color
+                        });
+                    }
+                }
+            }
+
+            buildTree(0, 0, 95, Math.PI / 2, 22, 0);
+
+            function drawHeart(x, y, size, color, angle) {
+                ctx.save();
+                ctx.translate(x, y);
+                if (angle) ctx.rotate(angle);
+                ctx.beginPath();
+                ctx.fillStyle = color;
+                for (var t = 0; t < Math.PI * 2; t += 0.1) {
+                    var hx = 16 * Math.pow(Math.sin(t), 3);
+                    var hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+                    if (t === 0) ctx.moveTo(hx * (size/12), hy * (size/12));
+                    else ctx.lineTo(hx * (size/12), hy * (size/12));
+                }
+                ctx.fill();
+                ctx.restore();
+            }
+
+            // ແຕ້ມພື້ນດິນ ແລະ ໃບຫຍ້າສີຂຽວ ພ້ອມເສັ້ນຂອບສີດຳຢູ່ພື້ນ
+            function drawGroundAndGrass() {
+                if (state < 2) return;
+                var progress = branches[0] ? branches[0].progress : 0;
+                if (progress <= 0) return;
+
+                ctx.save();
+
+                // 1. ເສັ້ນຂອບສີດຳຢູ່ພື້ນດິນ (Ground Black Line)
+                ctx.beginPath();
+                ctx.moveTo(currentTreeX - 220 * progress, treeY + 2);
+                ctx.lineTo(currentTreeX + 220 * progress, treeY + 2);
+                ctx.lineWidth = 3.5;
+                ctx.strokeStyle = "#1a1a1a";
+                ctx.stroke();
+
+                // 2. ເນີນຫຍ້າສີຂຽວຢູ່ພື້ນດິນ
+                ctx.beginPath();
+                ctx.ellipse(currentTreeX, treeY + 2, 190 * progress, 16 * progress, 0, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(46, 204, 113, 0.7)";
+                ctx.fill();
+
+                // 3. ແຕ້ມໃບຫຍ້າສີຂຽວທີ່ມີເສັ້ນຂອບສີດຳຢູ່ພື້ນ
+                var grassColors = ["#2ecc71", "#27ae60", "#7bed9f", "#10ac84"];
+                var grassCount = 36;
+
+                for (var i = 0; i < grassCount; i++) {
+                    var offsetX = (i - grassCount / 2) * 9 * progress;
+                    var grassHeight = (14 + Math.sin(i * 3) * 6) * progress;
+                    var grassY = treeY + 1;
+
+                    // ແຕ້ມເສັ້ນຂອບສີດຳຂອງໃບຫຍ້າ
+                    ctx.beginPath();
+                    ctx.moveTo(currentTreeX + offsetX, grassY);
+                    ctx.quadraticCurveTo(
+                        currentTreeX + offsetX + (i % 2 === 0 ? 5 : -5), 
+                        grassY - grassHeight / 2, 
+                        currentTreeX + offsetX + (i % 2 === 0 ? 8 : -8), 
+                        grassY - grassHeight
+                    );
+                    ctx.lineWidth = 2.5;
+                    ctx.strokeStyle = "#1a1a1a";
+                    ctx.stroke();
+
+                    // ແຕ້ມໃບຫຍ້າສີຂຽວ
+                    ctx.beginPath();
+                    ctx.moveTo(currentTreeX + offsetX, grassY);
+                    ctx.quadraticCurveTo(
+                        currentTreeX + offsetX + (i % 2 === 0 ? 5 : -5), 
+                        grassY - grassHeight / 2, 
+                        currentTreeX + offsetX + (i % 2 === 0 ? 8 : -8), 
+                        grassY - grassHeight
+                    );
+                    ctx.lineWidth = 1.5;
+                    ctx.strokeStyle = grassColors[i % grassColors.length];
+                    ctx.stroke();
+                }
+
+                ctx.restore();
+            }
+
+            // ແຕ້ມໂຄນຕົ້ນໄມ້ (ສີນ້ຳຕານລ້ວນ ບໍ່ມີເສັ້ນຂອບສີດຳ)
+            function drawTreeRoot() {
+                if (state < 2) return;
+                var rootProgress = branches[0] ? branches[0].progress : 0;
+                if (rootProgress <= 0) return;
+
+                ctx.save();
+                ctx.fillStyle = treeColor;
+                ctx.beginPath();
+                
+                var baseWidth = 55 * rootProgress;
+                var trunkTopWidth = 14;
+
+                ctx.moveTo(currentTreeX - trunkTopWidth, treeY - 30);
+                ctx.quadraticCurveTo(currentTreeX - trunkTopWidth, treeY - 5, currentTreeX - baseWidth, treeY);
+                ctx.lineTo(currentTreeX + baseWidth, treeY);
+                ctx.quadraticCurveTo(currentTreeX + trunkTopWidth, treeY - 5, currentTreeX + trunkTopWidth, treeY - 30);
+                
+                ctx.closePath();
+                ctx.fill();
+                ctx.restore();
+            }
+
+            function createFallingLeaf() {
+                var randomLeaf = leaves[Math.floor(Math.random() * leaves.length)];
+                fallingLeaves.push({
+                    x: currentTreeX + randomLeaf.relX,
+                    y: treeY + randomLeaf.relY,
+                    size: 4 + Math.random() * 4,
+                    color: randomLeaf.color,
+                    speedY: 1 + Math.random() * 1.5,
+                    speedX: (Math.random() - 0.5) * 1.2,
+                    angle: Math.random() * Math.PI * 2,
+                    angularSpeed: (Math.random() - 0.5) * 0.05
+                });
+            }
+
+            var dotY = 340;
+            var currentBranchIndex = 0;
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                if (state >= 2) {
+                    drawGroundAndGrass(); // ແຕ້ມພື້ນດິນ, ເສັ້ນຂອບສີດຳຢູ່ພື້ນ ແລະ ໃບຫຍ້າ
+                    drawTreeRoot();       // ແຕ້ມໂຄນຕົ້ນໄມ້
+                }
+
+                if (state === 1) {
+                    drawHeart(currentTreeX, dotY, 10, "#e74c3c");
+
+                    if (dotY < treeY) {
+                        dotY += 4;
+                    } else {
+                        state = 2;
+                    }
+                }
+
+                if (state >= 2) {
+                    var allBranchesDone = true;
+                    for (var i = 0; i < branches.length; i++) {
+                        var b = branches[i];
+                        if (i <= currentBranchIndex) {
+                            if (b.progress < 1) {
+                                b.progress += 0.08;
+                                allBranchesDone = false;
+                            }
+                            var startX = currentTreeX + b.relX1;
+                            var startY = treeY + b.relY1;
+                            var endX = currentTreeX + b.relX2;
+                            var endY = treeY + b.relY2;
+
+                            var currentX = startX + (endX - startX) * b.progress;
+                            var currentY = startY + (endY - startY) * b.progress;
+
+                            // ແຕ້ມງ່າໄມ້ສີນ້ຳຕານລ້ວນ (ບໍ່ມີເສັ້ນຂອບສີດຳ)
+                            ctx.beginPath();
+                            ctx.moveTo(startX, startY);
+                            ctx.lineTo(currentX, currentY);
+                            ctx.lineWidth = b.thickness;
+                            ctx.strokeStyle = treeColor; 
+                            ctx.lineCap = 'round';
+                            ctx.stroke();
+                        }
+                    }
+
+                    if (currentBranchIndex < branches.length - 1) {
+                        currentBranchIndex += 3;
+                    } else if (allBranchesDone && state === 2) {
+                        state = 3;
+                    }
+                }
+
+                if (state >= 3) {
+                    var allLeavesDone = true;
+                    for (var j = 0; j < leaves.length; j++) {
+                        var l = leaves[j];
+                        if (l.size < l.maxSize) {
+                            l.size += 0.3;
+                            allLeavesDone = false;
+                        }
+                        drawHeart(currentTreeX + l.relX, treeY + l.relY, l.size, l.color);
+                    }
+
+                    if (allLeavesDone && state === 3) {
+                        state = 3.5;
+                    }
+                }
+
+                if (state === 3.5) {
+                    var dx = targetTreeX - currentTreeX;
+                    if (dx > 0.5) {
+                        currentTreeX += dx * 0.12; 
+                    } else {
+                        currentTreeX = targetTreeX;
+                        state = 4;
+                        startUISequence();
+                    }
+                }
+
+                if (state === 4) {
+                    if (Math.random() < 0.2) {
+                        createFallingLeaf();
+                    }
+
+                    for (var k = fallingLeaves.length - 1; k >= 0; k--) {
+                        var fl = fallingLeaves[k];
+                        fl.y += fl.speedY;
+                        fl.x += Math.sin(fl.y * 0.02) + fl.speedX;
+                        fl.angle += fl.angularSpeed;
+
+                        drawHeart(fl.x, fl.y, fl.size, fl.color, fl.angle);
+
+                        if (fl.y > treeY + 20) {
+                            fallingLeaves.splice(k, 1);
+                        }
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            function typewriterEffect(element, onComplete) {
+                element.style.display = 'block';
+                var fullHTML = element.innerHTML;
+                element.innerHTML = "";
+                var progress = 0;
+                
+                var timer = setInterval(function () {
+                    var currentChar = fullHTML.substr(progress, 1);
+                    if (currentChar == '<') {
+                        progress = fullHTML.indexOf('>', progress) + 1;
+                    } else {
+                        progress++;
+                    }
+                    element.innerHTML = fullHTML.substring(0, progress) + (progress & 1 ? '_' : '');
+                    if (progress >= fullHTML.length) {
+                        clearInterval(timer);
+                        element.innerHTML = fullHTML;
+                        if (onComplete) onComplete();
+                    }
+                }, 40);
+            }
+
+            function timeElapse(element, date) {
+                function updateClock() {
+                    var seconds = (new Date() - date) / 1000;
+                    if (seconds < 0) seconds = 0;
+
+                    var days = Math.floor(seconds / (3600 * 24));
+                    seconds %= (3600 * 24);
+                    var hours = Math.floor(seconds / 3600);
+                    if (hours < 10) hours = "0" + hours;
+                    seconds %= 3600;
+                    var minutes = Math.floor(seconds / 60);
+                    if (minutes < 10) minutes = "0" + minutes;
+                    seconds = Math.floor(seconds % 60);
+                    if (seconds < 10) seconds = "0" + seconds;
+                    
+                    element.innerHTML = `
+                        <div class="time-block"><span class="digit">${days}</span><span class="unit">ວັນ</span></div>
+                        <div class="time-block"><span class="digit">${hours}</span><span class="unit">ຊົ່ວໂມງ</span></div>
+                        <div class="time-block"><span class="digit">${minutes}</span><span class="unit">ນາທີ</span></div>
+                        <div class="time-block"><span class="digit">${seconds}</span><span class="unit">ວິນາທີ</span></div>
+                    `;
+                }
+
+                updateClock();
+                setInterval(updateClock, 1000);
+            }
+
+            function startUISequence() {
+                var codeDiv = document.getElementById('code');
+                var bottomDiv = document.getElementById('bottom-container');
+                var clockText = document.getElementById('clock');
+                
+                var togetherDate = new Date(2026, 0, 1); 
+
+                bottomDiv.style.display = 'flex';
+                timeElapse(clockText, togetherDate);
+                typewriterEffect(codeDiv);
+            }
+
+            clickBtn.onclick = function () {
+                if (state !== 0) return;
+                
+                clickBtn.style.opacity = '0';
+                setTimeout(function() { clickBtn.style.display = 'none'; }, 500);
+
+                if (audio) audio.play().catch(function(e){});
+                
+                state = 1;
+                requestAnimationFrame(animate);
+            };
+
+        })();
+    </script>
+</body>
+</html>
