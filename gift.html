@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="lo">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ຈົດໝາຍຮັກສຳລັບເຈົ້າ ♡</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@400;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f7eee7;
+            font-family: 'Noto Sans Lao', 'Press Start 2P', cursive, monospace;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            user-select: none;
+        }
+
+        /* Background Hearts */
+        .bg-heart {
+            position: absolute;
+            color: #f28b82;
+            font-size: 10px;
+            pointer-events: none;
+            opacity: 0.6;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.1); }
+        }
+
+        /* ================= SCREEN 1: INTRO ================= */
+        #screen1 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            height: 80vh;
+            width: 100vw;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .envelope-card {
+            background: #fff6f6;
+            border: 3px dashed #e89ba6;
+            border-radius: 16px;
+            padding: 25px;
+            width: 240px;
+            box-shadow: 0 8px 16px rgba(232, 155, 166, 0.15);
+            cursor: pointer;
+            transition: transform 0.3s;
+            margin-top: 40px;
+            position: relative;
+        }
+
+        .envelope-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .envelope-svg {
+            width: 100px;
+            height: 80px;
+        }
+
+        .from-text {
+            color: #d16675;
+            font-size: 10pt;
+            margin-top: 15px;
+            line-height: 1.5;
+            font-weight: bold;
+        }
+
+        .bow-wrapper {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .bow-container {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            transform-origin: center center;
+        }
+
+        .bow-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .aim-text {
+            color: #a37279;
+            font-size: 9pt;
+            margin-top: 10px;
+        }
+
+        .flying-arrow {
+            position: absolute;
+            width: 50px;
+            height: 20px;
+            pointer-events: none;
+            z-index: 50;
+            transform-origin: center center;
+            transition: opacity 0.5s ease;
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+        }
+
+        .hit-heart {
+            position: absolute;
+            color: #e85d75;
+            font-size: 24px;
+            pointer-events: none;
+            z-index: 60;
+            animation: popHeart 0.6s ease-out forwards;
+        }
+
+        @keyframes popHeart {
+            0% { transform: scale(0) translate(-50%, -50%); opacity: 1; }
+            50% { transform: scale(1.5) translate(-50%, -50%); opacity: 1; }
+            100% { transform: scale(2) translate(-50%, -50%); opacity: 0; }
+        }
+
+        /* ================= SCREEN 2: LOVE WINDOW ================= */
+        #screen2 {
+            display: none;
+            z-index: 10;
+        }
+
+        .love-window {
+            background-color: #fcedf0;
+            border: 4px solid #e89ba6;
+            border-radius: 12px;
+            width: 340px;
+            height: 420px;
+            box-shadow: 0 10px 25px rgba(210, 110, 125, 0.2);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .window-header {
+            background-color: #f7d6dc;
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 3px solid #e89ba6;
+        }
+
+        .window-title {
+            color: #ba5363;
+            font-size: 9pt;
+            font-weight: bold;
+        }
+
+        .window-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border: 2px solid #e89ba6;
+            background: #fff;
+        }
+
+        .window-content {
+            padding: 20px 15px;
+            text-align: center;
+            background-image: radial-gradient(#f2b6c1 15%, transparent 15%);
+            background-size: 12px 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-grow: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .heart-header {
+            color: #e85d75;
+            font-size: 10pt;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            color: #8c434f;
+            font-size: 10.5pt;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            min-height: 35px;
+            font-weight: bold;
+        }
+
+        .cat-container {
+            margin: 5px 0 15px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cat-svg {
+            width: 100px;
+            height: 100px;
+        }
+
+        .typewriter-msg {
+            font-size: 9pt;
+            color: #8c434f;
+            margin-top: 10px;
+            line-height: 1.5;
+            min-height: 25px;
+        }
+
+        .love-badge {
+            background: #3b82f6;
+            color: white;
+            padding: 4px 8px;
+            margin-top: 8px;
+            display: inline-block;
+            font-size: 8pt;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            border-radius: 4px;
+        }
+
+        .love-badge.show {
+            opacity: 1;
+        }
+
+        /* Buttons Area */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            margin-top: auto;
+            margin-bottom: 10px;
+            min-height: 45px;
+        }
+
+        .pixel-btn {
+            font-family: 'Noto Sans Lao', cursive, monospace;
+            font-size: 9pt;
+            font-weight: bold;
+            width: 95px;
+            height: 38px;
+            border: 3px solid #e89ba6;
+            background: #ffffff;
+            color: #ba5363;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px #e89ba6;
+            outline: none;
+            border-radius: 6px;
+            transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pixel-btn:active {
+            transform: scale(0.95);
+        }
+
+        #btnYes {
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+            z-index: 10;
+        }
+
+        #btnYes:hover {
+            background: #ff758c;
+            color: #ffffff;
+            border-color: #d8435c;
+            box-shadow: 3px 3px 0px #b82d44;
+        }
+
+        #btnNo {
+            z-index: 100;
+            transition: left 0.15s ease-out, top 0.15s ease-out;
+        }
+
+        #btnNo.escaped {
+            position: absolute !important;
+        }
+
+        .confetti-heart {
+            position: absolute;
+            font-size: 20px;
+            pointer-events: none;
+            z-index: 100;
+            animation: fall 3s linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100vh) rotate(0deg) scale(0.8); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        /* ================= FLOATING MENU UI (UPDATED DESIGN) ================= */
+        .floating-menu-wrapper {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+
+        /* Rounded Square Menu Button */
+        .bottom-menu-btn {
+            width: 52px;
+            height: 52px;
+            background-color: #ffffff;
+            border: 3px solid #e8a0ab;
+            border-radius: 16px;
+            box-shadow: 4px 4px 0px #e8a0ab;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+
+        .bottom-menu-btn:hover {
+            background-color: #fff6f8;
+            transform: translateY(-2px);
+        }
+
+        .bottom-menu-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0px #e8a0ab;
+        }
+
+        .bottom-menu-btn .bar {
+            width: 22px;
+            height: 3px;
+            background-color: #c25968;
+            border-radius: 3px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .bottom-menu-btn .close-icon {
+            position: absolute;
+            color: #c25968;
+            font-size: 22px;
+            font-weight: bold;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        /* Active State for Menu Button (Turns into X) */
+        .floating-menu-wrapper.active .bottom-menu-btn .bar {
+            opacity: 0;
+        }
+
+        .floating-menu-wrapper.active .bottom-menu-btn .close-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Floating Pill-style Links Menu */
+        .nav-menu {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 12px;
+            margin-bottom: 15px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.27);
+        }
+
+        .floating-menu-wrapper.active .nav-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-menu .menu-item a {
+            display: inline-block;
+            padding: 10px 22px;
+            background: #ffffff;
+            border: 2px solid #ff5b79;
+            border-radius: 25px;
+            color: #ff5b79;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 9.5pt;
+            box-shadow: 0 4px 12px rgba(255, 91, 121, 0.15);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-menu .menu-item a:hover {
+            background: #ff5b79;
+            color: #ffffff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(255, 91, 121, 0.3);
+        }
+    </style>
+</head>
+<body>
+
+    <div id="bgHearts"></div>
+
+    <!-- SCREEN 1 -->
+    <div id="screen1">
+        <div class="envelope-card" id="envelopeCard">
+            <svg class="envelope-svg" viewBox="0 0 100 80">
+                <rect x="5" y="15" width="90" height="60" rx="6" fill="#ffffff" stroke="#e89ba6" stroke-width="4"/>
+                <path d="M 5 18 L 50 50 L 95 18" fill="none" stroke="#e89ba6" stroke-width="4"/>
+                <polygon points="5,15 50,45 95,15" fill="#fce4e8" />
+                <path d="M 50 38 C 45 30, 38 38, 50 46 C 62 38, 55 30, 50 38 Z" fill="#e85d75" />
+            </svg>
+            <div class="from-text">♥ ຈາກ ນົນ ເຖິງ ຢ້າ ♥</div>
+        </div>
+
+        <div class="bow-wrapper">
+            <div class="bow-container" id="bowContainer">
+                <svg class="bow-svg" viewBox="0 0 100 100">
+                    <path d="M 20 20 C 60 30, 60 70, 20 80" fill="none" stroke="#d49b4b" stroke-width="6" stroke-linecap="round"/>
+                    <line x1="20" y1="20" x2="20" y2="80" stroke="#f0d09c" stroke-width="2"/>
+                    <g id="bowArrow">
+                        <line x1="5" y1="50" x2="60" y2="50" stroke="#d8435c" stroke-width="4"/>
+                        <polygon points="60,44 72,50 60,56" fill="#d8435c"/>
+                        <polygon points="5,44 12,50 5,56" fill="#f7d6dc"/>
+                    </g>
+                </svg>
+            </div>
+            <div class="aim-text">ກົດບ່ອນໃດກໍໄດ້ເພື່ອຍິງທະນູໃສ່ຫົວໃຈ ♡ ♥</div>
+        </div>
+    </div>
+
+    <!-- SCREEN 2 -->
+    <div id="screen2">
+        <div class="love-window" id="loveWindow">
+            <div class="window-header">
+                <span class="window-title">ຂໍ້ຄວາມຮັກ</span>
+                <div class="window-dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+            </div>
+            
+            <div class="window-content" id="windowContent">
+                <div class="heart-header">♥ ♥ ♥</div>
+                
+                <div class="question-text" id="questionText">
+                    ຢ້າມື້ນີ້ໄປຕີແບັດນຳກັນບໍ່? ♡
+                </div>
+
+                <div class="cat-container" id="catBox">
+                    <svg class="cat-svg" viewBox="0 0 20 20" shape-rendering="crispEdges">
+                        <rect x="3" y="3" width="3" height="3" fill="#2b2b2b"/>
+                        <rect x="14" y="3" width="3" height="3" fill="#2b2b2b"/>
+                        <rect x="2" y="6" width="16" height="11" fill="#2b2b2b"/>
+                        <rect x="5" y="8" width="3" height="3" fill="#ffffff"/>
+                        <rect x="6" y="9" width="1" height="2" fill="#000000"/>
+                        <rect x="12" y="8" width="3" height="3" fill="#ffffff"/>
+                        <rect x="13" y="9" width="1" height="2" fill="#000000"/>
+                        <rect x="3" y="11" width="2" height="1" fill="#ff8ba7"/>
+                        <rect x="15" y="11" width="2" height="1" fill="#ff8ba7"/>
+                        <path d="M 10 16 L 6 12 C 4 10, 7 8, 10 11 C 13 8, 16 10, 14 12 Z" fill="#e85d75"/>
+                    </svg>
+                    <div class="typewriter-msg" id="subMessage"></div>
+                    <div class="love-badge" id="loveBadge">I LOVE YOU ♥</div>
+                </div>
+
+                <div class="btn-group" id="btnGroup">
+                    <button class="pixel-btn" id="btnYes" onclick="acceptedLove()">ໄປ</button>
+                    <button class="pixel-btn" id="btnNo" onclick="moveNoButton()" onmouseover="moveNoButton()">ບໍ່ໄປ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ປຸ່ມສາມຂີດ & ເມນູລອຍ (Floating Menu UI) -->
+    <div class="floating-menu-wrapper" id="menuWrapper">
+        <ul class="nav-menu" id="navMenu">
+            <li class="menu-item"><a href="gift.html"><span class="menu-text">invite</span></a></li>
+            <li class="menu-item"><a href="yarpalina.html"><span class="menu-text">For palina</span></a></li>
+            <li class="menu-item"><a href="dashboard.html"><span class="menu-text">Memory Box</span></a></li>
+            <li class="menu-item"><a href="heart.html"><span class="menu-text">Heart</span></a></li>
+            <li class="menu-item"><a href="non.html"><span class="menu-text">Do you Love me</span></a></li>
+            <li class="menu-item"><a href="palina.html"><span class="menu-text">She is the light</span></a></li>
+            <li class="menu-item"><a href="story.html"><span class="menu-text">Instagram</span></a></li>
+        </ul>
+
+        <div class="bottom-menu-btn" id="bottomMenuBtn" title="ເມນູ" onclick="toggleMenu()">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="close-icon">✕</div>
+        </div>
+    </div>
+
+    <script>
+        let currentAngle = 0;
+        let canShoot = true;
+
+        // Toggle Floating Menu
+        function toggleMenu() {
+            const menuWrapper = document.getElementById('menuWrapper');
+            menuWrapper.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const menuWrapper = document.getElementById('menuWrapper');
+            if (!menuWrapper.contains(e.target) && menuWrapper.classList.contains('active')) {
+                menuWrapper.classList.remove('active');
+            }
+        });
+
+        // Background Hearts setup
+        const bgContainer = document.getElementById('bgHearts');
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'bg-heart';
+            heart.innerHTML = '♥';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.top = Math.random() * 100 + 'vh';
+            heart.style.animationDelay = (Math.random() * 5) + 's';
+            heart.style.fontSize = (Math.random() * 10 + 8) + 'px';
+            bgContainer.appendChild(heart);
+        }
+
+        // Bow Aim & Shoot
+        const bowContainer = document.getElementById('bowContainer');
+        const screen1 = document.getElementById('screen1');
+        const envelopeCard = document.getElementById('envelopeCard');
+
+        window.addEventListener('mousemove', (e) => {
+            if (screen1.style.display === 'none') return;
+            const rect = bowContainer.getBoundingClientRect();
+            const bowCenterX = rect.left + rect.width / 2;
+            const bowCenterY = rect.top + rect.height / 2;
+            const deltaX = e.clientX - bowCenterX;
+            const deltaY = e.clientY - bowCenterY;
+            currentAngle = Math.atan2(deltaY, deltaX) * (180 / Math.PI);
+            bowContainer.style.transform = `rotate(${currentAngle}deg)`;
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target.closest('#menuWrapper')) return;
+            if (screen1.style.display === 'none' || !canShoot) return;
+            shootArrow(currentAngle);
+        });
+
+        function shootArrow(angle) {
+            canShoot = false;
+            const rect = bowContainer.getBoundingClientRect();
+            const startX = rect.left + rect.width / 2;
+            const startY = rect.top + rect.height / 2;
+
+            const arrow = document.createElement('div');
+            arrow.className = 'flying-arrow';
+            arrow.style.left = `${startX - 25}px`;
+            arrow.style.top = `${startY - 10}px`;
+            arrow.style.transform = `rotate(${angle}deg)`;
+
+            arrow.innerHTML = `
+                <svg viewBox="0 0 70 20" width="100%" height="100%">
+                    <line x1="5" y1="10" x2="55" y2="10" stroke="#d8435c" stroke-width="4"/>
+                    <polygon points="55,4 68,10 55,16" fill="#d8435c"/>
+                    <polygon points="5,4 12,10 5,16" fill="#f7d6dc"/>
+                </svg>
+            `;
+            document.body.appendChild(arrow);
+
+            const rad = angle * (Math.PI / 180);
+            const speed = 22;
+            let posX = startX;
+            let posY = startY;
+
+            const envelopeRect = envelopeCard.getBoundingClientRect();
+
+            const moveInterval = setInterval(() => {
+                posX += Math.cos(rad) * speed;
+                posY += Math.sin(rad) * speed;
+
+                arrow.style.left = `${posX - 25}px`;
+                arrow.style.top = `${posY - 10}px`;
+
+                const arrowTipX = posX + Math.cos(rad) * 25;
+                const arrowTipY = posY + Math.sin(rad) * 25;
+
+                const isHit = (
+                    arrowTipX >= envelopeRect.left &&
+                    arrowTipX <= envelopeRect.right &&
+                    arrowTipY >= envelopeRect.top &&
+                    arrowTipY <= envelopeRect.bottom
+                );
+
+                if (isHit) {
+                    clearInterval(moveInterval);
+                    onTargetHit(arrowTipX, arrowTipY, arrow);
+                } else if (
+                    posX < -50 || posX > window.innerWidth + 50 ||
+                    posY < -50 || posY > window.innerHeight + 50
+                ) {
+                    clearInterval(moveInterval);
+                    arrow.remove();
+                    canShoot = true;
+                }
+            }, 16);
+        }
+
+        function onTargetHit(hitX, hitY, arrowElement) {
+            const heart = document.createElement('div');
+            heart.className = 'hit-heart';
+            heart.innerHTML = '♥';
+            heart.style.left = `${hitX}px`;
+            heart.style.top = `${hitY}px`;
+            document.body.appendChild(heart);
+
+            setTimeout(() => { arrowElement.classList.add('fade-out'); }, 200);
+
+            setTimeout(() => {
+                heart.remove();
+                arrowElement.remove();
+                openLoveWindow();
+            }, 600);
+        }
+
+        function openLoveWindow() {
+            document.getElementById('screen1').style.display = 'none';
+            document.getElementById('screen2').style.display = 'block';
+        }
+
+        let yesScale = 1;
+
+        function moveNoButton() {
+            const btnNo = document.getElementById('btnNo');
+            const btnYes = document.getElementById('btnYes');
+            const windowContent = document.getElementById('windowContent');
+
+            if (!btnNo.classList.contains('escaped')) {
+                btnNo.classList.add('escaped');
+                windowContent.appendChild(btnNo);
+            }
+
+            const containerRect = windowContent.getBoundingClientRect();
+            const btnWidth = btnNo.offsetWidth;
+            const btnHeight = btnNo.offsetHeight;
+
+            const padding = 10;
+            const minX = padding;
+            const maxX = containerRect.width - btnWidth - padding;
+            const minY = padding;
+            const maxY = containerRect.height - btnHeight - padding;
+
+            const yesRect = btnYes.getBoundingClientRect();
+            const yesRelLeft = yesRect.left - containerRect.left;
+            const yesRelTop = yesRect.top - containerRect.top;
+            const yesRelRight = yesRelLeft + yesRect.width;
+            const yesRelBottom = yesRelTop + yesRect.height;
+
+            let randomX, randomY;
+            let overlap = true;
+            let attempts = 0;
+
+            while (overlap && attempts < 100) {
+                randomX = Math.floor(Math.random() * (maxX - minX + 1)) + minX;
+                randomY = Math.floor(Math.random() * (maxY - minY + 1)) + minY;
+
+                const noRight = randomX + btnWidth;
+                const noBottom = randomY + btnHeight;
+
+                const buffer = 10;
+                const isOverlapping = !(
+                    noRight < (yesRelLeft - buffer) ||
+                    randomX > (yesRelRight + buffer) ||
+                    noBottom < (yesRelTop - buffer) ||
+                    randomY > (yesRelBottom + buffer)
+                );
+
+                if (!isOverlapping) {
+                    overlap = false;
+                }
+                attempts++;
+            }
+
+            btnNo.style.left = `${randomX}px`;
+            btnNo.style.top = `${randomY}px`;
+
+            if (yesScale < 1.8) {
+                yesScale += 0.1;
+                btnYes.style.transform = `scale(${yesScale})`;
+            }
+        }
+
+        function typeWriter(text, elementId, speed, callback) {
+            let i = 0;
+            const elem = document.getElementById(elementId);
+            elem.innerHTML = "";
+            function type() {
+                if (i < text.length) {
+                    elem.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                } else if (callback) {
+                    callback();
+                }
+            }
+            type();
+        }
+
+        function acceptedLove() {
+            document.getElementById('btnGroup').style.display = 'none';
+            const btnNo = document.getElementById('btnNo');
+            if (btnNo) btnNo.style.display = 'none';
+
+            document.querySelector('.cat-svg').innerHTML = `
+                <rect x="3" y="3" width="3" height="3" fill="#2b2b2b"/>
+                <rect x="14" y="3" width="3" height="3" fill="#2b2b2b"/>
+                <rect x="2" y="6" width="16" height="11" fill="#2b2b2b"/>
+                <path d="M 5 10 L 6 8 L 7 10" stroke="#ffffff" stroke-width="1" fill="none"/>
+                <path d="M 13 10 L 14 8 L 15 10" stroke="#ffffff" stroke-width="1" fill="none"/>
+                <rect x="3" y="11" width="3" height="1" fill="#ff8ba7"/>
+                <rect x="14" y="11" width="3" height="1" fill="#ff8ba7"/>
+                <path d="M 10 16 L 6 12 C 4 10, 7 8, 10 11 C 13 8, 16 10, 14 12 Z" fill="#e85d75"/>
+            `;
+
+            typeWriter("ເຢ້້້! ໄປຫຼິ້ນກັນເລີຍ ♡", "questionText", 70, function() {
+                typeWriter("ດີໃຈຫຼາຍທີ່ຢ້າໄປນຳນົນ", "subMessage", 50, function() {
+                    document.getElementById('loveBadge').classList.add('show');
+                });
+            });
+
+            createHeartRain();
+        }
+
+        function createHeartRain() {
+            const colors = ['#ff758c', '#ff7eb3', '#f28b82', '#f7d6dc', '#e85d75'];
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'confetti-heart';
+                    heart.innerHTML = '♥';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+                    heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    heart.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+                    document.body.appendChild(heart);
+
+                    setTimeout(() => heart.remove(), 3000);
+                }, i * 60);
+            }
+        }
+    </script>
+</body>
+</html>
