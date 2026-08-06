@@ -20,7 +20,7 @@
             overflow: hidden;
             height: 100vh;
             font-family: 'Press Start 2P', monospace;
-            -webkit-tap-highlight-color: transparent; /* ປ້ອງກັນແສງໄຮໄລ້ສີຟ້າເວລາ Tap ເທິງໂທລະສັບ */
+            -webkit-tap-highlight-color: transparent;
         }
 
         /* ========================================================= */
@@ -57,7 +57,6 @@
             background: #ff3385;
             border: 4px inset #ffffff;
             box-shadow: 2px 2px 0px #a60042;
-            transform: translate(2px, 2px);
         }
 
         .hamburger-btn .bar {
@@ -126,7 +125,6 @@
             background: #ff3385;
             color: #ffffff;
             border: 3px inset #ffffff;
-            transform: translate(2px, 2px);
             box-shadow: 1px 1px 0px #a60042;
         }
 
@@ -150,6 +148,7 @@
             width: 400px;
             max-width: 90%;
             box-shadow: 10px 10px 0px #a60042;
+            will-change: transform;
         }
 
         .window-bar {
@@ -186,30 +185,31 @@
             gap: 20px;
         }
 
-        /* ປັບປຸງປຸ່ມໃຫ້ກົດງ່າຍເທິງໂທລະສັບ */
+        /* แก้ไข CSS ປຸ່ມໃຫ້ຮອງຮັບການ Touch ເທິງມືຖືໄດ້ 100% */
         .pixel-btn {
             background: transparent;
             color: #ffb3d1;
             border: 4px outset #ff3385; 
             padding: 14px 20px;
-            min-height: 48px; /* ຂະໜາດມາດຕະຖານ Touch Target */
+            min-height: 48px;
             min-width: 100px;
             font-size: 10pt;
             cursor: pointer;
             font-family: 'Press Start 2P', monospace;
             outline: none;
             box-shadow: 3px 3px 0px #a60042;
-            transition: transform 0.1s ease, background-color 0.1s ease;
-            touch-action: manipulation; /* ຍົກເວັ້ນ 300ms tap delay */
+            transition: background-color 0.1s ease, border-color 0.1s ease;
+            touch-action: manipulation;
+            -webkit-user-select: none;
             user-select: none;
         }
 
+        /* ຍົກເລີກ transform: scale(0.98) ເພື່ອບໍ່ໃຫ້ຈຸດແຕະເຄື່ອນທີ່ */
         .pixel-btn:hover, .pixel-btn:active {
             background: #ff3385;
             color: #ffffff;
             border: 4px inset #ffffff;
             box-shadow: 0 0 14px #ff3385;
-            transform: scale(0.98);
         }
 
         .pixel-smiler {
@@ -265,7 +265,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            justify-content: space-between;
+            justify-content: space-around;
             overflow: hidden;
             z-index: 1;
             opacity: 0; 
@@ -313,8 +313,8 @@
             <div class="window-body">
                 <h1 class="title-text">Do you love me?</h1>
                 <div class="btn-container">
-                    <button class="pixel-btn" onclick="triggerYes()">No</button>
-                    <button class="pixel-btn" onclick="triggerNo()">Yes</button>
+                    <button class="pixel-btn" id="btnNo">No</button>
+                    <button class="pixel-btn" id="btnYes">Yes</button>
                 </div>
             </div>
         </div>
@@ -357,7 +357,7 @@
         function buildMatrixBackground() {
             bgContainer.innerHTML = '';
             
-            const charWidth = 95; 
+            const charWidth = 90; 
             const columnCount = Math.ceil(window.innerWidth / charWidth) + 1;
             
             let textBlock = "";
@@ -383,12 +383,12 @@
 
         window.addEventListener('resize', buildMatrixBackground);
 
-        function triggerYes() {
+        function handleNoAction() {
             document.getElementById('viewInterface').style.display = 'none';
             document.getElementById('smileContainer').style.display = 'block';
         }
 
-        function triggerNo() {
+        function handleYesAction() {
             const frame = document.getElementById('popupWindow');
             frame.style.transform = 'translate(4px, 4px)';
             setTimeout(() => frame.style.transform = 'translate(-4px, -4px)', 40);
@@ -403,6 +403,10 @@
                 document.getElementById('neonSet').style.display = 'flex';
             }, 130);
         }
+
+        // ຜູກ Event Listeners ຜ່ານ JS ໂດຍກົງ ເພື່ອຮອງຮັບ Click/Tap ເທິງມືຖືໄດ້ 100%
+        document.getElementById('btnNo').addEventListener('click', handleNoAction);
+        document.getElementById('btnYes').addEventListener('click', handleYesAction);
 
         // Hamburger Menu
         const menuToggle = document.getElementById('menuToggle');
