@@ -14,12 +14,13 @@
         }
         
         body {
-            background-color: #12030b; /* ພື້ນຫຼັງສີດຳ-ມ່ວງບົວເຂັ້ມ ເພື່ອໃຫ້ສີບົວເດັ່ນ */
+            background-color: #12030b;
             margin: 0;
             padding: 0;
             overflow: hidden;
             height: 100vh;
             font-family: 'Press Start 2P', monospace;
+            -webkit-tap-highlight-color: transparent; /* ປ້ອງກັນແສງໄຮໄລ້ສີຟ້າເວລາ Tap ເທິງໂທລະສັບ */
         }
 
         /* ========================================================= */
@@ -49,9 +50,10 @@
             gap: 5px;
             box-shadow: 4px 4px 0px #a60042;
             transition: all 0.15s ease;
+            touch-action: manipulation;
         }
 
-        .hamburger-btn:hover {
+        .hamburger-btn:hover, .hamburger-btn:active {
             background: #ff3385;
             border: 4px inset #ffffff;
             box-shadow: 2px 2px 0px #a60042;
@@ -65,7 +67,7 @@
             transition: all 0.2s ease;
         }
 
-        .hamburger-btn:hover .bar {
+        .hamburger-btn:hover .bar, .hamburger-btn:active .bar {
             background-color: #ffffff;
         }
 
@@ -110,16 +112,17 @@
             background-color: #1a0512;
             color: #ffb3d1;
             border: 3px outset #ff3385;
-            padding: 8px 18px;
+            padding: 10px 18px;
             min-width: 140px;
             text-align: center;
             font-size: 8pt;
             font-family: 'Press Start 2P', monospace;
             box-shadow: 3px 3px 0px #a60042;
             transition: all 0.15s ease;
+            touch-action: manipulation;
         }
 
-        .menu-item a:hover .menu-text {
+        .menu-item a:hover .menu-text, .menu-item a:active .menu-text {
             background: #ff3385;
             color: #ffffff;
             border: 3px inset #ffffff;
@@ -164,7 +167,7 @@
         }
 
         .window-body {
-            padding: 50px 20px;
+            padding: 40px 20px;
             text-align: center;
         }
 
@@ -172,7 +175,7 @@
             color: #ffffff;
             font-size: 13pt;
             line-height: 1.6;
-            margin: 0 0 45px 0;
+            margin: 0 0 35px 0;
             font-weight: normal;
             text-shadow: 0 0 10px #ff3385;
         }
@@ -180,27 +183,33 @@
         .btn-container {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 20px;
         }
 
+        /* ປັບປຸງປຸ່ມໃຫ້ກົດງ່າຍເທິງໂທລະສັບ */
         .pixel-btn {
             background: transparent;
             color: #ffb3d1;
             border: 4px outset #ff3385; 
-            padding: 12px 24px;
-            font-size: 11pt;
+            padding: 14px 20px;
+            min-height: 48px; /* ຂະໜາດມາດຕະຖານ Touch Target */
+            min-width: 100px;
+            font-size: 10pt;
             cursor: pointer;
             font-family: 'Press Start 2P', monospace;
             outline: none;
             box-shadow: 3px 3px 0px #a60042;
-            transition: all 0.15s ease;
+            transition: transform 0.1s ease, background-color 0.1s ease;
+            touch-action: manipulation; /* ຍົກເວັ້ນ 300ms tap delay */
+            user-select: none;
         }
 
-        .pixel-btn:hover {
+        .pixel-btn:hover, .pixel-btn:active {
             background: #ff3385;
             color: #ffffff;
             border: 4px inset #ffffff;
             box-shadow: 0 0 14px #ff3385;
+            transform: scale(0.98);
         }
 
         .pixel-smiler {
@@ -222,7 +231,6 @@
             top: 53%;
             left: 50%;
             transform: translate(-50%, -50%);
-            display: flex;
             flex-direction: column;
             align-items: center;
             gap: 0px;
@@ -231,10 +239,9 @@
             pointer-events: none;
         }
 
-        /* ຂໍ້ຄວາມກາງຈໍ - ສີບົວຫວານເດັ່ນ ພ້ອມ Glow */
         .neon-text {
             color: #ff4d94;
-            font-size: 26pt;
+            font-size: 24pt;
             text-align: center;
             margin-bottom: 10px;
             text-shadow: 
@@ -258,7 +265,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            display: flex;
             justify-content: space-between;
             overflow: hidden;
             z-index: 1;
@@ -266,7 +272,6 @@
             transition: opacity 0.3s ease;
         }
 
-        /* ໂຕໜັງສືເລື່ອນ Matrix - ສີບົວຫວານແຈ່ມ */
         .matrix-column {
             display: flex;
             flex-direction: column;
@@ -317,7 +322,7 @@
 
     <div class="pixel-smiler" id="smileContainer">:) T T</div>
     
-    <div class="neon-center-set" id="neonSet" style="display: none;">
+    <div class="neon-center-set" id="neonSet">
         <div class="neon-text">LOVE YOU</div>
         
         <svg class="neon-heart-svg" viewBox="0 0 24 24" fill="#ff3385">
@@ -327,7 +332,7 @@
 
     <div class="matrix-bg" id="bgContainer"></div>
 
-    <!-- Hamburger Menu (ຢູ່ລຸ່ມຂວາ) -->
+    <!-- Hamburger Menu -->
     <div class="menu-wrapper">
         <ul class="menu-dropdown" id="menuDropdown">
             <li class="menu-item"><a href="gift.html"><span class="menu-text">invite</span></a></li>
@@ -399,16 +404,16 @@
             }, 130);
         }
 
-        // ລະບົບເປີດ-ປິດ ເມນູ Hamburger 
+        // Hamburger Menu
         const menuToggle = document.getElementById('menuToggle');
         const menuDropdown = document.getElementById('menuDropdown');
 
-        menuToggle.addEventListener('click', function() {
+        menuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
             this.classList.toggle('active');
             menuDropdown.classList.toggle('show');
         });
 
-        // ປິດເມນູອັດໂນມັດເມື່ອຄິກຢູ່ບ່ອນອື່ນ
         document.addEventListener('click', function(e) {
             if (!menuToggle.contains(e.target) && !menuDropdown.contains(e.target)) {
                 menuToggle.classList.remove('active');
