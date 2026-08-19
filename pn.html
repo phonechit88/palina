@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> ຕັ້ງໃຈເຮັດມາເພື່ອຢ້າໂດຍສະເພາະ❤️</title>
+    <title>ຕັ້ງໃຈເຮັດມາເພື່ອຢ້າໂດຍສະເພາະ❤️</title>
     
-    <!-- Google Fonts for Lao & Romantic Style -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Lao:wght@300;400;500;600;700&family=Noto+Serif+Lao:wght@400;600&display=swap" rel="stylesheet">
     
-    <!-- Lucide Icons & Canvas Confetti -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    
-    <!-- Three.js for 3D Particle System -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <style>
@@ -45,7 +41,7 @@
             color: var(--text-color);
             overflow-x: hidden;
             position: relative;
-            padding-bottom: 80px; /* Space for Mobile Bottom Nav */
+            padding-bottom: 80px;
         }
 
         @media (min-width: 769px) {
@@ -54,7 +50,6 @@
             }
         }
 
-        /* Ambient 3D Canvas Background */
         #canvas-container {
             position: fixed;
             top: 0;
@@ -65,7 +60,6 @@
             pointer-events: none;
         }
 
-        /* Glassmorphism Styles */
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(16px);
@@ -73,15 +67,12 @@
             border: 1px solid var(--glass-border);
             border-radius: 20px;
             box-shadow: var(--glass-shadow);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
         }
 
         .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 18px 35px rgba(233, 106, 141, 0.2);
+            box-shadow: var(--glass-shadow);
         }
 
-        /* Navigation Bar (Desktop & Mobile Adaptive) */
         nav {
             position: fixed;
             z-index: 1000;
@@ -90,10 +81,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all 0.3s ease;
         }
 
-        /* Desktop Nav: Top Bar */
         @media (min-width: 769px) {
             nav {
                 top: 20px;
@@ -104,7 +93,6 @@
             }
         }
 
-        /* Mobile Nav: Floating Bottom Bar */
         @media (max-width: 768px) {
             nav {
                 bottom: 15px;
@@ -117,6 +105,11 @@
                 -webkit-backdrop-filter: blur(20px);
                 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
             }
+        }
+
+        /* ລັອກບໍ່ໃຫ້ nav ເຄື່ອນທີ່ເວລາ Hover */
+        nav.glass-card:hover {
+            transform: translateX(-50%) !important;
         }
 
         nav .nav-links {
@@ -157,7 +150,6 @@
             height: 18px;
         }
 
-        /* Hero Section */
         .hero {
             min-height: 90vh;
             display: flex;
@@ -191,7 +183,6 @@
             50% { transform: translateY(-8px); }
         }
 
-        /* Interactive Heart */
         .heart-3d-wrapper {
             position: relative;
             width: clamp(180px, 40vw, 250px);
@@ -237,7 +228,6 @@
             45% { transform: scale(1.04); }
         }
 
-        /* Sections */
         .section {
             padding: 60px 20px;
             max-width: 1000px;
@@ -259,7 +249,6 @@
             margin-top: 4px;
         }
 
-        /* Timeline Section */
         .timeline {
             position: relative;
             padding: 10px 0;
@@ -303,14 +292,12 @@
             margin-bottom: 6px;
         }
 
-        /* Mobile Timeline Adjustments */
         @media (max-width: 768px) {
             .timeline::before { left: 18px; }
             .timeline-item { width: 100%; padding-left: 45px; padding-right: 0; text-align: left !important; }
             .timeline-item:nth-child(even) { left: 0; }
         }
 
-        /* Photo Gallery */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -359,7 +346,6 @@
             }
         }
 
-        /* Love Letter */
         .letter-container {
             max-width: 650px;
             margin: 0 auto;
@@ -377,7 +363,6 @@
             text-align: center;
         }
 
-        /* Reasons Floating Grid */
         .reasons-grid {
             display: flex;
             flex-wrap: wrap;
@@ -399,7 +384,6 @@
             50% { transform: translateY(-8px); }
         }
 
-        /* Realtime Counter */
         .counter-container {
             display: grid;
             grid-template-columns: repeat( auto-fit, minmax(75px, 1fr) );
@@ -426,7 +410,6 @@
             margin-top: 2px;
         }
 
-        /* Surprise Button */
         .surprise-btn-wrap {
             text-align: center;
             margin-top: 35px;
@@ -450,11 +433,10 @@
             transform: scale(0.96);
         }
 
-        /* Music Player (ย້າຍມາຢູ່ເບື້ອງຊ້າຍລຸ່ມ) */
         .music-player {
             position: fixed;
             bottom: 75px;
-            left: 15px; /* ເບື້ອງຊ້າຍ */
+            left: 15px;
             z-index: 1001;
             padding: 8px 14px;
             border-radius: 30px;
@@ -469,7 +451,7 @@
         @media (min-width: 769px) {
             .music-player {
                 bottom: 25px;
-                left: 25px; /* ເບື້ອງຊ້າຍ */
+                left: 25px;
                 padding: 10px 18px;
             }
         }
@@ -488,7 +470,6 @@
 
         .music-btn i { width: 16px; height: 16px; }
 
-        /* Floating Action Button (FAB) & Dropup Menu (ເບື້ອງຂວາລຸ່ມ) */
         .fab-container {
             position: fixed;
             bottom: 75px;
@@ -569,17 +550,16 @@
             font-weight: 600;
             border: 1px solid var(--glass-border);
             box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-            transition: background 0.2s, color 0.2s, transform 0.2s;
+            transition: background 0.2s, color 0.2s;
             white-space: nowrap;
         }
 
         .menu-item a:hover .menu-text {
             background: var(--deep-pink);
             color: white;
-            transform: translateX(-3px);
+            transform: none;
         }
 
-        /* Lightbox */
         .lightbox {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -598,7 +578,6 @@
             border-radius: 12px;
         }
 
-        /* Footer */
         footer {
             text-align: center;
             padding: 60px 20px 40px;
@@ -616,10 +595,8 @@
 </head>
 <body>
 
-    <!-- Ambient 3D Particle Canvas -->
     <div id="canvas-container"></div>
 
-    <!-- Responsive Navigation -->
     <nav class="glass-card">
         <ul class="nav-links">
             <li><a href="#hero"><i data-lucide="home"></i><span>Hom</span></a></li>
@@ -631,12 +608,10 @@
         </ul>
     </nav>
 
-    <!-- Hero Section -->
     <section id="hero" class="hero">
         <h1>ສຳລັບຄົນພິເສດຂອງຂ້ອຍ ❤️</h1>
         <p>ໂລກນ້ອຍໆໃບນີ້... ນົນສ້າງຂຶ້ນມາເພື່ອຢ້າ.</p>
 
-        <!-- Interactive Heart -->
         <div class="heart-3d-wrapper" id="heartWrapper">
             <div class="heart-3d" id="heart4D"></div>
         </div>
@@ -644,7 +619,6 @@
         <p style="font-size: 0.85rem; opacity: 0.7; margin-top: -10px;">(ລອງເລື່ອນ Mouse ຫຼື ສຳຜັດຫົວໃຈ)</p>
     </section>
 
-    <!-- Our Love Story Timeline -->
     <section id="story" class="section">
         <h2 class="section-title">Our story</h2>
         <div class="timeline">
@@ -680,32 +654,30 @@
                 <div class="glass-card">
                     <div class="timeline-number">05</div>
                     <div class="timeline-title">❤️❤️</div>
-                    <p>ຢາກຮຽນຮູ້ ແລະ ສ້າງອານາຄົດໄປພ້ອມໆ.</p>
+                    <p>ຢາກຮຽນຮູ້ ແລະ ສ້າງອານາຄົດໄປພ້ອມໆກັນ.</p>
                 </div>
             </div>
         </div>
     </section>
 
-   <!-- Photo Gallery -->
-<section id="gallery" class="section">
-    <h2 class="section-title">我的心❤️ </h2>
-    <div class="gallery-grid">
-        <div class="gallery-card glass-card" onclick="openLightbox('img/palina32.jpeg')">
-            <img src="img/palina32.jpeg" alt="Memory 1">
-            <div class="gallery-caption">ຮອຍຍິ້ມທີ່ເຮັດໃຫ້ໂລກສົດໃສ ❤️</div>
+    <section id="gallery" class="section">
+        <h2 class="section-title">我的心❤️ </h2>
+        <div class="gallery-grid">
+            <div class="gallery-card glass-card" onclick="openLightbox('img/palina32.jpeg')">
+                <img src="img/palina32.jpeg" alt="Memory 1">
+                <div class="gallery-caption">ຮອຍຍິ້ມທີ່ເຮັດໃຫ້ໂລກສົດໃສ ❤️</div>
+            </div>
+            <div class="gallery-card glass-card" onclick="openLightbox('img/palina67.jpeg')">
+                <img src="img/palina67.jpeg" alt="Memory 2">
+                <div class="gallery-caption">ທຸກໆບ່ອນທີ່ມີຢ້າແມ່ນບ່ອນພິເສດສຳລັບນົນ 🌸</div>
+            </div>
+            <div class="gallery-card glass-card" onclick="openLightbox('img/palina31.jpeg')">
+                <img src="img/palina31.jpeg" alt="Memory 3">
+                <div class="gallery-caption">ມືທີ່ອົບອຸ່ນທີ່ສຸດ✨</div>
+            </div>
         </div>
-        <div class="gallery-card glass-card" onclick="openLightbox('img/palina67.jpeg')">
-            <img src="img/palina67.jpeg" alt="Memory 2">
-            <div class="gallery-caption">ທຸກໆບ່ອນທີ່ມີຢ້າແມ່ນບ່ອນພິເສດສຳລັບນົນ 🌸</div>
-        </div>
-        <div class="gallery-card glass-card" onclick="openLightbox('img/palina31.jpeg')">
-            <img src="img/palina31.jpeg" alt="Memory 3">
-            <div class="gallery-caption">ມືທີ່ອົບອຸ່ນທີ່ສຸດ✨</div>
-        </div>
-    </div>
-</section>
+    </section>
 
-    <!-- Love Letter -->
     <section id="letter" class="section">
         <h2 class="section-title">💌 </h2>
         <div class="letter-container">
@@ -721,7 +693,6 @@
         </div>
     </section>
 
-    <!-- Reasons Section -->
     <section id="reasons" class="section">
         <h2 class="section-title">ຢາກບອກວ່າ...</h2>
         <div class="reasons-grid">
@@ -732,7 +703,6 @@
             <div class="reason-chip glass-card">❤️ ແລະຮັກຢ້າ... ເພາະຢ້າພິເສດແລ້ວໜ້າຮັກກວ່າໃຜໆ</div>
         </div>
 
-        <!-- Realtime Counter -->
         <div style="margin-top: 50px; text-align: center;">
             <h3 style="color: var(--text-color); font-weight: 500; font-size: 1.1rem;">❤️❤️</h3>
             <div class="counter-container">
@@ -742,27 +712,23 @@
                 <div class="counter-box glass-card"><div class="number" id="seconds">00</div><div class="label">ວິນາທີ</div></div>
             </div>
         </div>
-
-        <!-- Surprise Trigger -->
+        
         <div class="surprise-btn-wrap">
             <button class="surprise-btn" onclick="triggerSurprise()">✨ ກົດເປີດ</button>
         </div>
     </section>
-
-    <!-- Final Scene Footer -->
+    
     <footer id="final">
         <h2>“ບໍ່ຮູ້ວ່າອະນາຄົດຈະເປັນແນວໃດ... ແຕ່ຖ້າເລືອກໄດ້, ກໍຢາກມີຢ້າຢູ່ໃນທຸກໆບົດຂອງຊີວິດ. ❤️”</h2>
         <p style="opacity: 0.7; font-size: 0.85rem;">Made with ❤️ especially for you.</p>
     </footer>
-
-    <!-- Floating Audio Player (ເບື້ອງຊ້າຍລຸ່ມ) -->
+    
     <div class="music-player glass-card" onclick="toggleAudio()">
         <button class="music-btn" id="musicBtn"><i data-lucide="music"></i></button>
         <span style="font-size: 0.8rem; color: var(--text-color);" id="musicText">ເປີດເພງ 🎵</span>
         <audio id="bgMusic" loop src="love1.mp3"></audio>
     </div>
-
-    <!-- Floating Action Button Menu (ເບື້ອງຂວາລຸ່ມ) -->
+    
     <div class="fab-container" id="fabContainer">
         <button class="fab-trigger" onclick="toggleFabMenu()" aria-label="Toggle Menu">
             <i data-lucide="menu" id="fabIcon"></i>
@@ -778,17 +744,14 @@
             <li class="menu-item"><a href="story.html"><span class="menu-text">Instagram❤️</span></a></li>
         </ul>
     </div>
-
-    <!-- Lightbox Modal -->
+    
     <div class="lightbox" id="lightbox" onclick="closeLightbox()">
         <img id="lightboxImg" src="" alt="Zoomed Memory">
     </div>
 
     <script>
-        // Initialize Icons
         lucide.createIcons();
 
-        /* --- THREE.JS PARTICLE ENVIRONMENT --- */
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -834,7 +797,6 @@
         scene.add(particleSystem);
         camera.position.z = 5;
 
-        // Render Loop & Parallax
         let mouseX = 0, mouseY = 0;
         
         function handleMove(clientX, clientY) {
@@ -866,7 +828,6 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
 
-        /* --- HEART INTERACTION --- */
         const heartWrapper = document.getElementById('heartWrapper');
         const heart4D = document.getElementById('heart4D');
 
@@ -876,7 +837,6 @@
             const y = clientY - rect.top - rect.height / 2;
             heart4D.style.transform = `rotateY(${x * 0.2}deg) rotateX(${-y * 0.2}deg) scale(1.05)`;
         }
-
         heartWrapper.addEventListener('mousemove', (e) => handleHeartTilt(e.clientX, e.clientY));
         heartWrapper.addEventListener('mouseleave', () => {
             heart4D.style.transform = `rotateY(0deg) rotateX(0deg) scale(1)`;
@@ -892,7 +852,6 @@
             alert('ຮັກເຈົ້າຫຼາຍກວ່າທີ່ຄຳເວົ້າຈະອະທິບາຍໄດ້ ❤️');
         });
 
-        /* --- REALTIME COUNTER --- */
         const startDate = new Date(2026, 0, 1); 
 
         function updateCounter() {
@@ -903,7 +862,6 @@
             const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
             const minutes = Math.floor((diff / 1000 / 60) % 60);
             const seconds = Math.floor((diff / 1000) % 60);
-
             document.getElementById('days').innerText = String(days).padStart(3, '0');
             document.getElementById('hours').innerText = String(hours).padStart(2, '0');
             document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
@@ -912,7 +870,6 @@
         setInterval(updateCounter, 1000);
         updateCounter();
 
-        /* --- SURPRISE --- */
         function triggerSurprise() {
             confetti({
                 particleCount: 120,
@@ -925,7 +882,6 @@
             }, 300);
         }
 
-        /* --- AUDIO --- */
         const bgMusic = document.getElementById('bgMusic');
         const musicText = document.getElementById('musicText');
         let isPlaying = false;
@@ -941,13 +897,11 @@
             isPlaying = !isPlaying;
         }
 
-        /* --- FAB MENU TOGGLE --- */
         function toggleFabMenu() {
             const fabContainer = document.getElementById('fabContainer');
             fabContainer.classList.toggle('active');
         }
 
-        // Close FAB Menu when clicking outside
         document.addEventListener('click', (e) => {
             const fabContainer = document.getElementById('fabContainer');
             if (!fabContainer.contains(e.target) && fabContainer.classList.contains('active')) {
@@ -955,12 +909,10 @@
             }
         });
 
-        /* --- LIGHTBOX --- */
         function openLightbox(src) {
             document.getElementById('lightboxImg').src = src;
             document.getElementById('lightbox').style.display = 'flex';
         }
-
         function closeLightbox() {
             document.getElementById('lightbox').style.display = 'none';
         }
